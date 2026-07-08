@@ -1,0 +1,4500 @@
+{
+  "timestamp": "2026-07-08T22-57-06",
+  "dryRun": true,
+  "backupRemote": false,
+  "limit": "all",
+  "summary": {
+    "totalFiles": 448,
+    "optimized": 237,
+    "skipped": 211,
+    "failed": 0,
+    "backedUp": 0,
+    "bytesBefore": 4948079448,
+    "bytesAfter": 3503570719,
+    "bytesSaved": 1444508729,
+    "percentSaved": 29.19,
+    "pdfBytes": 3503570719
+  },
+  "entries": [
+    {
+      "path": "cadastros/cadastro_1781877802745_d4wqrbzihob.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 228648,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1781878801141_61p7m26t3xq.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16972264,
+      "finalSizeBytes": 16972264,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1781879560423_1h99a6jp02q.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17096335,
+      "finalSizeBytes": 17096335,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1781879789461_eef89vie9vw.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17302310,
+      "finalSizeBytes": 17302310,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1781880209209_8l9dbuwrhad.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15565019,
+      "finalSizeBytes": 15565019,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1781892677456_hysm6wlad77.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15411183,
+      "finalSizeBytes": 15411183,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1781895643008_0lnxdwblsnqe.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 684529,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1781895716809_i9uslxupxuh.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17440410,
+      "finalSizeBytes": 17440410,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782130943442_42zyicde3t3.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17067680,
+      "finalSizeBytes": 17067680,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782131230664_8kuhkpqc5a8.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 19139202,
+      "finalSizeBytes": 19139202,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782133174966_u76c7a32fi.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16989113,
+      "finalSizeBytes": 16989113,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782134290264_6snaortjcyx.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17506774,
+      "finalSizeBytes": 17506774,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782135150881_pcw27hij5ns.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15985175,
+      "finalSizeBytes": 15985175,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782137732296_cgfsd8nx7s.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15379984,
+      "finalSizeBytes": 15379984,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782139149059_zxhmfr948cd.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18036030,
+      "finalSizeBytes": 18036030,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782140813990_j0ritjbgxgr.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 14893582,
+      "finalSizeBytes": 14893582,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782143701708_mciqf151ehp.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 14191244,
+      "finalSizeBytes": 14191244,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782149749653_vrlmizjmvzn.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15759460,
+      "finalSizeBytes": 15759460,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782150742576_gnh1gv0hdb9.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15166513,
+      "finalSizeBytes": 15166513,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782150889014_pouwwk0n8zb.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16932674,
+      "finalSizeBytes": 16932674,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782151084141_f2pc6oq6xlb.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 724026,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782152026571_orrxz5h7rlm.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 807931,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782215639537_5btj2b12dwq.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16727073,
+      "finalSizeBytes": 16727073,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782216199759_79zlzdmt9zk.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17942600,
+      "finalSizeBytes": 17942600,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782216559465_csfyay56kr.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17925070,
+      "finalSizeBytes": 17925070,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782218126207_7hpwblzxk2x.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18070487,
+      "finalSizeBytes": 18070487,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782224550618_azdnk9wuzc.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15878828,
+      "finalSizeBytes": 15878828,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782224921971_p9mzmx9rw1.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15697149,
+      "finalSizeBytes": 15697149,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782225490681_r92g4bn91v.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16951937,
+      "finalSizeBytes": 16951937,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782227104376_tdnwp96l1i8.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16615209,
+      "finalSizeBytes": 16615209,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782235523092_aofi9iz6kkh.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17068214,
+      "finalSizeBytes": 17068214,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782237412330_5o1ji87blrt.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18235561,
+      "finalSizeBytes": 18235561,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782237971166_j036qwq2dfs.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17197985,
+      "finalSizeBytes": 17197985,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782238036958_2wwu8gmb7zp.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17516741,
+      "finalSizeBytes": 17516741,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782238430548_9j40gv6oto6.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18515129,
+      "finalSizeBytes": 18515129,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782238976488_nckhuz8ko3p.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16765481,
+      "finalSizeBytes": 16765481,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782239600736_2efw82gieie.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17933410,
+      "finalSizeBytes": 17933410,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782239988639_xixl345wq6.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15757946,
+      "finalSizeBytes": 15757946,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782247222362_xgdrb5afw1.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 594896,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782249879037_svkr14jl6wc.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 520738,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782302395674_l5mk482a0ca.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16096101,
+      "finalSizeBytes": 16096101,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782303035382_7t5oa0kgejy.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15178351,
+      "finalSizeBytes": 15178351,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782303100864_8ap9080xs9v.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15178351,
+      "finalSizeBytes": 15178351,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782307904493_uoufurybuy.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18220269,
+      "finalSizeBytes": 18220269,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782309530318_2mhmudjf203.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17779563,
+      "finalSizeBytes": 17779563,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782309846400_aic8k2lliqk.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17791645,
+      "finalSizeBytes": 17791645,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782312159512_xvw6rw48p2o.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17811211,
+      "finalSizeBytes": 17811211,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782316257198_rvi9xy2evu.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18410103,
+      "finalSizeBytes": 18410103,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782317404609_lexf6zf8jb.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16611484,
+      "finalSizeBytes": 16611484,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782318308847_8c3kyrjfkyw.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18276974,
+      "finalSizeBytes": 18276974,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782321820270_kgfa6a6d40i.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 675773,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782323057715_p3f162c5qkk.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18213686,
+      "finalSizeBytes": 18213686,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782323368477_62oicd8jgvi.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18078201,
+      "finalSizeBytes": 18078201,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782324818945_s5c1unnj00i.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17005074,
+      "finalSizeBytes": 17005074,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782326833961_1ywqvu55js1.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18153719,
+      "finalSizeBytes": 18153719,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782327706266_m00m9c76pm.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 602941,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782328547998_k9h2mpbsbkj.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17676843,
+      "finalSizeBytes": 17676843,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782330650114_j9g6ht7piae.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 650141,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782332576106_1wkxpldipz3.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 741526,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782333140256_dxetx2y4gxh.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16502831,
+      "finalSizeBytes": 16502831,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782392004649_gv5pzsw5o2j.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15982656,
+      "finalSizeBytes": 15982656,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782394503192_v2gnzam9hq.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17280697,
+      "finalSizeBytes": 17280697,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782397070256_5surrmfd396.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16983575,
+      "finalSizeBytes": 16983575,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782398741657_vqm7d3gqv9.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 444267,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782398754020_88nxnuyd0kp.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 444267,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782398757668_2uqx5ka4t8a.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 444267,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782400724458_26p02bt9z2o.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17927989,
+      "finalSizeBytes": 17927989,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782404123682_gge4i0bjbqb.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16548719,
+      "finalSizeBytes": 16548719,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782405048966_hbcs9iktbmb.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17641156,
+      "finalSizeBytes": 17641156,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782405780481_i090hhd619.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17811824,
+      "finalSizeBytes": 17811824,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782406029382_xcvc4s0qy6.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18021657,
+      "finalSizeBytes": 18021657,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782406041447_3s5mqsn1l2p.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 628321,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782408618393_bnkatkxvic.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17767537,
+      "finalSizeBytes": 17767537,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782410373173_lynsxps1fjc.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17159919,
+      "finalSizeBytes": 17159919,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782429754980_oi3tlc6neuf.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18340256,
+      "finalSizeBytes": 18340256,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782430110469_exeyz86854.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15971406,
+      "finalSizeBytes": 15971406,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782477169823_1sk2d8wo9uh.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 652601,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782478215257_ues2vb6awf.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 690463,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782481693959_zs85zq5zqwd.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16413898,
+      "finalSizeBytes": 16413898,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782483139757_jh3rei2l96.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15991576,
+      "finalSizeBytes": 15991576,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782484310210_dakxx5kggxi.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17375477,
+      "finalSizeBytes": 17375477,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782484546937_o53ve2bzt8.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18110422,
+      "finalSizeBytes": 18110422,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782485132492_6onemd5gsnq.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17983859,
+      "finalSizeBytes": 17983859,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782493673734_4195kkkytq3.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 748127,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782494112659_5s57ojyopb4.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 20270066,
+      "finalSizeBytes": 20270066,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782494321870_bvisqwsg9ds.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17244930,
+      "finalSizeBytes": 17244930,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782495870401_vloa1eazamd.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17858615,
+      "finalSizeBytes": 17858615,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782497001186_gut6yf46m6.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 677109,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782498792286_8h162snztiy.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17816703,
+      "finalSizeBytes": 17816703,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782501714040_khxeggejtm.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16840273,
+      "finalSizeBytes": 16840273,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782502374166_nl6tffropjn.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16833569,
+      "finalSizeBytes": 16833569,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782506349406_wxsb0nk6zcj.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18361888,
+      "finalSizeBytes": 18361888,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782509096964_yfcroyitw3.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 780169,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782509102418_xh5lqrq0xb.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 780169,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782509626390_cbtqr4z6n7i.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17085579,
+      "finalSizeBytes": 17085579,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782562561023_gi85ucuwmng.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17154320,
+      "finalSizeBytes": 17154320,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782568471351_otfeaa2d5dh.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18551548,
+      "finalSizeBytes": 18551548,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782569963498_va43e8qlzt.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16818907,
+      "finalSizeBytes": 16818907,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782579435250_5hx9y5byr9k.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17710129,
+      "finalSizeBytes": 17710129,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782581707016_d2khdkkp9i.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 708859,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782584072664_pi6b5sjdvim.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17052227,
+      "finalSizeBytes": 17052227,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782652130267_haxkvbvmlk8.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18191627,
+      "finalSizeBytes": 18191627,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782657386319_zdi3uh38e.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18649342,
+      "finalSizeBytes": 18649342,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782732095019_6r01nmrhw9o.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17014428,
+      "finalSizeBytes": 17014428,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782732518737_cw9gvu8jdel.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 772329,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782734805897_cyr7y8sn7di.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16950190,
+      "finalSizeBytes": 16950190,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782743786604_kdixkqhbk9o.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16623684,
+      "finalSizeBytes": 16623684,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782755114352_4uhokd2ar4p.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 778291,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782755340533_jejcx6fphl.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 246176,
+      "finalSizeBytes": 246176,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782756299213_vwoahj3rq3j.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16416462,
+      "finalSizeBytes": 16416462,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782757757610_8j5hgw3b4o6.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 347654,
+      "finalSizeBytes": 347654,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782761677532_tvewuq2mj6.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 558233,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782765887324_opyc8xh85r.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 638089,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782821082244_iq46um4br6.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16640930,
+      "finalSizeBytes": 16640930,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782826589742_k3ecvm9nagl.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 633281,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782829584519_i3ilzsb5vwp.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16161817,
+      "finalSizeBytes": 16161817,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782831960240_0tyelzdtq8c.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 922696,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782833319340_kmfg5lju0v.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 657422,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782838418592_mso4cd993fd.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 676319,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782840499928_uyacwi2c5hm.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 1797728,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782841165609_rnb8b2nipvf.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 853532,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782841450809_c3660kqegzs.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 653364,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782843813553_8n4lvlkat0w.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 678725,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782855527859_2v6mj0m51qc.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 921093,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782855787765_qmh1eo9cdq9.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 774538,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782858989675_j2l1fax2nr.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 739550,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782863707640_5dk8dqv1r16.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 814410,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782910016468_bgorqbq37sm.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 615883,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782910717861_52g0l49awtv.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 528052,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782914549180_nqly4zgv1jm.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 648432,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782915910968_l3oy456o9of.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 622528,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782918283158_udjkr7wgfp.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 833810,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782921479017_ynu89kl5r.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 535376,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782921668277_l64amgw897.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 604014,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782923053356_neq2xg40eu9.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 543949,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782928446368_lfnyeggz5k.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 1370953,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782933108412_6snvtbfmgn7.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 873648,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782937218590_2ww2fvetwpd.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 639316,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782991823753_sx6dz1x34.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 731378,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782995545175_35ak0fk6n88.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 616993,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782996056199_03lm1ihd62yd.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 615649,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782996371962_xfywogf147m.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 508319,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782996736049_uiek6fish0l.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 482357,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782997496284_cpi294ptv0m.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 643450,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782997816106_1yypz2p40ii.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 454212,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782997922543_e0aerrnfet.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 609394,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782998189784_hxdsr73sq9l.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 655503,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783000902238_75048hxvumk.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 632806,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783001029049_4rkwr53x8yj.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 615498,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783009190753_f7y66zicl0q.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 613331,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783013529698_24z2xgk3tk8.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 654023,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783014828308_wg86ubuz7pa.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 765063,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783015062310_imiee8z25j8.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 593536,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783017944823_g1a5n08ir85.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 793066,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783025731219_zgh4vxub2vf.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 696963,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783027149630_0mgrhuolurhn.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 771680,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783029367535_hibq3w37znu.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 489352,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783033155572_00ryrd7ru00na.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 812414,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783081373301_t8s8n4cpwtn.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 706141,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783081697634_5xg5daijqk3.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 799603,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783081830182_2zm5n99ahm8.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 748699,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783086598592_8j7z2m5koyh.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 740545,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783088322217_besdnr3608.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 759503,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783094113356_au1whr0dww.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15758665,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783095395480_w102qyjgkud.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 13398198,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783098152200_0wui0w2vglyj.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 539184,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783099923800_adydftvy9wt.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15688310,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783100490875_3h0mkyckcad.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17187800,
+      "finalSizeBytes": 17187800,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783101964540_cltbyz6wnz.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 1014760,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783108370189_8eg3lalrs7d.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18218411,
+      "finalSizeBytes": 18218411,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783111336033_0j2zcljj5re.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 796379,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783112985435_o5mjet31hl.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17533255,
+      "finalSizeBytes": 17533255,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783113501408_azsjj6c7buk.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 798822,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783115701650_crkh15xjk78.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17214087,
+      "finalSizeBytes": 17214087,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783115884385_lc60j6tfop.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15923119,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783118801035_e698gc5w6yl.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16365690,
+      "finalSizeBytes": 16365690,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783122430268_cgt2r4iwl4.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15014882,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783122751921_z2gfe8ra3i.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16435662,
+      "finalSizeBytes": 16435662,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783167229017_6v2jdplp286.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17070537,
+      "finalSizeBytes": 17070537,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783168518901_j3brqekc6t.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16781687,
+      "finalSizeBytes": 16781687,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783170376449_hkvfo688zk8.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14578094,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783170814259_7ep1f1qz2rc.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14292833,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783172307925_y0a2r3tikgp.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15433532,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783177430559_wmtsnbsghrb.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16981670,
+      "finalSizeBytes": 16981670,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783177720137_i0vahvit76d.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14452928,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783191025714_bhnuj38if3e.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14371707,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783191202562_gdvvcqvxqzm.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14571443,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783258758585_hjabbwwdywb.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15848899,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783261614708_4kq8h5gby7i.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 16286104,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783262381241_c6js82v9jp8.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15189339,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783265427576_c0fpcc2e6hp.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15430926,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783339308922_n78e1xfshy.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 837943,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783343069276_9hvsdfngq4r.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14202537,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783343298519_1wuxhdu6j78.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14191859,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783344831150_gdkny4bqd3n.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15645213,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783345578329_5yv3xnhnjee.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 700608,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783346992509_g8khhpe48r9.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17563832,
+      "finalSizeBytes": 17563832,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783347803394_e42caftnmfn.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 13741690,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783349041892_munal40cnzp.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14680147,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783357245349_jtg0hvc3mnj.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17064843,
+      "finalSizeBytes": 17064843,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782584072664_pi6b5sjdvim.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17052227,
+      "finalSizeBytes": 17052227,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782652130267_haxkvbvmlk8.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18191627,
+      "finalSizeBytes": 18191627,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782657386319_zdi3uh38e.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18649342,
+      "finalSizeBytes": 18649342,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782732095019_6r01nmrhw9o.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17014428,
+      "finalSizeBytes": 17014428,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782732518737_cw9gvu8jdel.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 772329,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782734805897_cyr7y8sn7di.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16950190,
+      "finalSizeBytes": 16950190,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782743786604_kdixkqhbk9o.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16623684,
+      "finalSizeBytes": 16623684,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782755114352_4uhokd2ar4p.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 778291,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782755340533_jejcx6fphl.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 246176,
+      "finalSizeBytes": 246176,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782756299213_vwoahj3rq3j.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16416462,
+      "finalSizeBytes": 16416462,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782757757610_8j5hgw3b4o6.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 347654,
+      "finalSizeBytes": 347654,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782761677532_tvewuq2mj6.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 558233,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782765887324_opyc8xh85r.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 638089,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782821082244_iq46um4br6.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16640930,
+      "finalSizeBytes": 16640930,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782826589742_k3ecvm9nagl.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 633281,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782829584519_i3ilzsb5vwp.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16161817,
+      "finalSizeBytes": 16161817,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782831960240_0tyelzdtq8c.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 922696,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782833319340_kmfg5lju0v.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 657422,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782838418592_mso4cd993fd.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 676319,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782840499928_uyacwi2c5hm.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 1797728,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782841165609_rnb8b2nipvf.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 853532,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782841450809_c3660kqegzs.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 653364,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782843813553_8n4lvlkat0w.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 678725,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782855527859_2v6mj0m51qc.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 921093,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782855787765_qmh1eo9cdq9.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 774538,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782858989675_j2l1fax2nr.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 739550,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782863707640_5dk8dqv1r16.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 814410,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782910016468_bgorqbq37sm.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 615883,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782910717861_52g0l49awtv.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 528052,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782914549180_nqly4zgv1jm.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 648432,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782915910968_l3oy456o9of.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 622528,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782918283158_udjkr7wgfp.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 833810,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782921479017_ynu89kl5r.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 535376,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782921668277_l64amgw897.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 604014,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782923053356_neq2xg40eu9.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 543949,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782928446368_lfnyeggz5k.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 1370953,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782933108412_6snvtbfmgn7.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 873648,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782937218590_2ww2fvetwpd.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 639316,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782991823753_sx6dz1x34.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 731378,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782995545175_35ak0fk6n88.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 616993,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782996056199_03lm1ihd62yd.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 615649,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782996371962_xfywogf147m.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 508319,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782996736049_uiek6fish0l.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 482357,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782997496284_cpi294ptv0m.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 643450,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782997816106_1yypz2p40ii.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 454212,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782997922543_e0aerrnfet.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 609394,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1782998189784_hxdsr73sq9l.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 655503,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783000902238_75048hxvumk.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 632806,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783001029049_4rkwr53x8yj.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 615498,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783009190753_f7y66zicl0q.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 613331,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783013529698_24z2xgk3tk8.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 654023,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783014828308_wg86ubuz7pa.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 765063,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783015062310_imiee8z25j8.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 593536,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783017944823_g1a5n08ir85.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 793066,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783025731219_zgh4vxub2vf.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 696963,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783027149630_0mgrhuolurhn.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 771680,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783029367535_hibq3w37znu.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 489352,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783033155572_00ryrd7ru00na.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 812414,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783081373301_t8s8n4cpwtn.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 706141,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783081697634_5xg5daijqk3.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 799603,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783081830182_2zm5n99ahm8.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 748699,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783086598592_8j7z2m5koyh.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 740545,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783088322217_besdnr3608.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 759503,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783094113356_au1whr0dww.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15758665,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783095395480_w102qyjgkud.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 13398198,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783098152200_0wui0w2vglyj.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 539184,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783099923800_adydftvy9wt.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15688310,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783100490875_3h0mkyckcad.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17187800,
+      "finalSizeBytes": 17187800,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783101964540_cltbyz6wnz.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 1014760,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783108370189_8eg3lalrs7d.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18218411,
+      "finalSizeBytes": 18218411,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783111336033_0j2zcljj5re.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 796379,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783112985435_o5mjet31hl.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17533255,
+      "finalSizeBytes": 17533255,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783113501408_azsjj6c7buk.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 798822,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783115701650_crkh15xjk78.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17214087,
+      "finalSizeBytes": 17214087,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783115884385_lc60j6tfop.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15923119,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783118801035_e698gc5w6yl.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16365690,
+      "finalSizeBytes": 16365690,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783122430268_cgt2r4iwl4.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15014882,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783122751921_z2gfe8ra3i.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16435662,
+      "finalSizeBytes": 16435662,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783167229017_6v2jdplp286.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17070537,
+      "finalSizeBytes": 17070537,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783168518901_j3brqekc6t.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16781687,
+      "finalSizeBytes": 16781687,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783170376449_hkvfo688zk8.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14578094,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783170814259_7ep1f1qz2rc.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14292833,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783172307925_y0a2r3tikgp.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15433532,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783177430559_wmtsnbsghrb.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16981670,
+      "finalSizeBytes": 16981670,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783177720137_i0vahvit76d.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14452928,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783191025714_bhnuj38if3e.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14371707,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783191202562_gdvvcqvxqzm.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14571443,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783258758585_hjabbwwdywb.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15848899,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783261614708_4kq8h5gby7i.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 16286104,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783262381241_c6js82v9jp8.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15189339,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783265427576_c0fpcc2e6hp.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15430926,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783339308922_n78e1xfshy.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 837943,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783343069276_9hvsdfngq4r.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14202537,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783343298519_1wuxhdu6j78.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14191859,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783344831150_gdkny4bqd3n.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15645213,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783345578329_5yv3xnhnjee.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 700608,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783346992509_g8khhpe48r9.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17563832,
+      "finalSizeBytes": 17563832,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783347803394_e42caftnmfn.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 13741690,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783349041892_munal40cnzp.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14680147,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783357245349_jtg0hvc3mnj.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17064843,
+      "finalSizeBytes": 17064843,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783358153617_oc0tah5ucs.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16894534,
+      "finalSizeBytes": 16894534,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783359793415_du3k5f7e79t.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14819140,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783361307324_3nf9py352qt.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16941257,
+      "finalSizeBytes": 16941257,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783361497177_q9fvxzmyijm.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17029486,
+      "finalSizeBytes": 17029486,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783364136584_cp4wqd6u41t.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 19169418,
+      "finalSizeBytes": 19169418,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783364773016_ncxfhf74yn.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15992877,
+      "finalSizeBytes": 15992877,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783366569866_x682jpnrx9m.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15386764,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783372103800_ia87jqs3fuh.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17564509,
+      "finalSizeBytes": 17564509,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783373733758_55w7atiep7h.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15979131,
+      "finalSizeBytes": 15979131,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783374838503_m7z4mg5ai3s.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17214127,
+      "finalSizeBytes": 17214127,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783380390852_8nbud4eb32m.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16321329,
+      "finalSizeBytes": 16321329,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783426560666_95kvp0olaye.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17077180,
+      "finalSizeBytes": 17077180,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783426745871_vplan80bo3p.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17511687,
+      "finalSizeBytes": 17511687,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783430267681_cjb3gzpub1m.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14295078,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783432198808_82oi8y467he.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17764411,
+      "finalSizeBytes": 17764411,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783434376039_k68q2f1o6z.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 7998187,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783434716301_aov12wkljau.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16800386,
+      "finalSizeBytes": 16800386,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783442019841_egzid1uk4iu.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 18890389,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783447872596_vwowex8goq.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18668228,
+      "finalSizeBytes": 18668228,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783455435424_vndqbfuytqr.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17886186,
+      "finalSizeBytes": 17886186,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783456995296_3d209q67gia.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 6308527,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783457204043_dab2795j7do.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15567455,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783463152053_gph64svc1x.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14503615,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783509305145_9r1v07awfjv.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15724776,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783514755068_c4b9dkb1gjc.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17578542,
+      "finalSizeBytes": 17578542,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783516558865_5rdv875y0yw.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14011892,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783517078845_1jyvijy2qmh.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14189826,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783517523142_g5hjv5llf0n.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 13977477,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783517970617_uskaoyldjlq.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 13855546,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783518502955_4fca2ci49mx.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14234040,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783525194813_9fjfx2ug4ma.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18028197,
+      "finalSizeBytes": 18028197,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783526939009_2nty3k1rgip.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17672369,
+      "finalSizeBytes": 17672369,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783527703617_yxmuliqy9mb.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14539215,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783528073016_vy3xxmgws6.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16667055,
+      "finalSizeBytes": 16667055,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783529603759_tufvqjy88g.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18005580,
+      "finalSizeBytes": 18005580,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783530660580_le9lp0tbpv.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18407794,
+      "finalSizeBytes": 18407794,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783530864002_qdgbpqt2zfm.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17601438,
+      "finalSizeBytes": 17601438,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783533821970_uu6vpi2jndo.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14329656,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783534650738_broltwsg3r9.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15967493,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783534985661_9k4oqxq4r3.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15006078,
+      "finalSizeBytes": 15006078,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783541160619_43stv02lf17.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17077629,
+      "finalSizeBytes": 17077629,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783541284161_kg7dtbjlgs.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14482934,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783542717124_e83nunl4wh4.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 16669242,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783545476207_hu5vwqy8g1.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18297595,
+      "finalSizeBytes": 18297595,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783546097430_pclaj90o2i.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14524814,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783548453540_84ebajzlwk.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14606234,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783548862715_v7lsc56jxud.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 13908235,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783549533969_rechord8pmp.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18126221,
+      "finalSizeBytes": 18126221,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783550416055_ssg20wrn3lj.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15806899,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783358153617_oc0tah5ucs.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16894534,
+      "finalSizeBytes": 16894534,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783359793415_du3k5f7e79t.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14819140,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783361307324_3nf9py352qt.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16941257,
+      "finalSizeBytes": 16941257,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783361497177_q9fvxzmyijm.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17029486,
+      "finalSizeBytes": 17029486,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783364136584_cp4wqd6u41t.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 19169418,
+      "finalSizeBytes": 19169418,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783364773016_ncxfhf74yn.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15992877,
+      "finalSizeBytes": 15992877,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783366569866_x682jpnrx9m.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15386764,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783372103800_ia87jqs3fuh.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17564509,
+      "finalSizeBytes": 17564509,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783373733758_55w7atiep7h.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15979131,
+      "finalSizeBytes": 15979131,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783374838503_m7z4mg5ai3s.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17214127,
+      "finalSizeBytes": 17214127,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783380390852_8nbud4eb32m.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16321329,
+      "finalSizeBytes": 16321329,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783426560666_95kvp0olaye.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17077180,
+      "finalSizeBytes": 17077180,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783426745871_vplan80bo3p.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17511687,
+      "finalSizeBytes": 17511687,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783430267681_cjb3gzpub1m.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14295078,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783432198808_82oi8y467he.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17764411,
+      "finalSizeBytes": 17764411,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783434376039_k68q2f1o6z.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 7998187,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783434716301_aov12wkljau.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16800386,
+      "finalSizeBytes": 16800386,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783442019841_egzid1uk4iu.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 18890389,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783447872596_vwowex8goq.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18668228,
+      "finalSizeBytes": 18668228,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783455435424_vndqbfuytqr.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17886186,
+      "finalSizeBytes": 17886186,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783456995296_3d209q67gia.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 6308527,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783457204043_dab2795j7do.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15567455,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783463152053_gph64svc1x.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14503615,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783509305145_9r1v07awfjv.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15724776,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783514755068_c4b9dkb1gjc.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17578542,
+      "finalSizeBytes": 17578542,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783516558865_5rdv875y0yw.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14011892,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783517078845_1jyvijy2qmh.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14189826,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783517523142_g5hjv5llf0n.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 13977477,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783517970617_uskaoyldjlq.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 13855546,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783518502955_4fca2ci49mx.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14234040,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783525194813_9fjfx2ug4ma.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18028197,
+      "finalSizeBytes": 18028197,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783526939009_2nty3k1rgip.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17672369,
+      "finalSizeBytes": 17672369,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783527703617_yxmuliqy9mb.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14539215,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783528073016_vy3xxmgws6.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16667055,
+      "finalSizeBytes": 16667055,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783529603759_tufvqjy88g.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18005580,
+      "finalSizeBytes": 18005580,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783530660580_le9lp0tbpv.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18407794,
+      "finalSizeBytes": 18407794,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783530864002_qdgbpqt2zfm.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17601438,
+      "finalSizeBytes": 17601438,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783533821970_uu6vpi2jndo.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14329656,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783534650738_broltwsg3r9.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15967493,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783534985661_9k4oqxq4r3.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15006078,
+      "finalSizeBytes": 15006078,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783541160619_43stv02lf17.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17077629,
+      "finalSizeBytes": 17077629,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783541284161_kg7dtbjlgs.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14482934,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783542717124_e83nunl4wh4.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 16669242,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783545476207_hu5vwqy8g1.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18297595,
+      "finalSizeBytes": 18297595,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783546097430_pclaj90o2i.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14524814,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783548453540_84ebajzlwk.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 14606234,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783548862715_v7lsc56jxud.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 13908235,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783549533969_rechord8pmp.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18126221,
+      "finalSizeBytes": 18126221,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1783550416055_ssg20wrn3lj.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15806899,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_14432cd3-f967-4f71-952f-976014c35881_1781880263533_0uajclt1szm.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17237337,
+      "finalSizeBytes": 17237337,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_18b37442-600c-414a-a925-ea25692a28fc_1783432234478_bqb9a7y9vmh.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15327271,
+      "finalSizeBytes": 15327271,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_18b37442-600c-414a-a925-ea25692a28fc_1783432249580_xkrv1v3v8x.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15209487,
+      "finalSizeBytes": 15209487,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_18bd8754-a692-4d76-b817-6b1315ab59e8_1783364177541_sajcj1y99j.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17064682,
+      "finalSizeBytes": 17064682,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_18bd8754-a692-4d76-b817-6b1315ab59e8_1783364195643_ix13rcgovw.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16332705,
+      "finalSizeBytes": 16332705,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_21f37cac-e464-4e0e-b864-c5973700248a_1782494349391_t0vgle92fnq.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17789289,
+      "finalSizeBytes": 17789289,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_21f37cac-e464-4e0e-b864-c5973700248a_1782494371089_ecyx2wec1xs.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15906667,
+      "finalSizeBytes": 15906667,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_21f37cac-e464-4e0e-b864-c5973700248a_1782494389888_fwgyyv09e2t.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15566745,
+      "finalSizeBytes": 15566745,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_363bd301-57f2-4235-b9ea-02fbcafa1469_1782133238443_5bh4kfinueo.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 18117490,
+      "finalSizeBytes": 18117490,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_363bd301-57f2-4235-b9ea-02fbcafa1469_1782509152305_0enuqeh5b6ur.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 942527,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_42535dfd-d884-4ce1-98f2-f986d92325d5_1783099953311_ly6yx7hvzg.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15996902,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_4549b857-30f6-4b25-8f04-f839540b6c33_1783014851116_tf7224eqex.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 852819,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_4a864917-1af1-466e-8039-d0ff2ceeb404_1783115724339_ikdw7g8asvf.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 19704336,
+      "finalSizeBytes": 19704336,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_4a864917-1af1-466e-8039-d0ff2ceeb404_1783115744587_nhxibbqoc9r.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 20651844,
+      "finalSizeBytes": 20651844,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_4a864917-1af1-466e-8039-d0ff2ceeb404_1783115759644_x95t6orzndc.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 20059947,
+      "finalSizeBytes": 20059947,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_4a864917-1af1-466e-8039-d0ff2ceeb404_1783115774674_8nyx5dx5s54.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 14607476,
+      "finalSizeBytes": 14607476,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_5f0a1ecf-855b-4506-ba74-411bb1f0be25_1782309874400_6a60vfamfsw.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17900260,
+      "finalSizeBytes": 17900260,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_7a4a5f33-aaff-4348-a774-8263c28d0aa0_1782143795117_4w2j8l6knj.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17593030,
+      "finalSizeBytes": 17593030,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_7eb2f8a4-68ae-457b-8975-5ca565eedf6b_1782140876399_vcgr28n28g.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17070913,
+      "finalSizeBytes": 17070913,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_7eb2f8a4-68ae-457b-8975-5ca565eedf6b_1782140896526_axgjcerltn.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16981452,
+      "finalSizeBytes": 16981452,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_7eb2f8a4-68ae-457b-8975-5ca565eedf6b_1782140921668_i2egsoxee9g.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16981452,
+      "finalSizeBytes": 16981452,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_8115724e-f8f9-4ce0-900e-eca3e319eca3_1782405302544_7c5fottwdym.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16932685,
+      "finalSizeBytes": 16932685,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_8556c096-b30e-4613-933f-f961ec939d51_1782303125387_dvulugpl019.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16892713,
+      "finalSizeBytes": 16892713,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_8556c096-b30e-4613-933f-f961ec939d51_1782303139682_sfapdwtgi7q.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 15333613,
+      "finalSizeBytes": 15333613,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_8556c096-b30e-4613-933f-f961ec939d51_1783339946055_zlfh749fm9r.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 502946,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_9ec096a8-f578-49ab-9534-3b83a108b276_1783358172642_lf3zvlfpm5.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 14634014,
+      "finalSizeBytes": 14634014,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_9ec096a8-f578-49ab-9534-3b83a108b276_1783358190466_jjdb9ijhmaq.jpeg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 74403,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_a9ed11c7-0508-479c-a864-1c2e571a6ce0_1783364952045_dwha47mfrce.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15135996,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_abfc199c-f032-47dc-bd4d-c02a897acf87_1783095413895_3xy3ld7uj5h.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 13398198,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_be2f16c7-5008-4526-b157-cf9e60d63ef4_1783263692939_66hf10fkzb9.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15391608,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_c173c5c9-198b-495c-9a2d-1090f1d841ac_1782757773971_is169keqvc.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16764176,
+      "finalSizeBytes": 16764176,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_c1dc2df7-6ead-466e-92eb-adf16fed6b95_1781895757903_0i4chzzrk54.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 14734222,
+      "finalSizeBytes": 14734222,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_c1f88453-bc32-4c2c-a3f0-935f3e6e907b_1782239022559_tza7634u8z.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16829545,
+      "finalSizeBytes": 16829545,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_d26ba2d5-00d4-43de-a153-0b84f14f3c01_1782131353463_alhyeq0xev.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17067658,
+      "finalSizeBytes": 17067658,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_e0f525fc-6260-4117-b01a-8efa8f8efa74_1782318332614_037k3mpyhamt.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17727938,
+      "finalSizeBytes": 17727938,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_e7a77eda-fe85-4d87-b260-b5645b0ef656_1782991963799_9uwgry6l3b.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 408861,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_ef791d5c-e489-491d-8543-d19986371675_1783091057908_6gqxesrvws4.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17183445,
+      "finalSizeBytes": 17183445,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_ef791d5c-e489-491d-8543-d19986371675_1783091078188_tzvd0wue9v.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16345070,
+      "finalSizeBytes": 16345070,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_ef791d5c-e489-491d-8543-d19986371675_1783091098833_bygmvlykx99.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17200552,
+      "finalSizeBytes": 17200552,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_efc493de-4543-4eca-b130-f3ff6310dffd_1783442181027_wbm3qc8xzys.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 15343469,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_fa07d0ba-e404-4a7a-b984-4f1493151232_1783115910249_akvbfzvmi8v.png",
+      "mimeType": "image/png",
+      "originalSizeBytes": 13652792,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_fe2da9be-cfc1-4131-a266-120704b101d6_1782584090150_ird37q26hw.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17969916,
+      "finalSizeBytes": 17969916,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "receita/receita_fe2da9be-cfc1-4131-a266-120704b101d6_1782584104782_ddvhjhgb6b4.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 16365666,
+      "finalSizeBytes": 16365666,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "cupom/cupom_1781897980270_p1l97fi0f8.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 684529,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cupom/cupom_1781898207852_0meffqwf3ja.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 528010,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "identidades/h19rvlqdx4_1774612821510.jpg",
+      "mimeType": "image/jpeg",
+      "originalSizeBytes": 4713,
+      "finalSizeBytes": 0,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "identidades/id_1779996374449_0csvh080c1ce.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 294748,
+      "finalSizeBytes": 294748,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "identidades/id_1779996412937_ncqgojxk42j.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 17736287,
+      "finalSizeBytes": 17736287,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "identidades/id_1779996443892_kpvi9bu7tmi.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 294748,
+      "finalSizeBytes": 294748,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    },
+    {
+      "path": "identidades/id_1779996479805_wddopypp2pb.pdf",
+      "mimeType": "application/pdf",
+      "originalSizeBytes": 693502,
+      "finalSizeBytes": 693502,
+      "savedBytes": 0,
+      "savedPercent": 0,
+      "action": "skipped-pdf",
+      "backupType": "none"
+    }
+  ]
+}

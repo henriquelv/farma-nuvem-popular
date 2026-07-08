@@ -1,0 +1,1220 @@
+============================================================
+OTIMIZACAO DE STORAGE ÔÇö FARMACIA POPULAR
+  Bucket: documentos
+  Pastas: cadastros, receita, cupom, identidades
+  Modo: DRY-RUN
+  Incluir imagens: auto (dry)
+  Incluir PDFs....: auto (dry)
+  Backup remoto...: nao
+  Limite.........: todos
+  Data: 2026-07-08
+============================================================
+Listando bucket "documentos"...
+  cadastros/...
+    249 arquivos
+  receita/...
+    43 arquivos
+  cupom/...
+    2 arquivos
+  identidades/...
+    5 arquivos
+
+Total: 299
+
+Processando 299 arquivos (conc: 3)...
+
+cadastros/cadastro_1781877802745_d4wqrbzihob.jpg
+  Tipo: image/jpeg | Tam: 228.6 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1781878801141_61p7m26t3xq.pdf
+  Tipo: application/pdf | Tam: 16.97 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1781879560423_1h99a6jp02q.pdf
+  Tipo: application/pdf | Tam: 17.10 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1781879789461_eef89vie9vw.pdf
+  Tipo: application/pdf | Tam: 17.30 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1781880209209_8l9dbuwrhad.pdf
+  Tipo: application/pdf | Tam: 15.57 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1781892677456_hysm6wlad77.pdf
+  Tipo: application/pdf | Tam: 15.41 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1781895643008_0lnxdwblsnqe.jpg
+  Tipo: image/jpeg | Tam: 684.5 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1781895716809_i9uslxupxuh.pdf
+  Tipo: application/pdf | Tam: 17.44 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782130943442_42zyicde3t3.pdf
+  Tipo: application/pdf | Tam: 17.07 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782131230664_8kuhkpqc5a8.pdf
+  Tipo: application/pdf | Tam: 19.14 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782133174966_u76c7a32fi.pdf
+  Tipo: application/pdf | Tam: 16.99 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782134290264_6snaortjcyx.pdf
+  Tipo: application/pdf | Tam: 17.51 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782135150881_pcw27hij5ns.pdf
+  Tipo: application/pdf | Tam: 15.99 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782137732296_cgfsd8nx7s.pdf
+  Tipo: application/pdf | Tam: 15.38 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782139149059_zxhmfr948cd.pdf
+  Tipo: application/pdf | Tam: 18.04 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782140813990_j0ritjbgxgr.pdf
+  Tipo: application/pdf | Tam: 14.89 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782143701708_mciqf151ehp.pdf
+  Tipo: application/pdf | Tam: 14.19 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782149749653_vrlmizjmvzn.pdf
+  Tipo: application/pdf | Tam: 15.76 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782150742576_gnh1gv0hdb9.pdf
+  Tipo: application/pdf | Tam: 15.17 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782150889014_pouwwk0n8zb.pdf
+  Tipo: application/pdf | Tam: 16.93 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782151084141_f2pc6oq6xlb.jpg
+  Tipo: image/jpeg | Tam: 724.0 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782152026571_orrxz5h7rlm.jpg
+  Tipo: image/jpeg | Tam: 807.9 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782215639537_5btj2b12dwq.pdf
+  Tipo: application/pdf | Tam: 16.73 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782216199759_79zlzdmt9zk.pdf
+  Tipo: application/pdf | Tam: 17.94 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782216559465_csfyay56kr.pdf
+  Tipo: application/pdf | Tam: 17.93 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782218126207_7hpwblzxk2x.pdf
+  Tipo: application/pdf | Tam: 18.07 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782224550618_azdnk9wuzc.pdf
+  Tipo: application/pdf | Tam: 15.88 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782224921971_p9mzmx9rw1.pdf
+  Tipo: application/pdf | Tam: 15.70 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782225490681_r92g4bn91v.pdf
+  Tipo: application/pdf | Tam: 16.95 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782227104376_tdnwp96l1i8.pdf
+  Tipo: application/pdf | Tam: 16.62 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782235523092_aofi9iz6kkh.pdf
+  Tipo: application/pdf | Tam: 17.07 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782237412330_5o1ji87blrt.pdf
+  Tipo: application/pdf | Tam: 18.24 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782237971166_j036qwq2dfs.pdf
+  Tipo: application/pdf | Tam: 17.20 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782238036958_2wwu8gmb7zp.pdf
+  Tipo: application/pdf | Tam: 17.52 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782238430548_9j40gv6oto6.pdf
+  Tipo: application/pdf | Tam: 18.52 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782238976488_nckhuz8ko3p.pdf
+  Tipo: application/pdf | Tam: 16.77 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782239600736_2efw82gieie.pdf
+  Tipo: application/pdf | Tam: 17.93 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782239988639_xixl345wq6.pdf
+  Tipo: application/pdf | Tam: 15.76 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782247222362_xgdrb5afw1.jpg
+  Tipo: image/jpeg | Tam: 594.9 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782249879037_svkr14jl6wc.jpg
+  Tipo: image/jpeg | Tam: 520.7 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782302395674_l5mk482a0ca.pdf
+  Tipo: application/pdf | Tam: 16.10 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782303035382_7t5oa0kgejy.pdf
+  Tipo: application/pdf | Tam: 15.18 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782303100864_8ap9080xs9v.pdf
+  Tipo: application/pdf | Tam: 15.18 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782307904493_uoufurybuy.pdf
+  Tipo: application/pdf | Tam: 18.22 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782309530318_2mhmudjf203.pdf
+  Tipo: application/pdf | Tam: 17.78 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782309846400_aic8k2lliqk.pdf
+  Tipo: application/pdf | Tam: 17.79 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782312159512_xvw6rw48p2o.pdf
+  Tipo: application/pdf | Tam: 17.81 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782316257198_rvi9xy2evu.pdf
+  Tipo: application/pdf | Tam: 18.41 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782317404609_lexf6zf8jb.pdf
+  Tipo: application/pdf | Tam: 16.61 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782318308847_8c3kyrjfkyw.pdf
+  Tipo: application/pdf | Tam: 18.28 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782321820270_kgfa6a6d40i.jpg
+  Tipo: image/jpeg | Tam: 675.8 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782323057715_p3f162c5qkk.pdf
+  Tipo: application/pdf | Tam: 18.21 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782323368477_62oicd8jgvi.pdf
+  Tipo: application/pdf | Tam: 18.08 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782324818945_s5c1unnj00i.pdf
+  Tipo: application/pdf | Tam: 17.01 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782326833961_1ywqvu55js1.pdf
+  Tipo: application/pdf | Tam: 18.15 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782327706266_m00m9c76pm.jpg
+  Tipo: image/jpeg | Tam: 602.9 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782328547998_k9h2mpbsbkj.pdf
+  Tipo: application/pdf | Tam: 17.68 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782330650114_j9g6ht7piae.jpg
+  Tipo: image/jpeg | Tam: 650.1 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782332576106_1wkxpldipz3.jpg
+  Tipo: image/jpeg | Tam: 741.5 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782333140256_dxetx2y4gxh.pdf
+  Tipo: application/pdf | Tam: 16.50 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782392004649_gv5pzsw5o2j.pdf
+  Tipo: application/pdf | Tam: 15.98 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782394503192_v2gnzam9hq.pdf
+  Tipo: application/pdf | Tam: 17.28 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782397070256_5surrmfd396.pdf
+  Tipo: application/pdf | Tam: 16.98 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782398741657_vqm7d3gqv9.jpg
+  Tipo: image/jpeg | Tam: 444.3 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782398754020_88nxnuyd0kp.jpg
+  Tipo: image/jpeg | Tam: 444.3 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782398757668_2uqx5ka4t8a.jpg
+  Tipo: image/jpeg | Tam: 444.3 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782400724458_26p02bt9z2o.pdf
+  Tipo: application/pdf | Tam: 17.93 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782404123682_gge4i0bjbqb.pdf
+  Tipo: application/pdf | Tam: 16.55 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782405048966_hbcs9iktbmb.pdf
+  Tipo: application/pdf | Tam: 17.64 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782405780481_i090hhd619.pdf
+  Tipo: application/pdf | Tam: 17.81 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782406029382_xcvc4s0qy6.pdf
+  Tipo: application/pdf | Tam: 18.02 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782406041447_3s5mqsn1l2p.jpg
+  Tipo: image/jpeg | Tam: 628.3 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782408618393_bnkatkxvic.pdf
+  Tipo: application/pdf | Tam: 17.77 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782410373173_lynsxps1fjc.pdf
+  Tipo: application/pdf | Tam: 17.16 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782429754980_oi3tlc6neuf.pdf
+  Tipo: application/pdf | Tam: 18.34 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782430110469_exeyz86854.pdf
+  Tipo: application/pdf | Tam: 15.97 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782477169823_1sk2d8wo9uh.jpg
+  Tipo: image/jpeg | Tam: 652.6 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782478215257_ues2vb6awf.jpg
+  Tipo: image/jpeg | Tam: 690.5 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782481693959_zs85zq5zqwd.pdf
+  Tipo: application/pdf | Tam: 16.41 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782483139757_jh3rei2l96.pdf
+  Tipo: application/pdf | Tam: 15.99 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782484310210_dakxx5kggxi.pdf
+  Tipo: application/pdf | Tam: 17.38 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782484546937_o53ve2bzt8.pdf
+  Tipo: application/pdf | Tam: 18.11 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782485132492_6onemd5gsnq.pdf
+  Tipo: application/pdf | Tam: 17.98 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782493673734_4195kkkytq3.jpg
+  Tipo: image/jpeg | Tam: 748.1 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782494112659_5s57ojyopb4.pdf
+  Tipo: application/pdf | Tam: 20.27 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782494321870_bvisqwsg9ds.pdf
+  Tipo: application/pdf | Tam: 17.24 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782495870401_vloa1eazamd.pdf
+  Tipo: application/pdf | Tam: 17.86 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782497001186_gut6yf46m6.jpg
+  Tipo: image/jpeg | Tam: 677.1 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782498792286_8h162snztiy.pdf
+  Tipo: application/pdf | Tam: 17.82 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782501714040_khxeggejtm.pdf
+  Tipo: application/pdf | Tam: 16.84 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782502374166_nl6tffropjn.pdf
+  Tipo: application/pdf | Tam: 16.83 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782506349406_wxsb0nk6zcj.pdf
+  Tipo: application/pdf | Tam: 18.36 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782509096964_yfcroyitw3.jpg
+  Tipo: image/jpeg | Tam: 780.2 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782509102418_xh5lqrq0xb.jpg
+  Tipo: image/jpeg | Tam: 780.2 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782509626390_cbtqr4z6n7i.pdf
+  Tipo: application/pdf | Tam: 17.09 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782562561023_gi85ucuwmng.pdf
+  Tipo: application/pdf | Tam: 17.15 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782568471351_otfeaa2d5dh.pdf
+  Tipo: application/pdf | Tam: 18.55 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782569963498_va43e8qlzt.pdf
+  Tipo: application/pdf | Tam: 16.82 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782579435250_5hx9y5byr9k.pdf
+  Tipo: application/pdf | Tam: 17.71 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782581707016_d2khdkkp9i.jpg
+  Tipo: image/jpeg | Tam: 708.9 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782584072664_pi6b5sjdvim.pdf
+  Tipo: application/pdf | Tam: 17.05 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782652130267_haxkvbvmlk8.pdf
+  Tipo: application/pdf | Tam: 18.19 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782657386319_zdi3uh38e.pdf
+  Tipo: application/pdf | Tam: 18.65 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782732095019_6r01nmrhw9o.pdf
+  Tipo: application/pdf | Tam: 17.01 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782732518737_cw9gvu8jdel.jpg
+  Tipo: image/jpeg | Tam: 772.3 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782734805897_cyr7y8sn7di.pdf
+  Tipo: application/pdf | Tam: 16.95 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782743786604_kdixkqhbk9o.pdf
+  Tipo: application/pdf | Tam: 16.62 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782755114352_4uhokd2ar4p.jpg
+  Tipo: image/jpeg | Tam: 778.3 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782755340533_jejcx6fphl.pdf
+  Tipo: application/pdf | Tam: 246.2 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782756299213_vwoahj3rq3j.pdf
+  Tipo: application/pdf | Tam: 16.42 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782757757610_8j5hgw3b4o6.pdf
+  Tipo: application/pdf | Tam: 347.7 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782761677532_tvewuq2mj6.jpg
+  Tipo: image/jpeg | Tam: 558.2 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782765887324_opyc8xh85r.jpg
+  Tipo: image/jpeg | Tam: 638.1 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782821082244_iq46um4br6.pdf
+  Tipo: application/pdf | Tam: 16.64 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782826589742_k3ecvm9nagl.jpg
+  Tipo: image/jpeg | Tam: 633.3 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782829584519_i3ilzsb5vwp.pdf
+  Tipo: application/pdf | Tam: 16.16 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782831960240_0tyelzdtq8c.jpg
+  Tipo: image/jpeg | Tam: 922.7 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782833319340_kmfg5lju0v.jpg
+  Tipo: image/jpeg | Tam: 657.4 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782838418592_mso4cd993fd.jpg
+  Tipo: image/jpeg | Tam: 676.3 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782840499928_uyacwi2c5hm.jpg
+  Tipo: image/jpeg | Tam: 1.80 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782841165609_rnb8b2nipvf.jpg
+  Tipo: image/jpeg | Tam: 853.5 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782841450809_c3660kqegzs.jpg
+  Tipo: image/jpeg | Tam: 653.4 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782843813553_8n4lvlkat0w.jpg
+  Tipo: image/jpeg | Tam: 678.7 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782855527859_2v6mj0m51qc.jpg
+  Tipo: image/jpeg | Tam: 921.1 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782855787765_qmh1eo9cdq9.jpg
+  Tipo: image/jpeg | Tam: 774.5 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782858989675_j2l1fax2nr.jpg
+  Tipo: image/jpeg | Tam: 739.5 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782863707640_5dk8dqv1r16.jpg
+  Tipo: image/jpeg | Tam: 814.4 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782910016468_bgorqbq37sm.jpg
+  Tipo: image/jpeg | Tam: 615.9 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782910717861_52g0l49awtv.jpg
+  Tipo: image/jpeg | Tam: 528.1 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782914549180_nqly4zgv1jm.jpg
+  Tipo: image/jpeg | Tam: 648.4 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782915910968_l3oy456o9of.jpg
+  Tipo: image/jpeg | Tam: 622.5 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782918283158_udjkr7wgfp.jpg
+  Tipo: image/jpeg | Tam: 833.8 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782921479017_ynu89kl5r.jpg
+  Tipo: image/jpeg | Tam: 535.4 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782921668277_l64amgw897.jpg
+  Tipo: image/jpeg | Tam: 604.0 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782923053356_neq2xg40eu9.jpg
+  Tipo: image/jpeg | Tam: 543.9 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782928446368_lfnyeggz5k.jpg
+  Tipo: image/jpeg | Tam: 1.37 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782933108412_6snvtbfmgn7.jpg
+  Tipo: image/jpeg | Tam: 873.6 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782937218590_2ww2fvetwpd.jpg
+  Tipo: image/jpeg | Tam: 639.3 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782991823753_sx6dz1x34.jpg
+  Tipo: image/jpeg | Tam: 731.4 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782995545175_35ak0fk6n88.jpg
+  Tipo: image/jpeg | Tam: 617.0 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782996056199_03lm1ihd62yd.jpg
+  Tipo: image/jpeg | Tam: 615.6 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782996371962_xfywogf147m.jpg
+  Tipo: image/jpeg | Tam: 508.3 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782996736049_uiek6fish0l.jpg
+  Tipo: image/jpeg | Tam: 482.4 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782997496284_cpi294ptv0m.jpg
+  Tipo: image/jpeg | Tam: 643.5 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782997816106_1yypz2p40ii.jpg
+  Tipo: image/jpeg | Tam: 454.2 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782997922543_e0aerrnfet.jpg
+  Tipo: image/jpeg | Tam: 609.4 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782998189784_hxdsr73sq9l.jpg
+  Tipo: image/jpeg | Tam: 655.5 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783000902238_75048hxvumk.jpg
+  Tipo: image/jpeg | Tam: 632.8 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783001029049_4rkwr53x8yj.jpg
+  Tipo: image/jpeg | Tam: 615.5 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783009190753_f7y66zicl0q.jpg
+  Tipo: image/jpeg | Tam: 613.3 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783013529698_24z2xgk3tk8.jpg
+  Tipo: image/jpeg | Tam: 654.0 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783014828308_wg86ubuz7pa.jpg
+  Tipo: image/jpeg | Tam: 765.1 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783015062310_imiee8z25j8.jpg
+  Tipo: image/jpeg | Tam: 593.5 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783017944823_g1a5n08ir85.jpg
+  Tipo: image/jpeg | Tam: 793.1 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783025731219_zgh4vxub2vf.jpg
+  Tipo: image/jpeg | Tam: 697.0 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783027149630_0mgrhuolurhn.jpg
+  Tipo: image/jpeg | Tam: 771.7 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783029367535_hibq3w37znu.jpg
+  Tipo: image/jpeg | Tam: 489.4 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783033155572_00ryrd7ru00na.jpg
+  Tipo: image/jpeg | Tam: 812.4 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783081373301_t8s8n4cpwtn.jpg
+  Tipo: image/jpeg | Tam: 706.1 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783081697634_5xg5daijqk3.jpg
+  Tipo: image/jpeg | Tam: 799.6 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783081830182_2zm5n99ahm8.jpg
+  Tipo: image/jpeg | Tam: 748.7 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783086598592_8j7z2m5koyh.jpg
+  Tipo: image/jpeg | Tam: 740.5 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783088322217_besdnr3608.jpg
+  Tipo: image/jpeg | Tam: 759.5 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783094113356_au1whr0dww.png
+  Tipo: image/png | Tam: 15.76 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783095395480_w102qyjgkud.png
+  Tipo: image/png | Tam: 13.40 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783098152200_0wui0w2vglyj.jpg
+  Tipo: image/jpeg | Tam: 539.2 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783099923800_adydftvy9wt.png
+  Tipo: image/png | Tam: 15.69 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783100490875_3h0mkyckcad.pdf
+  Tipo: application/pdf | Tam: 17.19 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783101964540_cltbyz6wnz.jpg
+  Tipo: image/jpeg | Tam: 1.01 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783108370189_8eg3lalrs7d.pdf
+  Tipo: application/pdf | Tam: 18.22 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783111336033_0j2zcljj5re.jpg
+  Tipo: image/jpeg | Tam: 796.4 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783112985435_o5mjet31hl.pdf
+  Tipo: application/pdf | Tam: 17.53 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783113501408_azsjj6c7buk.jpg
+  Tipo: image/jpeg | Tam: 798.8 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783115701650_crkh15xjk78.pdf
+  Tipo: application/pdf | Tam: 17.21 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783115884385_lc60j6tfop.png
+  Tipo: image/png | Tam: 15.92 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783118801035_e698gc5w6yl.pdf
+  Tipo: application/pdf | Tam: 16.37 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783122430268_cgt2r4iwl4.png
+  Tipo: image/png | Tam: 15.01 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783122751921_z2gfe8ra3i.pdf
+  Tipo: application/pdf | Tam: 16.44 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783167229017_6v2jdplp286.pdf
+  Tipo: application/pdf | Tam: 17.07 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783168518901_j3brqekc6t.pdf
+  Tipo: application/pdf | Tam: 16.78 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783170376449_hkvfo688zk8.png
+  Tipo: image/png | Tam: 14.58 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783170814259_7ep1f1qz2rc.png
+  Tipo: image/png | Tam: 14.29 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783172307925_y0a2r3tikgp.png
+  Tipo: image/png | Tam: 15.43 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783177430559_wmtsnbsghrb.pdf
+  Tipo: application/pdf | Tam: 16.98 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783177720137_i0vahvit76d.png
+  Tipo: image/png | Tam: 14.45 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783191025714_bhnuj38if3e.png
+  Tipo: image/png | Tam: 14.37 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783191202562_gdvvcqvxqzm.png
+  Tipo: image/png | Tam: 14.57 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783258758585_hjabbwwdywb.png
+  Tipo: image/png | Tam: 15.85 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783261614708_4kq8h5gby7i.png
+  Tipo: image/png | Tam: 16.29 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783262381241_c6js82v9jp8.png
+  Tipo: image/png | Tam: 15.19 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783265427576_c0fpcc2e6hp.png
+  Tipo: image/png | Tam: 15.43 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783339308922_n78e1xfshy.jpg
+  Tipo: image/jpeg | Tam: 837.9 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783343069276_9hvsdfngq4r.png
+  Tipo: image/png | Tam: 14.20 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783343298519_1wuxhdu6j78.png
+  Tipo: image/png | Tam: 14.19 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783344831150_gdkny4bqd3n.png
+  Tipo: image/png | Tam: 15.65 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783345578329_5yv3xnhnjee.jpg
+  Tipo: image/jpeg | Tam: 700.6 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783346992509_g8khhpe48r9.pdf
+  Tipo: application/pdf | Tam: 17.56 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783347803394_e42caftnmfn.png
+  Tipo: image/png | Tam: 13.74 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783349041892_munal40cnzp.png
+  Tipo: image/png | Tam: 14.68 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783357245349_jtg0hvc3mnj.pdf
+  Tipo: application/pdf | Tam: 17.06 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783358153617_oc0tah5ucs.pdf
+  Tipo: application/pdf | Tam: 16.89 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783359793415_du3k5f7e79t.png
+  Tipo: image/png | Tam: 14.82 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783361307324_3nf9py352qt.pdf
+  Tipo: application/pdf | Tam: 16.94 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783361497177_q9fvxzmyijm.pdf
+  Tipo: application/pdf | Tam: 17.03 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783364136584_cp4wqd6u41t.pdf
+  Tipo: application/pdf | Tam: 19.17 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783364773016_ncxfhf74yn.pdf
+  Tipo: application/pdf | Tam: 15.99 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783366569866_x682jpnrx9m.png
+  Tipo: image/png | Tam: 15.39 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783372103800_ia87jqs3fuh.pdf
+  Tipo: application/pdf | Tam: 17.56 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783373733758_55w7atiep7h.pdf
+  Tipo: application/pdf | Tam: 15.98 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783374838503_m7z4mg5ai3s.pdf
+  Tipo: application/pdf | Tam: 17.21 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783380390852_8nbud4eb32m.pdf
+  Tipo: application/pdf | Tam: 16.32 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783426560666_95kvp0olaye.pdf
+  Tipo: application/pdf | Tam: 17.08 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783426745871_vplan80bo3p.pdf
+  Tipo: application/pdf | Tam: 17.51 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783430267681_cjb3gzpub1m.png
+  Tipo: image/png | Tam: 14.30 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783432198808_82oi8y467he.pdf
+  Tipo: application/pdf | Tam: 17.76 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783434376039_k68q2f1o6z.png
+  Tipo: image/png | Tam: 8.00 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783434716301_aov12wkljau.pdf
+  Tipo: application/pdf | Tam: 16.80 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783442019841_egzid1uk4iu.png
+  Tipo: image/png | Tam: 18.89 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783447872596_vwowex8goq.pdf
+  Tipo: application/pdf | Tam: 18.67 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783455435424_vndqbfuytqr.pdf
+  Tipo: application/pdf | Tam: 17.89 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783456995296_3d209q67gia.png
+  Tipo: image/png | Tam: 6.31 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783457204043_dab2795j7do.png
+  Tipo: image/png | Tam: 15.57 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783463152053_gph64svc1x.png
+  Tipo: image/png | Tam: 14.50 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783509305145_9r1v07awfjv.png
+  Tipo: image/png | Tam: 15.72 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783514755068_c4b9dkb1gjc.pdf
+  Tipo: application/pdf | Tam: 17.58 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783516558865_5rdv875y0yw.png
+  Tipo: image/png | Tam: 14.01 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783517078845_1jyvijy2qmh.png
+  Tipo: image/png | Tam: 14.19 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783517523142_g5hjv5llf0n.png
+  Tipo: image/png | Tam: 13.98 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783517970617_uskaoyldjlq.png
+  Tipo: image/png | Tam: 13.86 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783518502955_4fca2ci49mx.png
+  Tipo: image/png | Tam: 14.23 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783525194813_9fjfx2ug4ma.pdf
+  Tipo: application/pdf | Tam: 18.03 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783526939009_2nty3k1rgip.pdf
+  Tipo: application/pdf | Tam: 17.67 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783527703617_yxmuliqy9mb.png
+  Tipo: image/png | Tam: 14.54 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783528073016_vy3xxmgws6.pdf
+  Tipo: application/pdf | Tam: 16.67 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783529603759_tufvqjy88g.pdf
+  Tipo: application/pdf | Tam: 18.01 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783530660580_le9lp0tbpv.pdf
+  Tipo: application/pdf | Tam: 18.41 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783530864002_qdgbpqt2zfm.pdf
+  Tipo: application/pdf | Tam: 17.60 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783533821970_uu6vpi2jndo.png
+  Tipo: image/png | Tam: 14.33 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783534650738_broltwsg3r9.png
+  Tipo: image/png | Tam: 15.97 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783534985661_9k4oqxq4r3.pdf
+  Tipo: application/pdf | Tam: 15.01 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783541160619_43stv02lf17.pdf
+  Tipo: application/pdf | Tam: 17.08 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783541284161_kg7dtbjlgs.png
+  Tipo: image/png | Tam: 14.48 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783542717124_e83nunl4wh4.png
+  Tipo: image/png | Tam: 16.67 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783545476207_hu5vwqy8g1.pdf
+  Tipo: application/pdf | Tam: 18.30 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783546097430_pclaj90o2i.png
+  Tipo: image/png | Tam: 14.52 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783548453540_84ebajzlwk.png
+  Tipo: image/png | Tam: 14.61 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783548862715_v7lsc56jxud.png
+  Tipo: image/png | Tam: 13.91 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783549533969_rechord8pmp.pdf
+  Tipo: application/pdf | Tam: 18.13 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1783550416055_ssg20wrn3lj.png
+  Tipo: image/png | Tam: 15.81 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_14432cd3-f967-4f71-952f-976014c35881_1781880263533_0uajclt1szm.pdf
+  Tipo: application/pdf | Tam: 17.24 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_18b37442-600c-414a-a925-ea25692a28fc_1783432234478_bqb9a7y9vmh.pdf
+  Tipo: application/pdf | Tam: 15.33 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_18b37442-600c-414a-a925-ea25692a28fc_1783432249580_xkrv1v3v8x.pdf
+  Tipo: application/pdf | Tam: 15.21 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_18bd8754-a692-4d76-b817-6b1315ab59e8_1783364177541_sajcj1y99j.pdf
+  Tipo: application/pdf | Tam: 17.06 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_18bd8754-a692-4d76-b817-6b1315ab59e8_1783364195643_ix13rcgovw.pdf
+  Tipo: application/pdf | Tam: 16.33 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_21f37cac-e464-4e0e-b864-c5973700248a_1782494349391_t0vgle92fnq.pdf
+  Tipo: application/pdf | Tam: 17.79 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_21f37cac-e464-4e0e-b864-c5973700248a_1782494371089_ecyx2wec1xs.pdf
+  Tipo: application/pdf | Tam: 15.91 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_21f37cac-e464-4e0e-b864-c5973700248a_1782494389888_fwgyyv09e2t.pdf
+  Tipo: application/pdf | Tam: 15.57 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_363bd301-57f2-4235-b9ea-02fbcafa1469_1782133238443_5bh4kfinueo.pdf
+  Tipo: application/pdf | Tam: 18.12 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_363bd301-57f2-4235-b9ea-02fbcafa1469_1782509152305_0enuqeh5b6ur.jpg
+  Tipo: image/jpeg | Tam: 942.5 KB
+  [DRY-RUN] Seria processado
+
+receita/receita_42535dfd-d884-4ce1-98f2-f986d92325d5_1783099953311_ly6yx7hvzg.png
+  Tipo: image/png | Tam: 16.00 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_4549b857-30f6-4b25-8f04-f839540b6c33_1783014851116_tf7224eqex.jpg
+  Tipo: image/jpeg | Tam: 852.8 KB
+  [DRY-RUN] Seria processado
+
+receita/receita_4a864917-1af1-466e-8039-d0ff2ceeb404_1783115724339_ikdw7g8asvf.pdf
+  Tipo: application/pdf | Tam: 19.70 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_4a864917-1af1-466e-8039-d0ff2ceeb404_1783115744587_nhxibbqoc9r.pdf
+  Tipo: application/pdf | Tam: 20.65 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_4a864917-1af1-466e-8039-d0ff2ceeb404_1783115759644_x95t6orzndc.pdf
+  Tipo: application/pdf | Tam: 20.06 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_4a864917-1af1-466e-8039-d0ff2ceeb404_1783115774674_8nyx5dx5s54.pdf
+  Tipo: application/pdf | Tam: 14.61 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_5f0a1ecf-855b-4506-ba74-411bb1f0be25_1782309874400_6a60vfamfsw.pdf
+  Tipo: application/pdf | Tam: 17.90 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_7a4a5f33-aaff-4348-a774-8263c28d0aa0_1782143795117_4w2j8l6knj.pdf
+  Tipo: application/pdf | Tam: 17.59 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_7eb2f8a4-68ae-457b-8975-5ca565eedf6b_1782140876399_vcgr28n28g.pdf
+  Tipo: application/pdf | Tam: 17.07 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_7eb2f8a4-68ae-457b-8975-5ca565eedf6b_1782140896526_axgjcerltn.pdf
+  Tipo: application/pdf | Tam: 16.98 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_7eb2f8a4-68ae-457b-8975-5ca565eedf6b_1782140921668_i2egsoxee9g.pdf
+  Tipo: application/pdf | Tam: 16.98 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_8115724e-f8f9-4ce0-900e-eca3e319eca3_1782405302544_7c5fottwdym.pdf
+  Tipo: application/pdf | Tam: 16.93 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_8556c096-b30e-4613-933f-f961ec939d51_1782303125387_dvulugpl019.pdf
+  Tipo: application/pdf | Tam: 16.89 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_8556c096-b30e-4613-933f-f961ec939d51_1782303139682_sfapdwtgi7q.pdf
+  Tipo: application/pdf | Tam: 15.33 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_8556c096-b30e-4613-933f-f961ec939d51_1783339946055_zlfh749fm9r.jpg
+  Tipo: image/jpeg | Tam: 502.9 KB
+  [DRY-RUN] Seria processado
+
+receita/receita_9ec096a8-f578-49ab-9534-3b83a108b276_1783358172642_lf3zvlfpm5.pdf
+  Tipo: application/pdf | Tam: 14.63 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_9ec096a8-f578-49ab-9534-3b83a108b276_1783358190466_jjdb9ijhmaq.jpeg
+  Tipo: image/jpeg | Tam: 74.4 KB
+  [DRY-RUN] Seria processado
+
+receita/receita_a9ed11c7-0508-479c-a864-1c2e571a6ce0_1783364952045_dwha47mfrce.png
+  Tipo: image/png | Tam: 15.14 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_abfc199c-f032-47dc-bd4d-c02a897acf87_1783095413895_3xy3ld7uj5h.png
+  Tipo: image/png | Tam: 13.40 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_be2f16c7-5008-4526-b157-cf9e60d63ef4_1783263692939_66hf10fkzb9.png
+  Tipo: image/png | Tam: 15.39 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_c173c5c9-198b-495c-9a2d-1090f1d841ac_1782757773971_is169keqvc.pdf
+  Tipo: application/pdf | Tam: 16.76 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_c1dc2df7-6ead-466e-92eb-adf16fed6b95_1781895757903_0i4chzzrk54.pdf
+  Tipo: application/pdf | Tam: 14.73 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_c1f88453-bc32-4c2c-a3f0-935f3e6e907b_1782239022559_tza7634u8z.pdf
+  Tipo: application/pdf | Tam: 16.83 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_d26ba2d5-00d4-43de-a153-0b84f14f3c01_1782131353463_alhyeq0xev.pdf
+  Tipo: application/pdf | Tam: 17.07 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_e0f525fc-6260-4117-b01a-8efa8f8efa74_1782318332614_037k3mpyhamt.pdf
+  Tipo: application/pdf | Tam: 17.73 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_e7a77eda-fe85-4d87-b260-b5645b0ef656_1782991963799_9uwgry6l3b.jpg
+  Tipo: image/jpeg | Tam: 408.9 KB
+  [DRY-RUN] Seria processado
+
+receita/receita_ef791d5c-e489-491d-8543-d19986371675_1783091057908_6gqxesrvws4.pdf
+  Tipo: application/pdf | Tam: 17.18 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_ef791d5c-e489-491d-8543-d19986371675_1783091078188_tzvd0wue9v.pdf
+  Tipo: application/pdf | Tam: 16.35 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_ef791d5c-e489-491d-8543-d19986371675_1783091098833_bygmvlykx99.pdf
+  Tipo: application/pdf | Tam: 17.20 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_efc493de-4543-4eca-b130-f3ff6310dffd_1783442181027_wbm3qc8xzys.png
+  Tipo: image/png | Tam: 15.34 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_fa07d0ba-e404-4a7a-b984-4f1493151232_1783115910249_akvbfzvmi8v.png
+  Tipo: image/png | Tam: 13.65 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_fe2da9be-cfc1-4131-a266-120704b101d6_1782584090150_ird37q26hw.pdf
+  Tipo: application/pdf | Tam: 17.97 MB
+  [DRY-RUN] Seria processado
+
+receita/receita_fe2da9be-cfc1-4131-a266-120704b101d6_1782584104782_ddvhjhgb6b4.pdf
+  Tipo: application/pdf | Tam: 16.37 MB
+  [DRY-RUN] Seria processado
+
+cupom/cupom_1781897980270_p1l97fi0f8.jpg
+  Tipo: image/jpeg | Tam: 684.5 KB
+  [DRY-RUN] Seria processado
+
+cupom/cupom_1781898207852_0meffqwf3ja.jpg
+  Tipo: image/jpeg | Tam: 528.0 KB
+  [DRY-RUN] Seria processado
+
+identidades/h19rvlqdx4_1774612821510.jpg
+  Tipo: image/jpeg | Tam: 4.7 KB
+  [DRY-RUN] Seria processado
+
+identidades/id_1779996374449_0csvh080c1ce.pdf
+  Tipo: application/pdf | Tam: 294.7 KB
+  [DRY-RUN] Seria processado
+
+identidades/id_1779996412937_ncqgojxk42j.pdf
+  Tipo: application/pdf | Tam: 17.74 MB
+  [DRY-RUN] Seria processado
+
+identidades/id_1779996443892_kpvi9bu7tmi.pdf
+  Tipo: application/pdf | Tam: 294.7 KB
+  [DRY-RUN] Seria processado
+
+identidades/id_1779996479805_wddopypp2pb.pdf
+  Tipo: application/pdf | Tam: 693.5 KB
+  [DRY-RUN] Seria processado

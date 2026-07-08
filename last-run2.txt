@@ -1,0 +1,64 @@
+============================================================
+OTIMIZACAO DE STORAGE ÔÇö FARMACIA POPULAR
+  Bucket: documentos
+  Pastas: cadastros, receita, cupom, identidades
+  Modo: DRY-RUN
+  Incluir imagens: auto (dry)
+  Incluir PDFs....: auto (dry)
+  Backup remoto...: nao
+  Limite.........: 10
+  Data: 2026-07-08
+============================================================
+Listando bucket "documentos"...
+  cadastros/...
+    249 arquivos
+  receita/...
+    43 arquivos
+  cupom/...
+    2 arquivos
+  identidades/...
+    5 arquivos
+
+Total: 299
+
+Processando 10 arquivos (conc: 3)...
+
+cadastros/cadastro_1781877802745_d4wqrbzihob.jpg
+  Tipo: image/jpeg | Tam: 228.6 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1781878801141_61p7m26t3xq.pdf
+  Tipo: application/pdf | Tam: 16.97 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1781879560423_1h99a6jp02q.pdf
+  Tipo: application/pdf | Tam: 17.10 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1781879789461_eef89vie9vw.pdf
+  Tipo: application/pdf | Tam: 17.30 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1781880209209_8l9dbuwrhad.pdf
+  Tipo: application/pdf | Tam: 15.57 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1781892677456_hysm6wlad77.pdf
+  Tipo: application/pdf | Tam: 15.41 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1781895643008_0lnxdwblsnqe.jpg
+  Tipo: image/jpeg | Tam: 684.5 KB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1781895716809_i9uslxupxuh.pdf
+  Tipo: application/pdf | Tam: 17.44 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782130943442_42zyicde3t3.pdf
+  Tipo: application/pdf | Tam: 17.07 MB
+  [DRY-RUN] Seria processado
+
+cadastros/cadastro_1782131230664_8kuhkpqc5a8.pdf
+  Tipo: application/pdf | Tam: 19.14 MB
+  [DRY-RUN] Seria processado

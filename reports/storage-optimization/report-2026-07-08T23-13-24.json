@@ -1,0 +1,90 @@
+{
+  "timestamp": "2026-07-08T23-13-24",
+  "dryRun": true,
+  "limit": 5,
+  "folders": [
+    "cadastros",
+    "receita",
+    "cupom",
+    "identidades"
+  ],
+  "backupRemote": false,
+  "summary": {
+    "totalFiles": 5,
+    "optimized": 5,
+    "skipped": 0,
+    "failed": 0,
+    "backups": 0,
+    "bytesBefore": 67164576,
+    "bytesAfter": 0,
+    "bytesSaved": 67164576,
+    "pctSaved": 100,
+    "images": {
+      "before": 228648,
+      "after": 0,
+      "optimized": 1
+    },
+    "pdfs": {
+      "before": 66935928,
+      "after": 0,
+      "optimized": 4
+    }
+  },
+  "entries": [
+    {
+      "path": "cadastros/cadastro_1781877802745_d4wqrbzihob.jpg",
+      "folder": "cadastros",
+      "fileType": "image",
+      "originalSize": 228648,
+      "finalSize": 0,
+      "saved": 0,
+      "savedPct": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1781878801141_61p7m26t3xq.pdf",
+      "folder": "cadastros",
+      "fileType": "pdf",
+      "originalSize": 16972264,
+      "finalSize": 0,
+      "saved": 0,
+      "savedPct": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1781879560423_1h99a6jp02q.pdf",
+      "folder": "cadastros",
+      "fileType": "pdf",
+      "originalSize": 17096335,
+      "finalSize": 0,
+      "saved": 0,
+      "savedPct": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1781879789461_eef89vie9vw.pdf",
+      "folder": "cadastros",
+      "fileType": "pdf",
+      "originalSize": 17302310,
+      "finalSize": 0,
+      "saved": 0,
+      "savedPct": 0,
+      "action": "optimized",
+      "backupType": "none"
+    },
+    {
+      "path": "cadastros/cadastro_1781880209209_8l9dbuwrhad.pdf",
+      "folder": "cadastros",
+      "fileType": "pdf",
+      "originalSize": 15565019,
+      "finalSize": 0,
+      "saved": 0,
+      "savedPct": 0,
+      "action": "optimized",
+      "backupType": "none"
+    }
+  ]
+}
