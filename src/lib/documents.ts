@@ -10,6 +10,10 @@ const META_PREFIX = 'META::';
 
 export const isPdfDocument = (url = '', name = '') => {
   const value = `${url} ${name}`.toLowerCase();
+  const extensionMatch = value.match(/\.(\w+)(?:\?|$)/);
+  const ext = extensionMatch?.[1] || '';
+  if (ext === 'pdf') return true;
+  if (['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp'].includes(ext)) return false;
   return value.includes('.pdf') || value.includes('application/pdf');
 };
 

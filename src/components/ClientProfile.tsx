@@ -20,7 +20,7 @@ import {
   parsePrescriptionMeta,
 } from '../lib/documents';
 import { maskDate, parseDateToDB } from '../lib/validators';
-import { compressImage, validateFileSize } from '../lib/media-compression';
+import { prepareDocumentForUpload, checkFileFeasibility } from '../lib/media-compression';
 
 const currency = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
@@ -30,11 +30,13 @@ const currency = new Intl.NumberFormat('pt-BR', {
 // ─── VISUALIZADOR FULLSCREEN ────────────────────────────────────────────────
 function FullscreenViewer({ url, title, onClose }: { url: string; title: string; onClose: () => void }) {
   const [zoom, setZoom] = useState(1);
-  const isPdf = isPdfDocument(url, title);
+  const [renderAsPdf, setRenderAsPdf] = useState(isPdfDocument(url, title));
+  const [imgError, setImgError] = useState(false);
   const handlePrint = () => {
     const win = window.open('', '_blank');
     if (win) {
-      win.document.write(`<html><body style="margin:0;background:#fff;"><${isPdf ? 'iframe' : 'img'} src="${url}" style="width:100%;height:100%;border:0;object-fit:contain;"></${isPdf ? 'iframe' : 'img'}></body></html>`);
+      const tag = renderAsPdf || imgError ? 'iframe' : 'img';
+      win.document.write(`<html><body style="margin:0;background:#fff;display:flex;align-items:center;justify-content:center;"><${tag} src="${url}" style="width:100%;height:100%;border:0;object-fit:contain;"></${tag}></body></html>`);
       win.document.close(); win.focus();
       setTimeout(() => { win.print(); win.close(); }, 500);
     }
@@ -43,12 +45,14 @@ function FullscreenViewer({ url, title, onClose }: { url: string; title: string;
     try {
       const res = await fetch(url);
       const blob = await res.blob();
+      const ext = blob.type?.includes('pdf') ? '.pdf' : '.jpg';
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = `${title.replace(/\s+/g, '_')}.png`;
+      a.download = `${title.replace(/\s+/g, '_')}${ext}`;
       document.body.appendChild(a); a.click(); document.body.removeChild(a);
     } catch (e) { console.error(e); }
   };
+  const showAsPdf = renderAsPdf || imgError;
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       className="fixed inset-0 bg-black/95 z-[100] flex flex-col pt-16">
@@ -63,10 +67,11 @@ function FullscreenViewer({ url, title, onClose }: { url: string; title: string;
         </div>
       </div>
       <div className="flex-1 overflow-auto flex items-center justify-center p-4 sm:p-8 bg-slate-100">
-        {isPdf ? (
+        {showAsPdf ? (
           <iframe src={url} title={title} className="w-full h-full bg-white rounded-xl shadow-2xl border border-slate-200" />
         ) : (
-          <img src={url} alt={title} style={{ transform: `scale(${zoom})`, transformOrigin: 'center', transition: 'transform 0.2s' }}
+          <img src={url} alt={title} onError={() => setImgError(true)}
+            style={{ transform: `scale(${zoom})`, transformOrigin: 'center', transition: 'transform 0.2s' }}
             className="max-h-full max-w-full rounded-xl shadow-2xl bg-white" />
         )}
       </div>
@@ -497,8 +502,8 @@ function NewRegistroModal({ client, receitaStatus, onClose, onAdded }: any) {
     const supabase = getSupabase();
     if (!supabase) return;
 
-    const sizeErrMsg = validateFileSize(cupomFiles[0]);
-    if (sizeErrMsg) { setError(sizeErrMsg); setLoading(false); return; }
+    const feasibilityErr = await checkFileFeasibility(cupomFiles[0]);
+    if (feasibilityErr) { setError(feasibilityErr); setLoading(false); return; }
 
     try {
       const valorNumerico = Number(valor.replace(',', '.')) || 0;
@@ -513,10 +518,10 @@ function NewRegistroModal({ client, receitaStatus, onClose, onAdded }: any) {
 
       const uploadDocs = async (files: File[], tipo: string) => {
         for (const f of files) {
-          setStatusMsg('Comprimindo imagem...');
-          const { file: fileToUpload } = await compressImage(f);
-          if (fileToUpload !== f) setStatusMsg('Comprimindo imagem...');
-          setStatusMsg('Enviando documento...');
+          const prepared = await prepareDocumentForUpload(f, (status) => {
+            setStatusMsg(status === 'optimizing' ? 'Otimizando arquivo...' : status === 'uploading' ? 'Enviando documento...' : 'Preparando documento...');
+          });
+          const fileToUpload = prepared.file;
           const ext  = fileToUpload.name.split('.').pop();
           const path = `${tipo}/${tipo}_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
           const { error: upErr } = await supabase.storage.from('documentos').upload(path, fileToUpload, {
@@ -531,7 +536,7 @@ function NewRegistroModal({ client, receitaStatus, onClose, onAdded }: any) {
         }
       };
 
-      await uploadDocs(cupomFiles,   'cupom');
+      await uploadDocs(cupomFiles, 'cupom');
       onAdded(); onClose();
     } catch (err: any) {
       setError(explainSupabaseError(err));
@@ -658,13 +663,14 @@ function NewPrescriptionModal({ client, onClose, onAdded }: any) {
     setLoading(true);
     setError(''); setStatusMsg('');
 
-    const sizeErr = validateFileSize(file);
-    if (sizeErr) { setError(sizeErr); setLoading(false); return; }
+    const feasibilityErr = await checkFileFeasibility(file);
+    if (feasibilityErr) { setError(feasibilityErr); setLoading(false); return; }
 
     try {
-      setStatusMsg('Comprimindo imagem...');
-      const { file: fileToUpload } = await compressImage(file);
-      setStatusMsg('Enviando documento...');
+      const prepared = await prepareDocumentForUpload(file, (status) => {
+        setStatusMsg(status === 'optimizing' ? 'Otimizando arquivo...' : status === 'uploading' ? 'Enviando documento...' : 'Preparando documento...');
+      });
+      const fileToUpload = prepared.file;
       const ext = fileToUpload.name.split('.').pop();
       const path = `receita/receita_${client.id}_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
       const { error: upErr } = await supabase.storage.from('documentos').upload(path, fileToUpload, {
@@ -787,9 +793,10 @@ function DuplicarModal({ client, sourceVisita, sourceDocs, onClose, onAdded }: a
     if (!supabase) return;
 
     const allFiles = [...novaReceitaFiles, ...cupomFiles];
-    let sizeErrMsg: string | null = null;
-    for (const f of allFiles) { sizeErrMsg = validateFileSize(f); if (sizeErrMsg) break; }
-    if (sizeErrMsg) { setError(sizeErrMsg); setLoading(false); return; }
+    for (const f of allFiles) {
+      const errMsg = await checkFileFeasibility(f);
+      if (errMsg) { setError(errMsg); setLoading(false); return; }
+    }
 
     try {
       const { data: venda, error: vErr } = await supabase.from('vendas')
@@ -811,9 +818,10 @@ function DuplicarModal({ client, sourceVisita, sourceDocs, onClose, onAdded }: a
         }
       } else {
         for (const f of novaReceitaFiles) {
-          setStatusMsg('Comprimindo imagem...');
-          const { file: fileToUpload } = await compressImage(f);
-          setStatusMsg('Enviando documento...');
+          const prepared = await prepareDocumentForUpload(f, (status) => {
+            setStatusMsg(status === 'optimizing' ? 'Otimizando arquivo...' : status === 'uploading' ? 'Enviando documento...' : 'Preparando documento...');
+          });
+          const fileToUpload = prepared.file;
           const ext  = fileToUpload.name.split('.').pop();
           const path = `receita/receita_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
           const { error: upErr } = await supabase.storage.from('documentos').upload(path, fileToUpload, {
@@ -830,9 +838,10 @@ function DuplicarModal({ client, sourceVisita, sourceDocs, onClose, onAdded }: a
 
       // Upload cupons novos
       for (const f of cupomFiles) {
-        setStatusMsg('Comprimindo imagem...');
-        const { file: fileToUpload } = await compressImage(f);
-        setStatusMsg('Enviando documento...');
+        const prepared = await prepareDocumentForUpload(f, (status) => {
+          setStatusMsg(status === 'optimizing' ? 'Otimizando arquivo...' : status === 'uploading' ? 'Enviando documento...' : 'Preparando documento...');
+        });
+        const fileToUpload = prepared.file;
         const ext  = fileToUpload.name.split('.').pop();
         const path = `cupom/cupom_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
         const { error: upErr } = await supabase.storage.from('documentos').upload(path, fileToUpload, {

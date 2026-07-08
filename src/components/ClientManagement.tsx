@@ -4,17 +4,20 @@ import { CalendarDays, FileText, Search, Plus, User, X, Filter, ZoomIn, ZoomOut,
 import { getSupabase, explainSupabaseError } from '../lib/supabase';
 import { maskCPF, maskDate, parseDateToDB } from '../lib/validators';
 import { buildPrescriptionMeta, formatDateBR, getPrescriptionEndDate, isPdfDocument } from '../lib/documents';
-import { compressImage, validateFileSize } from '../lib/media-compression';
+import { prepareDocumentForUpload, checkFileFeasibility } from '../lib/media-compression';
 import { motion, AnimatePresence } from 'motion/react';
 
 // --- VISUALIZADOR REUTILIZÁVEL (MESMO DO PROFILE) ---
 function FullscreenViewer({ url, title, onClose }: any) {
   const [zoom, setZoom] = useState(1);
+  const [imgError, setImgError] = useState(false);
   const isPdf = isPdfDocument(url, title);
+  const showAsPdf = isPdf || imgError;
   const handlePrint = () => {
     const win = window.open('', '_blank');
     if (win) {
-      win.document.write(`<html><body style="margin:0;display:flex;justify-content:center;align-items:center;background:#fff;"><${isPdf ? 'iframe' : 'img'} src="${url}" style="width:100%;height:100%;border:0;object-fit:contain;"></${isPdf ? 'iframe' : 'img'}></body></html>`);
+      const tag = showAsPdf ? 'iframe' : 'img';
+      win.document.write(`<html><body style="margin:0;display:flex;justify-content:center;align-items:center;background:#fff;"><${tag} src="${url}" style="width:100%;height:100%;border:0;object-fit:contain;"></${tag}></body></html>`);
       win.document.close(); win.focus();
       setTimeout(() => { win.print(); win.close(); }, 500);
     }
@@ -31,10 +34,10 @@ function FullscreenViewer({ url, title, onClose }: any) {
         </div>
       </div>
       <div className="flex-1 overflow-auto flex items-center justify-center p-4 sm:p-8 bg-slate-100">
-        {isPdf ? (
+        {showAsPdf ? (
           <iframe src={url} title={title} className="w-full h-full bg-white rounded-xl shadow-2xl border border-slate-200" />
         ) : (
-          <motion.img src={url} style={{ scale: zoom }} className="max-h-full max-w-full shadow-2xl transition-transform duration-200 bg-white rounded-xl" />
+          <motion.img src={url} onError={() => setImgError(true)} style={{ scale: zoom }} className="max-h-full max-w-full shadow-2xl transition-transform duration-200 bg-white rounded-xl" />
         )}
       </div>
     </motion.div>
@@ -357,15 +360,16 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
       return;
     }
 
-    const sizeErr = validateFileSize(documentoReceita);
-    if (sizeErr) { setError(sizeErr); setLoading(false); return; }
+    const feasibilityErr = await checkFileFeasibility(documentoReceita);
+    if (feasibilityErr) { setError(feasibilityErr); setLoading(false); return; }
 
     try {
       let url_identidade_frontal: string | null = null;
 
-      setStatusMsg('Comprimindo imagem...');
-      const { file: fileToUpload } = await compressImage(documentoReceita);
-      setStatusMsg('Enviando documento...');
+      const prepared = await prepareDocumentForUpload(documentoReceita, (status) => {
+        setStatusMsg(status === 'optimizing' ? 'Otimizando arquivo...' : status === 'uploading' ? 'Enviando documento...' : 'Preparando documento...');
+      });
+      const fileToUpload = prepared.file;
       const ext = fileToUpload.name.split('.').pop();
       const path = `cadastros/cadastro_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
       const { error: upErr } = await supabase.storage.from('documentos').upload(path, fileToUpload, {
