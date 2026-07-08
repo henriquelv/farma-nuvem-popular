@@ -1,12 +1,13 @@
 #!/usr/bin/env tsx
 /**
- * Script de migração/backfill para otimizar documentos já existentes
- * no bucket "documentos" do Supabase Storage.
+ * Backfill de otimização para documentos existentes no bucket "documentos".
  *
  * Uso:
- *   npm run storage:optimize:dry              # dry-run (padrão)
- *   npm run storage:optimize -- --apply        # executa de verdade
- *   npm run storage:optimize -- --apply --limit 5   # só 5 arquivos
+ *   npm run storage:optimize:dry                         # dry-run (padrão)
+ *   npm run storage:optimize -- --apply                   # executa com backup local
+ *   npm run storage:optimize -- --apply --limit 5         # teste com 5 arquivos
+ *   npm run storage:optimize -- --apply --backup-remote   # backup local + remoto (consome storage)
+ *   npm run storage:optimize -- --list-remote-backups     # lista backups remotos existentes
  *
  * Requer variáveis de ambiente:
  *   SUPABASE_URL=
@@ -16,7 +17,6 @@
 import { createClient } from '@supabase/supabase-js';
 import sharp from 'sharp';
 import * as fs from 'node:fs';
-import * as os from 'node:os';
 import * as path from 'node:path';
 import * as process from 'node:process';
 
@@ -28,10 +28,9 @@ const IMAGE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp']);
 const IMAGE_MIME_PREFIX = 'image/';
 const IMAGE_MAX_WH = 1800;
 const JPEG_QUALITY = 78;
-/** Só substitui se economizar pelo menos este percentual */
 const MIN_SAVINGS_PERCENT = 5;
-/** Máximo de downloads/processamentos simultâneos */
 const CONCURRENCY = 3;
+const BACKUP_ROOT = 'backups';
 
 // ─── CLI args ─────────────────────────────────────────────────────────────────
 
@@ -42,10 +41,17 @@ const LIMIT = (() => {
   if (idx !== -1 && idx + 1 < args.length) {
     return parseInt(args[idx + 1], 10);
   }
+  if (idx !== -1 && args[idx].includes('=')) {
+    return parseInt(args[idx].split('=')[1], 10);
+  }
   return Infinity;
 })();
+const BACKUP_REMOTE = args.includes('--backup-remote');
+const LIST_REMOTE_BACKUPS = args.includes('--list-remote-backups');
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
+
+type BackupType = 'local' | 'remote' | 'both' | 'none';
 
 type ReportEntry = {
   path: string;
@@ -55,6 +61,9 @@ type ReportEntry = {
   savedBytes: number;
   savedPercent: number;
   action: Action;
+  backupType: BackupType;
+  localBackupPath?: string;
+  remoteBackupPath?: string;
   error?: string;
 };
 
@@ -66,7 +75,7 @@ type Action =
   | 'failed'
   | 'backed-up';
 
-/** O Supabase.FileObject retorna `name`, `id`, `metadata` e `created_at` */
+/** Tipo compatível com FileObject do Supabase list() */
 type FileObject = {
   name: string;
   id: string;
@@ -109,8 +118,8 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !serviceRoleKey) {
-  console.error('❌ SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY são obrigatórios no .env');
-  console.error('   Adicione ao .env ou exporte antes de rodar.');
+  console.error('SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY sao obrigatorios no .env');
+  console.error('Adicione ao .env ou exporte antes de rodar.');
   process.exit(1);
 }
 
@@ -125,6 +134,7 @@ let totalOptimized = 0;
 let totalSkipped = 0;
 let totalFailed = 0;
 let totalBackedUp = 0;
+let totalPdfBytes = 0;
 
 function addReport(entry: ReportEntry): void {
   reports.push(entry);
@@ -133,7 +143,7 @@ function addReport(entry: ReportEntry): void {
   if (entry.action === 'optimized') totalOptimized++;
   else if (entry.action === 'failed') totalFailed++;
   else totalSkipped++;
-  if (entry.action === 'backed-up') totalBackedUp++;
+  if (entry.backupType !== 'none') totalBackedUp++;
 }
 
 async function saveReport(): Promise<void> {
@@ -157,11 +167,13 @@ async function saveReport(): Promise<void> {
       totalOriginal > 0
         ? Number(((totalOriginal - totalFinal) / totalOriginal * 100).toFixed(2))
         : 0,
+    pdfBytes: totalPdfBytes,
   };
 
   const data = {
     timestamp: now,
     dryRun: IS_DRY_RUN,
+    backupRemote: BACKUP_REMOTE,
     limit: LIMIT === Infinity ? 'all' : LIMIT,
     summary,
     entries: reports,
@@ -169,21 +181,21 @@ async function saveReport(): Promise<void> {
 
   fs.writeFileSync(jsonPath, JSON.stringify(data, null, 2));
 
-  const header = 'path,mimeType,originalSizeBytes,finalSizeBytes,savedBytes,savedPercent,action,error\n';
-  const rows = reports.map((r) => {
-    const esc = (v: string) => `"${v.replace(/"/g, '""')}"`;
-    return [
-      esc(r.path), esc(r.mimeType),
-      r.originalSizeBytes, r.finalSizeBytes,
-      r.savedBytes, r.savedPercent.toFixed(2),
-      esc(r.action), esc(r.error || ''),
-    ].join(',');
-  });
+  const esc = (v: string) => `"${v.replace(/"/g, '""')}"`;
+  const header = 'path,mimeType,originalSizeBytes,finalSizeBytes,savedBytes,savedPercent,action,backupType,localBackupPath,remoteBackupPath,error\n';
+  const rows = reports.map((r) => [
+    esc(r.path), esc(r.mimeType),
+    r.originalSizeBytes, r.finalSizeBytes,
+    r.savedBytes, r.savedPercent.toFixed(2),
+    esc(r.action), esc(r.backupType),
+    esc(r.localBackupPath || ''), esc(r.remoteBackupPath || ''),
+    esc(r.error || ''),
+  ].join(','));
   fs.writeFileSync(csvPath, header + rows.join('\n'));
 
-  console.log(`\n📄 Relatório salvo:`);
-  console.log(`   JSON: ${jsonPath}`);
-  console.log(`   CSV : ${csvPath}`);
+  console.log(`\nRelatorio salvo:`);
+  console.log(`  JSON: ${jsonPath}`);
+  console.log(`  CSV:  ${csvPath}`);
 }
 
 function printSummary(): void {
@@ -191,63 +203,120 @@ function printSummary(): void {
   const pct = totalOriginal > 0 ? `${((saved / totalOriginal) * 100).toFixed(2)}%` : '0%';
 
   console.log(`\n${'='.repeat(60)}`);
-  console.log(`📊 RESUMO FINAL${IS_DRY_RUN ? ' (DRY-RUN — nada foi alterado)' : ''}`);
+  console.log(`RESUMO FINAL${IS_DRY_RUN ? ' (DRY-RUN — nada alterado)' : ''}`);
   console.log(`${'='.repeat(60)}`);
-  console.log(`   Total analisados: ${reports.length}`);
-  console.log(`   Otimizados......: ${totalOptimized}`);
-  console.log(`   Pulados.........: ${totalSkipped}`);
-  console.log(`   Com erro........: ${totalFailed}`);
-  console.log(`   Backups salvos..: ${totalBackedUp}`);
-  console.log(`   Tamanho antes...: ${formatBytes(totalOriginal)}`);
-  console.log(`   Tamanho depois..: ${formatBytes(totalFinal)}`);
-  console.log(`   Economia........: ${formatBytes(saved)} (${pct})`);
+  console.log(`  Total analisados: ${reports.length}`);
+  console.log(`  Otimizados......: ${totalOptimized}`);
+  console.log(`  Pulados.........: ${totalSkipped}`);
+  console.log(`  Com erro........: ${totalFailed}`);
+  console.log(`  Backups salvos..: ${totalBackedUp}`);
+  console.log(`  Tamanho antes...: ${formatBytes(totalOriginal)}`);
+  console.log(`  Tamanho depois..: ${formatBytes(totalFinal)}`);
+  console.log(`  Economia........: ${formatBytes(saved)} (${pct})`);
+  if (totalPdfBytes > 0) {
+    console.log(`  PDFs (pulados)..: ${formatBytes(totalPdfBytes)} — requer etapa separada`);
+  }
   console.log(`${'='.repeat(60)}`);
 }
 
-// ─── Etapa 1: listar arquivos ────────────────────────────────────────────────
+// ─── LISTAGEM ──────────────────────────────────────────────────────────────────
 
 async function listBucketFiles(): Promise<FileObject[]> {
-  console.log(`🔍 Listando arquivos do bucket "${BUCKET_NAME}"...`);
+  console.log(`Listando bucket "${BUCKET_NAME}"...`);
 
   const files: FileObject[] = [];
 
   for (const folder of ALLOWED_PATHS) {
-    console.log(`   📁 Listando ${folder}...`);
+    console.log(`  ${folder}...`);
+    let offset = 0;
+    let totalInFolder = 0;
 
-    const { data, error } = await supabase.storage
-      .from(BUCKET_NAME)
-      .list(folder, { limit: 1000, offset: 0, sortBy: { column: 'name', order: 'asc' } });
+    for (let page = 0; page < 200; page++) {
+      const { data, error } = await supabase.storage
+        .from(BUCKET_NAME)
+        .list(folder, { limit: 200, offset, sortBy: { column: 'name', order: 'asc' } });
 
-    if (error) {
-      console.warn(`   ⚠️  Erro ao listar ${folder}: ${error.message}`);
-      continue;
-    }
-
-    if (!data || data.length === 0) {
-      console.log(`      (vazio)`);
-      continue;
-    }
-
-    for (const item of data) {
-      if (item.id) {
-        files.push({ ...item, name: folder + item.name } as FileObject);
+      if (error) {
+        console.warn(`  Erro ao listar ${folder} (offset ${offset}): ${error.message}`);
+        break;
       }
+
+      if (!data || data.length === 0) break;
+
+      for (const item of data) {
+        if (item.id) {
+          files.push({ ...item, name: folder + item.name } as FileObject);
+        }
+      }
+
+      totalInFolder += data.length;
+
+      // Se veio menos que o limite, é a última página
+      if (data.length < 100) break;
+      offset += 100;
     }
 
-    console.log(`      ${data.length} arquivos encontrados`);
+    console.log(`    ${totalInFolder} arquivos`);
   }
 
-  console.log(`\n📦 Total de arquivos no bucket (pastas permitidas): ${files.length}`);
+  console.log(`\nTotal (pastas permitidas): ${files.length}`);
 
   if (LIMIT < Infinity) {
-    console.log(`   (limitado a ${LIMIT} arquivos via --limit)`);
+    console.log(`  (limitado a ${LIMIT} via --limit)`);
     return files.slice(0, LIMIT);
   }
 
   return files;
 }
 
-// ─── Etapa 2: baixar um arquivo ─────────────────────────────────────────────
+// ─── LISTAR BACKUPS REMOTOS ────────────────────────────────────────────────────
+
+async function listRemoteBackups(): Promise<void> {
+  console.log(`Listando backups remotos em _backups/storage-optimization/...`);
+
+  let totalBytes = 0;
+  let totalFiles = 0;
+
+  async function scanFolder(prefix: string): Promise<void> {
+    let offset = 0;
+    while (true) {
+      const { data, error } = await supabase.storage
+        .from(BUCKET_NAME)
+        .list(prefix, { limit: 100, offset, sortBy: { column: 'name', order: 'asc' } });
+
+      if (error || !data || data.length === 0) break;
+
+      for (const item of data) {
+        const fullName = prefix + item.name;
+        if (item.id && item.metadata) {
+          const size = (item.metadata?.size as number) || 0;
+          totalBytes += size;
+          totalFiles++;
+          console.log(`  ${fullName} (${formatBytes(size)})`);
+        } else {
+          // Subpasta
+          await scanFolder(fullName + '/');
+        }
+      }
+
+      if (data.length < 100) break;
+      offset += 100;
+    }
+  }
+
+  await scanFolder('_backups/storage-optimization/');
+
+  if (totalFiles === 0) {
+    console.log('  Nenhum backup remoto encontrado.');
+    return;
+  }
+
+  console.log(`\nTotal: ${totalFiles} arquivos, ${formatBytes(totalBytes)}`);
+  console.log('  NOTA: Backups remotos dentro do mesmo bucket contam no uso de storage.');
+  console.log('  Para reduzir storage de verdade, remova backups remotos apos confirmar que os otimizados estao ok.');
+}
+
+// ─── DOWNLOAD ────────────────────────────────────────────────────────────────
 
 async function downloadFile(file: FileObject): Promise<{ data: Buffer; mimeType: string } | null> {
   const { data, error } = await supabase.storage
@@ -255,7 +324,7 @@ async function downloadFile(file: FileObject): Promise<{ data: Buffer; mimeType:
     .download(file.name);
 
   if (error || !data) {
-    console.error(`      ❌ Erro ao baixar: ${error?.message || 'sem dados'}`);
+    console.error(`    Erro ao baixar: ${error?.message || 'sem dados'}`);
     return null;
   }
 
@@ -265,24 +334,19 @@ async function downloadFile(file: FileObject): Promise<{ data: Buffer; mimeType:
   return { data: buf, mimeType };
 }
 
-// ─── Etapa 3: otimizar imagem ───────────────────────────────────────────────
+// ─── OTIMIZAR IMAGEM ──────────────────────────────────────────────────────────
 
 async function optimizeImage(buf: Buffer): Promise<Buffer | null> {
   try {
-    const sharpInstance = sharp(buf);
-    const metadata = await sharpInstance.metadata();
+    const metadata = await sharp(buf).metadata();
     if (!metadata.width || !metadata.height) return null;
 
-    const w = metadata.width;
-    const h = metadata.height;
-
-    // Só redimensiona se exceder o limite
     const resizeOpts: sharp.ResizeOptions = {
       fit: 'inside',
       withoutEnlargement: true,
     };
 
-    if (w > IMAGE_MAX_WH || h > IMAGE_MAX_WH) {
+    if ((metadata.width || 0) > IMAGE_MAX_WH || (metadata.height || 0) > IMAGE_MAX_WH) {
       resizeOpts.width = IMAGE_MAX_WH;
       resizeOpts.height = IMAGE_MAX_WH;
     }
@@ -294,40 +358,63 @@ async function optimizeImage(buf: Buffer): Promise<Buffer | null> {
       .withMetadata({ exif: undefined, icc: undefined })
       .toBuffer();
 
-    // Validação pós-processamento: tenta ler metadados do resultado
+    // Validação
     const resultMeta = await sharp(optimized).metadata();
     if (!resultMeta.width || !resultMeta.height) return null;
 
     return optimized;
   } catch (err) {
-    console.error(`      ❌ Falha ao otimizar imagem:`, (err as Error).message);
+    console.error(`    Falha ao otimizar:`, (err as Error).message);
     return null;
   }
 }
 
-// ─── Etapa 4: backup ────────────────────────────────────────────────────────
+// ─── BACKUP LOCAL ────────────────────────────────────────────────────────────
 
-async function saveBackup(originalPath: string, buffer: Buffer): Promise<boolean> {
-  const backupRelPath = path.posix.join('_backups', 'storage-optimization', dateStamp, originalPath);
-  const fullPath = path.resolve(backupRelPath);
+function saveLocalBackup(originalPath: string, buffer: Buffer): boolean {
+  const relPath = path.posix.join(BACKUP_ROOT, 'storage-optimization', dateStamp, originalPath);
+  const fullPath = path.resolve(relPath);
 
   try {
     fs.mkdirSync(path.dirname(fullPath), { recursive: true });
     fs.writeFileSync(fullPath, buffer);
     return true;
   } catch (err) {
-    console.error(`      ❌ Erro ao salvar backup: ${(err as Error).message}`);
+    console.error(`    Erro backup local: ${(err as Error).message}`);
     return false;
   }
 }
 
-// ─── Etapa 5: upload otimizado ───────────────────────────────────────────────
+function getLocalBackupPath(originalPath: string): string {
+  return path.posix.join(BACKUP_ROOT, 'storage-optimization', dateStamp, originalPath);
+}
 
-async function uploadOptimized(
-  originalPath: string,
-  optimizedBuf: Buffer,
-  contentType: string,
-): Promise<boolean> {
+// ─── BACKUP REMOTO (opcional) ───────────────────────────────────────────────
+
+async function saveRemoteBackup(originalPath: string, buffer: Buffer): Promise<boolean> {
+  const remotePath = path.posix.join('_backups', 'storage-optimization', dateStamp, originalPath);
+  const { error } = await supabase.storage
+    .from(BUCKET_NAME)
+    .upload(remotePath, buffer, {
+      contentType: 'application/octet-stream',
+      upsert: true,
+    });
+
+  if (error) {
+    console.error(`    Erro backup remoto: ${error.message}`);
+    return false;
+  }
+
+  return true;
+}
+
+function getRemoteBackupPath(originalPath: string): string {
+  return path.posix.join('_backups', 'storage-optimization', dateStamp, originalPath);
+}
+
+// ─── UPLOAD OTIMIZADO ────────────────────────────────────────────────────────
+
+async function uploadOptimized(originalPath: string, optimizedBuf: Buffer, contentType: string): Promise<boolean> {
   try {
     const { error } = await supabase.storage
       .from(BUCKET_NAME)
@@ -337,70 +424,69 @@ async function uploadOptimized(
       });
 
     if (error) {
-      console.error(`      ❌ Erro ao fazer upload: ${error.message}`);
+      console.error(`    Erro ao fazer upload: ${error.message}`);
       return false;
     }
 
     return true;
   } catch (err) {
-    console.error(`      ❌ Erro ao fazer upload: ${(err as Error).message}`);
+    console.error(`    Erro ao fazer upload: ${(err as Error).message}`);
     return false;
   }
 }
 
-// ─── Etapa principal: processar um arquivo ───────────────────────────────────
+// ─── PROCESSAR ARQUIVO ───────────────────────────────────────────────────────
 
 async function processFile(file: FileObject): Promise<void> {
   const startTime = Date.now();
   const ext = extFromName(file.name);
   const mimeFromMeta = (file.metadata?.mimetype as string) || '';
-  const indent = '   ';
+  const indent = '  ';
 
-  console.log(`\n📄 ${file.name}`);
-  console.log(`${indent}Tipo: ${mimeFromMeta || 'desconhecido'} | Tamanho: ${formatBytes((file.metadata?.size as number) || 0)}`);
+  console.log(`\n${file.name}`);
+  console.log(`${indent}Tipo: ${mimeFromMeta || 'desconhecido'} | Tam: ${formatBytes((file.metadata?.size as number) || 0)}`);
 
-  // Detectar tipo
   const isImageFile = isImage(mimeFromMeta, ext);
   const isPdfFile = isPdf(mimeFromMeta, ext);
-
-  // Tamanho default do metadata (pode ser impreciso)
   let originalSize = (file.metadata?.size as number) || 0;
 
   if (!isImageFile && !isPdfFile) {
-    console.log(`${indent}⏭️  Tipo não suportado`);
-    addReport({ path: file.name, mimeType: mimeFromMeta, originalSizeBytes: originalSize, finalSizeBytes: originalSize, savedBytes: 0, savedPercent: 0, action: 'skipped-unsupported' });
+    console.log(`${indent}Pulado — tipo nao suportado`);
+    addReport({ path: file.name, mimeType: mimeFromMeta, originalSizeBytes: originalSize, finalSizeBytes: originalSize, savedBytes: 0, savedPercent: 0, action: 'skipped-unsupported', backupType: 'none' });
     return;
   }
 
   if (isPdfFile) {
-    console.log(`${indent}⏭️  PDF — otimização server-side não implementada (consulte relatório)`);
-    addReport({ path: file.name, mimeType: mimeFromMeta, originalSizeBytes: originalSize, finalSizeBytes: originalSize, savedBytes: 0, savedPercent: 0, action: 'skipped-pdf' });
+    totalPdfBytes += originalSize;
+    console.log(`${indent}Pulado — PDF (sem otimizacao server-side)`);
+    addReport({ path: file.name, mimeType: mimeFromMeta, originalSizeBytes: originalSize, finalSizeBytes: originalSize, savedBytes: 0, savedPercent: 0, action: 'skipped-pdf', backupType: 'none' });
     return;
   }
 
-  // ── Processar imagem ──
+  // Imagem
   if (IS_DRY_RUN) {
-    console.log(`${indent}🔍 [DRY-RUN] Seria processado como imagem`);
-    addReport({ path: file.name, mimeType: mimeFromMeta, originalSizeBytes: originalSize, finalSizeBytes: 0, savedBytes: 0, savedPercent: 0, action: 'optimized' });
+    console.log(`${indent}[DRY-RUN] Seria processado`);
+    addReport({ path: file.name, mimeType: mimeFromMeta, originalSizeBytes: originalSize, finalSizeBytes: 0, savedBytes: 0, savedPercent: 0, action: 'optimized', backupType: 'none' });
     return;
   }
 
-  // Modo apply
-  console.log(`${indent}⬇️  Baixando...`);
+  console.log(`${indent}Baixando...`);
   const downloaded = await downloadFile(file);
   if (!downloaded) {
-    addReport({ path: file.name, mimeType: mimeFromMeta, originalSizeBytes: originalSize, finalSizeBytes: originalSize, savedBytes: 0, savedPercent: 0, action: 'failed', error: 'download failed' });
+    addReport({ path: file.name, mimeType: mimeFromMeta, originalSizeBytes: originalSize, finalSizeBytes: originalSize, savedBytes: 0, savedPercent: 0, action: 'failed', backupType: 'none', error: 'download failed' });
     return;
   }
 
   originalSize = downloaded.data.length;
-  console.log(`${indent}Tamanho real: ${formatBytes(originalSize)}`);
 
-  console.log(`${indent}🖼️  Otimizando...`);
+  // Determinar contentType para o upload otimizado
+  const finalContentType = 'image/jpeg';
+
+  console.log(`${indent}Otimizando (${formatBytes(originalSize)})...`);
   const optimized = await optimizeImage(downloaded.data);
   if (!optimized) {
-    console.log(`${indent}❌ Falha na otimização — mantendo original`);
-    addReport({ path: file.name, mimeType: downloaded.mimeType, originalSizeBytes: originalSize, finalSizeBytes: originalSize, savedBytes: 0, savedPercent: 0, action: 'failed', error: 'optimization returned null' });
+    console.log(`${indent}Falha na otimizacao — mantendo original`);
+    addReport({ path: file.name, mimeType: downloaded.mimeType, originalSizeBytes: originalSize, finalSizeBytes: originalSize, savedBytes: 0, savedPercent: 0, action: 'failed', backupType: 'none', error: 'optimization returned null' });
     return;
   }
 
@@ -408,68 +494,95 @@ async function processFile(file: FileObject): Promise<void> {
   const savedPercent = (savedBytes / originalSize) * 100;
 
   if (optimized.length >= originalSize || savedPercent < MIN_SAVINGS_PERCENT) {
-    console.log(`${indent}⏭️  Economia muito pequena (${savedPercent.toFixed(1)}%) — mantendo original`);
-    addReport({ path: file.name, mimeType: downloaded.mimeType, originalSizeBytes: originalSize, finalSizeBytes: originalSize, savedBytes: 0, savedPercent: 0, action: 'skipped-small' });
+    console.log(`${indent}Economia pequena (${savedPercent.toFixed(1)}%) — mantendo original`);
+    addReport({ path: file.name, mimeType: downloaded.mimeType, originalSizeBytes: originalSize, finalSizeBytes: originalSize, savedBytes: 0, savedPercent: 0, action: 'skipped-small', backupType: 'none' });
     return;
   }
 
-  // Backup
-  console.log(`${indent}💾 Salvando backup...`);
-  const backedUp = await saveBackup(file.name, downloaded.data);
-  if (!backedUp) {
-    addReport({ path: file.name, mimeType: downloaded.mimeType, originalSizeBytes: originalSize, finalSizeBytes: originalSize, savedBytes: 0, savedPercent: 0, action: 'failed', error: 'backup failed — aborting to avoid data loss' });
+  // Backup local (sempre)
+  console.log(`${indent}Backup local...`);
+  const localPath = getLocalBackupPath(file.name);
+  const backedUpLocal = saveLocalBackup(file.name, downloaded.data);
+  if (!backedUpLocal) {
+    addReport({ path: file.name, mimeType: downloaded.mimeType, originalSizeBytes: originalSize, finalSizeBytes: originalSize, savedBytes: 0, savedPercent: 0, action: 'failed', backupType: 'none', error: 'local backup failed — aborting' });
     return;
   }
 
-  // Upload
-  console.log(`${indent}⬆️  Substituindo original (mesmo path)...`);
-  const uploaded = await uploadOptimized(file.name, optimized, 'image/jpeg');
+  let backupType: BackupType = 'local';
+  let remotePath: string | undefined;
+
+  // Backup remoto (opcional)
+  if (BACKUP_REMOTE) {
+    console.log(`${indent}Backup remoto...`);
+    const ok = await saveRemoteBackup(file.name, downloaded.data);
+    if (ok) {
+      backupType = 'both';
+      remotePath = getRemoteBackupPath(file.name);
+    } else {
+      console.log(`${indent}  (backup remoto falhou, local mantido)`);
+    }
+  }
+
+  // Upload otimizado
+  console.log(`${indent}Substituindo (${formatBytes(originalSize)} -> ${formatBytes(optimized.length)})...`);
+  const uploaded = await uploadOptimized(file.name, optimized, finalContentType);
 
   if (!uploaded) {
-    addReport({ path: file.name, mimeType: downloaded.mimeType, originalSizeBytes: originalSize, finalSizeBytes: originalSize, savedBytes: 0, savedPercent: 0, action: 'failed', error: 'upload failed (backup exists)' });
+    addReport({ path: file.name, mimeType: downloaded.mimeType, originalSizeBytes: originalSize, finalSizeBytes: originalSize, savedBytes: 0, savedPercent: 0, action: 'failed', backupType, localBackupPath: localPath, remoteBackupPath: remotePath, error: 'upload failed (backup exists)' });
     return;
   }
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
-  console.log(`${indent}✅ Otimizado! ${formatBytes(originalSize)} → ${formatBytes(optimized.length)} (-${savedPercent.toFixed(1)}%) [${elapsed}s]`);
+  console.log(`${indent}OK! ${formatBytes(originalSize)} -> ${formatBytes(optimized.length)} (-${savedPercent.toFixed(1)}%) [${elapsed}s]`);
 
-  addReport({ path: file.name, mimeType: downloaded.mimeType, originalSizeBytes: originalSize, finalSizeBytes: optimized.length, savedBytes, savedPercent, action: 'optimized' });
+  addReport({ path: file.name, mimeType: finalContentType, originalSizeBytes: originalSize, finalSizeBytes: optimized.length, savedBytes, savedPercent, action: 'optimized', backupType, localBackupPath: localPath, remoteBackupPath: remotePath });
 }
 
-// ─── Main ─────────────────────────────────────────────────────────────────────
+// ─── MAIN ───────────────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log('='.repeat(60));
-  console.log(`🚀 OTIMIZAÇÃO DE STORAGE EXISTENTE`);
-  console.log(`   Bucket: ${BUCKET_NAME}`);
-  console.log(`   Modo: ${IS_DRY_RUN ? '🔍 DRY-RUN (nada será alterado)' : '⚡ APPLY (irá modificar o storage)'}`);
-  console.log(`   Limite: ${LIMIT === Infinity ? 'todos' : LIMIT}`);
-  console.log(`   Data: ${dateStamp}`);
-  console.log('='.repeat(60));
-
-  if (!IS_DRY_RUN) {
-    console.log(`\n⚠️  ATENÇÃO: Modo APPLY ativo! Este script irá:`);
-    console.log(`   1. Baixar arquivos do storage`);
-    console.log(`   2. Otimizar imagens (sharp)`);
-    console.log(`   3. Salvar backup dos originais em _backups/storage-optimization/${dateStamp}/`);
-    console.log(`   4. Substituir versões otimizadas no storage (mesmo path, upsert)`);
-    console.log(``);
-    console.log(`   Pressione Ctrl+C para cancelar nos próximos 5s...`);
-    await sleep(5000);
-    console.log(`   ✅ Prosseguindo...`);
-  }
-
-  const files = await listBucketFiles();
-
-  if (files.length === 0) {
-    console.log(`Nenhum arquivo encontrado. Nada a fazer.`);
+  // Modo listar backups remotos
+  if (LIST_REMOTE_BACKUPS) {
+    await listRemoteBackups();
     return;
   }
 
-  console.log(`\n🔄 Processando arquivos (concorrência: ${CONCURRENCY})...`);
+  console.log('='.repeat(60));
+  console.log('OTIMIZACAO DE STORAGE EXISTENTE');
+  console.log(`  Bucket: ${BUCKET_NAME}`);
+  console.log(`  Modo: ${IS_DRY_RUN ? 'DRY-RUN (nada alterado)' : 'APPLY'}`);
+  console.log(`  Backup remoto: ${BACKUP_REMOTE ? 'sim' : 'nao (apenas local)'}`);
+  console.log(`  Limite: ${LIMIT === Infinity ? 'todos' : LIMIT}`);
+  console.log(`  Data: ${dateStamp}`);
+  console.log('='.repeat(60));
 
-  for (let i = 0; i < files.length; i += CONCURRENCY) {
-    const batch = files.slice(i, i + CONCURRENCY);
+  if (!IS_DRY_RUN) {
+    console.log(`\nATENCAO: Modo APPLY ativo!`);
+    console.log(`  1. Baixar arquivos`);
+    console.log(`  2. Otimizar imagens (sharp)`);
+    console.log(`  3. Backup LOCAL em backups/storage-optimization/${dateStamp}/`);
+    if (BACKUP_REMOTE) {
+      console.log(`  4. Backup REMOTO em _backups/storage-optimization/${dateStamp}/ (opcional)`);
+      console.log(`  5. Substituir versao otimizada no storage (mesmo path, upsert)`);
+    } else {
+      console.log(`  4. Substituir versao otimizada no storage (mesmo path, upsert)`);
+    }
+    console.log(`\n  Ctrl+C para cancelar (5s)...`);
+    await sleep(5000);
+    console.log(`  Prosseguindo...`);
+  }
+
+  const allFiles = await listBucketFiles();
+
+  if (allFiles.length === 0) {
+    console.log('Nenhum arquivo para processar.');
+    return;
+  }
+
+  console.log(`\nProcessando (concorrencia: ${CONCURRENCY})...`);
+
+  for (let i = 0; i < allFiles.length; i += CONCURRENCY) {
+    const batch = allFiles.slice(i, i + CONCURRENCY);
     await Promise.all(batch.map((f) => processFile(f)));
   }
 
@@ -477,9 +590,14 @@ async function main() {
   printSummary();
 
   if (!IS_DRY_RUN) {
-    console.log(`\n🔔 Lembre-se de verificar manualmente alguns arquivos no Supabase.`);
-    console.log(`   Backups em: _backups/storage-optimization/${dateStamp}/`);
-    console.log(`   Para restaurar, faça upload manualmente.`);
+    console.log(`\nBackups locais: backups/storage-optimization/${dateStamp}/`);
+    if (BACKUP_REMOTE) {
+      console.log(`Backups remotos: _backups/storage-optimization/${dateStamp}/`);
+      console.log(`    NOTA: Backups remotos consomem storage do Supabase.`);
+      console.log(`    Para reducao real, remova-os apos confirmar que os otimizados abrem.`);
+      console.log(`    Use: npm run storage:optimize -- --list-remote-backups`);
+    }
+    console.log(`\nVerifique manualmente alguns arquivos antes de limpar backups.`);
   }
 }
 
