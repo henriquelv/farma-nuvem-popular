@@ -4,6 +4,7 @@ import { CalendarDays, FileText, Search, Plus, User, X, Filter, ZoomIn, ZoomOut,
 import { getSupabase, explainSupabaseError } from '../lib/supabase';
 import { maskCPF, maskDate, parseDateToDB } from '../lib/validators';
 import { buildPrescriptionMeta, formatDateBR, getPrescriptionEndDate, isPdfDocument } from '../lib/documents';
+import { compressImage, validateFileSize } from '../lib/media-compression';
 import { motion, AnimatePresence } from 'motion/react';
 
 // --- VISUALIZADOR REUTILIZÁVEL (MESMO DO PROFILE) ---
@@ -325,6 +326,7 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
   const [documentoReceita, setDocumentoReceita] = useState<File | null>(null);
   const [receitaInicio, setReceitaInicio] = useState('');
   const [loading, setLoading] = useState(false);
+  const [statusMsg, setStatusMsg] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -347,6 +349,7 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
     }
 
     setLoading(true);
+    setStatusMsg('');
     const supabase = getSupabase();
     if (!supabase) {
       setError('Credenciais do Supabase não configuradas.');
@@ -354,12 +357,20 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
       return;
     }
 
+    const sizeErr = validateFileSize(documentoReceita);
+    if (sizeErr) { setError(sizeErr); setLoading(false); return; }
+
     try {
       let url_identidade_frontal: string | null = null;
 
-      const ext = documentoReceita.name.split('.').pop();
+      setStatusMsg('Comprimindo imagem...');
+      const { file: fileToUpload } = await compressImage(documentoReceita);
+      setStatusMsg('Enviando documento...');
+      const ext = fileToUpload.name.split('.').pop();
       const path = `cadastros/cadastro_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-      const { error: upErr } = await supabase.storage.from('documentos').upload(path, documentoReceita);
+      const { error: upErr } = await supabase.storage.from('documentos').upload(path, fileToUpload, {
+        contentType: fileToUpload.type,
+      });
       if (upErr) throw upErr;
       const { data: urlData } = supabase.storage.from('documentos').getPublicUrl(path);
       url_identidade_frontal = urlData.publicUrl;
@@ -412,6 +423,12 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
 
         <form onSubmit={handleSubmit} className="min-h-0 flex-1 flex flex-col">
           <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5 sm:px-7 space-y-4">
+            {statusMsg && (
+              <div className="bg-blue-50 text-blue-700 px-4 py-3 rounded-2xl text-sm font-semibold border border-blue-100 flex items-center gap-2">
+                <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                {statusMsg}
+              </div>
+            )}
             {error && (
               <div className="bg-red-50 text-red-700 px-4 py-3 rounded-2xl text-sm font-semibold border border-red-100">
                 ⚠️ {error}

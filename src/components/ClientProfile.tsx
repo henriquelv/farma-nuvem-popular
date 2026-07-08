@@ -20,6 +20,7 @@ import {
   parsePrescriptionMeta,
 } from '../lib/documents';
 import { maskDate, parseDateToDB } from '../lib/validators';
+import { compressImage, validateFileSize } from '../lib/media-compression';
 
 const currency = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
@@ -475,6 +476,7 @@ function NewRegistroModal({ client, receitaStatus, onClose, onAdded }: any) {
   const [valor, setValor] = useState('');
   const [cupomFiles,   setCupomFiles]   = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
+  const [statusMsg, setStatusMsg] = useState('');
   const [error, setError]     = useState('');
 
   const addFiles = (setter: React.Dispatch<React.SetStateAction<File[]>>) =>
@@ -491,9 +493,13 @@ function NewRegistroModal({ client, receitaStatus, onClose, onAdded }: any) {
     if (receitaStatus.vencida) { setError('Receita vencida. Anexe uma nova receita antes de concluir a compra.'); return; }
     if (cupomFiles.length === 0)   { setError('Anexe pelo menos um Cupom Fiscal.'); return; }
 
-    setLoading(true); setError('');
+    setLoading(true); setError(''); setStatusMsg('');
     const supabase = getSupabase();
     if (!supabase) return;
+
+    const sizeErrMsg = validateFileSize(cupomFiles[0]);
+    if (sizeErrMsg) { setError(sizeErrMsg); setLoading(false); return; }
+
     try {
       const valorNumerico = Number(valor.replace(',', '.')) || 0;
       const { data: venda, error: vErr } = await supabase.from('vendas')
@@ -507,9 +513,15 @@ function NewRegistroModal({ client, receitaStatus, onClose, onAdded }: any) {
 
       const uploadDocs = async (files: File[], tipo: string) => {
         for (const f of files) {
-          const ext  = f.name.split('.').pop();
+          setStatusMsg('Comprimindo imagem...');
+          const { file: fileToUpload } = await compressImage(f);
+          if (fileToUpload !== f) setStatusMsg('Comprimindo imagem...');
+          setStatusMsg('Enviando documento...');
+          const ext  = fileToUpload.name.split('.').pop();
           const path = `${tipo}/${tipo}_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-          const { error: upErr } = await supabase.storage.from('documentos').upload(path, f);
+          const { error: upErr } = await supabase.storage.from('documentos').upload(path, fileToUpload, {
+            contentType: fileToUpload.type,
+          });
           if (upErr) throw upErr;
           const { data: urlData } = supabase.storage.from('documentos').getPublicUrl(path);
           await supabase.from('vendas_documentos').insert([{
@@ -523,7 +535,7 @@ function NewRegistroModal({ client, receitaStatus, onClose, onAdded }: any) {
       onAdded(); onClose();
     } catch (err: any) {
       setError(explainSupabaseError(err));
-    } finally { setLoading(false); }
+    } finally { setLoading(false); setStatusMsg(''); }
   };
 
   return (
@@ -541,6 +553,7 @@ function NewRegistroModal({ client, receitaStatus, onClose, onAdded }: any) {
 
         <form onSubmit={handleSubmit} className="min-h-0 flex-1 flex flex-col">
           <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5 sm:px-7 space-y-5">
+            {statusMsg && <div className="p-4 bg-blue-50 text-blue-700 rounded-2xl text-sm font-semibold border border-blue-100 flex items-center gap-2"><div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />{statusMsg}</div>}
             {error && <div className="p-4 bg-red-50 text-red-700 rounded-2xl text-sm font-semibold border border-red-100">⚠️ {error}</div>}
 
             <div className="rounded-2xl bg-slate-50 border border-slate-100 p-4 space-y-4">
@@ -630,6 +643,7 @@ function NewPrescriptionModal({ client, onClose, onAdded }: any) {
   const [file, setFile] = useState<File | null>(null);
   const [inicio, setInicio] = useState('');
   const [loading, setLoading] = useState(false);
+  const [statusMsg, setStatusMsg] = useState('');
   const [error, setError] = useState('');
   const inicioDb = parseDateToDB(inicio);
   const vencimento = inicioDb ? getPrescriptionEndDate(inicioDb) : '';
@@ -642,11 +656,20 @@ function NewPrescriptionModal({ client, onClose, onAdded }: any) {
     if (!inicioDb) { setError('Informe a data de início da receita.'); return; }
 
     setLoading(true);
-    setError('');
+    setError(''); setStatusMsg('');
+
+    const sizeErr = validateFileSize(file);
+    if (sizeErr) { setError(sizeErr); setLoading(false); return; }
+
     try {
-      const ext = file.name.split('.').pop();
+      setStatusMsg('Comprimindo imagem...');
+      const { file: fileToUpload } = await compressImage(file);
+      setStatusMsg('Enviando documento...');
+      const ext = fileToUpload.name.split('.').pop();
       const path = `receita/receita_${client.id}_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-      const { error: upErr } = await supabase.storage.from('documentos').upload(path, file);
+      const { error: upErr } = await supabase.storage.from('documentos').upload(path, fileToUpload, {
+        contentType: fileToUpload.type,
+      });
       if (upErr) throw upErr;
       const { data: urlData } = supabase.storage.from('documentos').getPublicUrl(path);
       const { error: insertError } = await supabase.from('vendas_documentos').insert([{
@@ -681,6 +704,7 @@ function NewPrescriptionModal({ client, onClose, onAdded }: any) {
 
         <form onSubmit={handleSubmit} className="min-h-0 flex-1 flex flex-col">
           <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5 space-y-4">
+            {statusMsg && <div className="p-4 bg-blue-50 text-blue-700 rounded-2xl text-sm font-semibold border border-blue-100 flex items-center gap-2"><div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />{statusMsg}</div>}
             {error && <div className="p-4 bg-red-50 text-red-700 rounded-2xl text-sm font-semibold border border-red-100">⚠️ {error}</div>}
 
             <div className={`relative rounded-2xl border-2 border-dashed transition-all overflow-hidden ${file ? 'border-emerald-400 bg-emerald-50' : 'border-slate-200 bg-slate-50 hover:border-blue-300'}`}>
@@ -741,6 +765,7 @@ function DuplicarModal({ client, sourceVisita, sourceDocs, onClose, onAdded }: a
   const [novaReceitaFiles, setNovaReceitaFiles] = useState<File[]>([]);
   const [cupomFiles, setCupomFiles]             = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
+  const [statusMsg, setStatusMsg] = useState('');
   const [error, setError]     = useState('');
 
   const addFiles = (setter: React.Dispatch<React.SetStateAction<File[]>>) =>
@@ -757,9 +782,15 @@ function DuplicarModal({ client, sourceVisita, sourceDocs, onClose, onAdded }: a
     if (usaNovaReceita && novaReceitaFiles.length === 0) { setError('Anexe a nova Receita Médica ou mantenha a anterior.'); return; }
     if (cupomFiles.length === 0) { setError('Anexe o Cupom Fiscal da nova compra.'); return; }
 
-    setLoading(true); setError('');
+    setLoading(true); setError(''); setStatusMsg('');
     const supabase = getSupabase();
     if (!supabase) return;
+
+    const allFiles = [...novaReceitaFiles, ...cupomFiles];
+    let sizeErrMsg: string | null = null;
+    for (const f of allFiles) { sizeErrMsg = validateFileSize(f); if (sizeErrMsg) break; }
+    if (sizeErrMsg) { setError(sizeErrMsg); setLoading(false); return; }
+
     try {
       const { data: venda, error: vErr } = await supabase.from('vendas')
         .insert([{
@@ -780,9 +811,14 @@ function DuplicarModal({ client, sourceVisita, sourceDocs, onClose, onAdded }: a
         }
       } else {
         for (const f of novaReceitaFiles) {
-          const ext  = f.name.split('.').pop();
+          setStatusMsg('Comprimindo imagem...');
+          const { file: fileToUpload } = await compressImage(f);
+          setStatusMsg('Enviando documento...');
+          const ext  = fileToUpload.name.split('.').pop();
           const path = `receita/receita_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-          const { error: upErr } = await supabase.storage.from('documentos').upload(path, f);
+          const { error: upErr } = await supabase.storage.from('documentos').upload(path, fileToUpload, {
+            contentType: fileToUpload.type,
+          });
           if (upErr) throw upErr;
           const { data: urlData } = supabase.storage.from('documentos').getPublicUrl(path);
           await supabase.from('vendas_documentos').insert([{
@@ -794,9 +830,14 @@ function DuplicarModal({ client, sourceVisita, sourceDocs, onClose, onAdded }: a
 
       // Upload cupons novos
       for (const f of cupomFiles) {
-        const ext  = f.name.split('.').pop();
+        setStatusMsg('Comprimindo imagem...');
+        const { file: fileToUpload } = await compressImage(f);
+        setStatusMsg('Enviando documento...');
+        const ext  = fileToUpload.name.split('.').pop();
         const path = `cupom/cupom_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-        const { error: upErr } = await supabase.storage.from('documentos').upload(path, f);
+        const { error: upErr } = await supabase.storage.from('documentos').upload(path, fileToUpload, {
+          contentType: fileToUpload.type,
+        });
         if (upErr) throw upErr;
         const { data: urlData } = supabase.storage.from('documentos').getPublicUrl(path);
         await supabase.from('vendas_documentos').insert([{
@@ -831,6 +872,7 @@ function DuplicarModal({ client, sourceVisita, sourceDocs, onClose, onAdded }: a
         </div>
 
         <form onSubmit={handleSubmit} className="overflow-y-auto">
+          {statusMsg && <div className="mx-6 mt-5 p-4 bg-blue-50 text-blue-700 rounded-2xl text-sm font-semibold border border-blue-100 flex items-center gap-2"><div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />{statusMsg}</div>}
           {error && <div className="mx-6 mt-5 p-4 bg-red-50 text-red-700 rounded-2xl text-sm font-semibold border border-red-100">⚠️ {error}</div>}
 
           <div className="p-6 space-y-4">

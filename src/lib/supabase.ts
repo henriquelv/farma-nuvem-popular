@@ -1,3 +1,9 @@
+/**
+ * @security O bucket "documentos" está público (acesso anônimo).
+ * Os arquivos de farmácia contêm CPF, identidade, receitas e dados pessoais.
+ * TODO: Migrar para bucket privado + signed URLs em produção.
+ * O app atual depende de acesso público para leitura no frontend.
+ */
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 // Tenta pegar as variáveis de ambiente, se existirem

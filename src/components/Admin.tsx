@@ -111,7 +111,7 @@ export default function Admin() {
     setError('');
     try {
       const [{ data: clientsData, error: clientsError }, { data: salesData, error: salesError }] = await Promise.all([
-        supabase.from('clientes').select('*').order('created_at', { ascending: false }),
+        supabase.from('clientes').select('id, nome_completo, cpf, data_nascimento, created_at').order('created_at', { ascending: false }),
         supabase
           .from('vendas')
           .select('id, cliente_id, data_venda, nome_medicamento, valor, created_at, clientes(nome_completo, cpf)')
