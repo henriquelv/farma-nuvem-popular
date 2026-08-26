@@ -14,6 +14,10 @@ import Admin from './components/Admin';
 import BIVendasHoje from './components/bi/VendasHoje';
 import BICupons from './components/bi/Cupons';
 import BIHistorico from './components/bi/Historico';
+import Login from './components/Login';
+import AccessDenied from './components/AccessDenied';
+import { AuthProvider } from './auth/AuthContext';
+import ProtectedRoute from './auth/ProtectedRoute';
 
 export default function App() {
   const [isSetup, setIsSetup] = useState(false);
@@ -54,18 +58,26 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Navigate to="/clientes" replace />} />
-          <Route path="clientes" element={<ClientManagement />} />
-          <Route path="clientes/:id" element={<ClientProfile />} />
-          <Route path="admin" element={<Admin />} />
-          <Route path="bi/vendas-hoje" element={<BIVendasHoje />} />
-          <Route path="bi/cupons" element={<BICupons />} />
-          <Route path="bi/historico" element={<BIHistorico />} />
-          <Route path="*" element={<Navigate to="/clientes" replace />} />
-        </Route>
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/sem-acesso" element={<AccessDenied />} />
+          <Route element={<ProtectedRoute roles={['admin', 'atendente']} />}>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Navigate to="/clientes" replace />} />
+              <Route path="clientes" element={<ClientManagement />} />
+              <Route path="clientes/:id" element={<ClientProfile />} />
+              <Route element={<ProtectedRoute roles={['admin']} />}>
+                <Route path="admin" element={<Admin />} />
+                <Route path="bi/vendas-hoje" element={<BIVendasHoje />} />
+                <Route path="bi/cupons" element={<BICupons />} />
+                <Route path="bi/historico" element={<BIHistorico />} />
+              </Route>
+              <Route path="*" element={<Navigate to="/clientes" replace />} />
+            </Route>
+          </Route>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

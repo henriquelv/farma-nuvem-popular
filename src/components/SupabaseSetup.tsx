@@ -55,7 +55,7 @@ export default function SupabaseSetup({ onSetupComplete }: { onSetupComplete: ()
           </div>
           <h1 className="text-2xl font-bold text-slate-800">Configuração do Supabase</h1>
           <p className="text-slate-500 mt-2 text-sm">
-            Para testar este MVP, insira as credenciais do seu projeto Supabase.
+            Configuração disponível somente no ambiente local de desenvolvimento.
           </p>
         </div>
 
@@ -121,11 +121,10 @@ export default function SupabaseSetup({ onSetupComplete }: { onSetupComplete: ()
 
         <div className="mt-6 pt-6 border-t border-slate-100 text-xs text-slate-500">
           <p>
-            <strong>Nota:</strong> As credenciais serão salvas apenas no seu navegador (localStorage) para fins de demonstração.
+            <strong>Nota:</strong> Esta tela nunca é habilitada na versão de produção.
           </p>
         </div>
       </div>
     </div>
   );
 }
-

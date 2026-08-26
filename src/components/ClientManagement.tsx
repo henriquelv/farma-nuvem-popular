@@ -6,6 +6,7 @@ import { isFutureDate, maskCPF, maskDate, normalizePersonName, parseDateToDB, sa
 import { buildPrescriptionMeta, formatDateBR, getPrescriptionEndDate, isPdfDocument } from '../lib/documents';
 import { prepareDocumentForUpload, checkFileFeasibility } from '../lib/media-compression';
 import { searchMatchScore } from '../lib/search';
+import { documentBucket } from '../lib/storage';
 import { motion, AnimatePresence } from 'motion/react';
 
 // --- VISUALIZADOR REUTILIZÁVEL (MESMO DO PROFILE) ---
@@ -461,12 +462,11 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
       const fileToUpload = prepared.file;
       const ext = fileToUpload.name.split('.').pop();
       const path = `cadastros/cadastro_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-      const { error: upErr } = await supabase.storage.from('documentos').upload(path, fileToUpload, {
+      const { error: upErr } = await supabase.storage.from(documentBucket).upload(path, fileToUpload, {
         contentType: fileToUpload.type,
       });
       if (upErr) throw upErr;
-      const { data: urlData } = supabase.storage.from('documentos').getPublicUrl(path);
-      url_identidade_frontal = urlData.publicUrl;
+      url_identidade_frontal = path;
 
       const { data: newClient, error: insertError } = await supabase.from('clientes').insert([{
         nome_completo: normalizedName,
@@ -482,7 +482,7 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
         venda_id: null,
         cliente_id: newClient.id,
         tipo: 'receita',
-        url: urlData.publicUrl,
+        url: path,
         nome_arquivo: buildPrescriptionMeta(documentoReceita.name, receitaInicioDb),
       }]);
       if (receitaError) throw receitaError;
@@ -491,7 +491,7 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
       onClose();
     } catch (err: any) {
       if (createdClientId) {
-        const { error: rollbackError } = await supabase.from('clientes').delete().eq('id', createdClientId);
+        const { error: rollbackError } = await supabase.rpc('rollback_empty_recent_client', { target_id: createdClientId });
         if (rollbackError) console.error('Falha ao remover cadastro incompleto:', rollbackError);
       }
       setError(explainSupabaseError(err));

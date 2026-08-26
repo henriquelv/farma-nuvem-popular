@@ -8,6 +8,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { formatDateBR, getDocumentName, isPdfDocument, parsePrescriptionMeta } from '../../lib/documents';
 import { matchesSearchText } from '../../lib/search';
+import { resolveDocumentRows } from '../../lib/storage';
 
 type DocumentFilter = 'todos' | 'receita' | 'cupom' | 'documento' | 'procuracao';
 
@@ -131,7 +132,7 @@ export default function Auditoria() {
       const { data, error } = await query;
       if (error) throw error;
 
-      let filtered = data || [];
+      let filtered = await resolveDocumentRows(data || []);
 
       if (searchClient.trim()) {
         const termDigits = searchClient.replace(/\D/g, '');

@@ -40,8 +40,8 @@ CREATE TABLE public.vendas (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     cliente_id UUID REFERENCES public.clientes(id) ON DELETE CASCADE,
     data_venda TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
-    nome_medicamento TEXT NOT NULL CHECK (length(btrim(nome_medicamento)) > 0),
-    valor NUMERIC(10, 2) NOT NULL CHECK (valor > 0),
+    nome_medicamento TEXT,
+    valor NUMERIC(10, 2),
     url_receita TEXT,
     url_cupom_fiscal TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
@@ -60,24 +60,90 @@ CREATE TABLE public.vendas_documentos (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- 4. Configuração do Storage (Bucket para documentos)
-INSERT INTO storage.buckets (id, name, public) VALUES ('documentos', 'documentos', true);
+-- 4. Perfis de acesso vinculados ao Supabase Auth
+CREATE TABLE public.user_profiles (
+    id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE RESTRICT,
+    full_name TEXT NOT NULL CHECK (length(btrim(full_name)) >= 3),
+    role TEXT NOT NULL CHECK (role IN ('admin', 'atendente')),
+    active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
 
--- 5. Políticas de Segurança (RLS - Row Level Security)
--- ATENÇÃO: Para este MVP, estamos permitindo acesso total anônimo. 
--- Em produção, você DEVE restringir isso apenas para usuários autenticados.
+CREATE OR REPLACE FUNCTION public.current_app_role()
+RETURNS TEXT
+LANGUAGE SQL
+STABLE
+SECURITY DEFINER
+SET search_path = pg_catalog, public, pg_temp
+AS $$
+    SELECT role FROM public.user_profiles
+    WHERE id = auth.uid() AND active = TRUE
+    LIMIT 1
+$$;
+
+CREATE OR REPLACE FUNCTION public.is_active_app_user()
+RETURNS BOOLEAN
+LANGUAGE SQL
+STABLE
+SECURITY DEFINER
+SET search_path = pg_catalog, public, pg_temp
+AS $$ SELECT public.current_app_role() IN ('admin', 'atendente') $$;
+
+CREATE OR REPLACE FUNCTION public.is_admin()
+RETURNS BOOLEAN
+LANGUAGE SQL
+STABLE
+SECURITY DEFINER
+SET search_path = pg_catalog, public, pg_temp
+AS $$ SELECT public.current_app_role() = 'admin' $$;
+
+CREATE OR REPLACE FUNCTION public.rollback_empty_recent_client(target_id UUID)
+RETURNS BOOLEAN
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = pg_catalog, public, pg_temp
+AS $$
+BEGIN
+    IF NOT public.is_active_app_user() THEN
+        RAISE EXCEPTION 'app_user_not_authorized' USING ERRCODE = '42501';
+    END IF;
+    DELETE FROM public.clientes
+    WHERE id = target_id
+      AND created_at >= now() - INTERVAL '15 minutes'
+      AND NOT EXISTS (SELECT 1 FROM public.vendas WHERE cliente_id = target_id)
+      AND NOT EXISTS (SELECT 1 FROM public.vendas_documentos WHERE cliente_id = target_id);
+    RETURN FOUND;
+END;
+$$;
+
+-- 5. Storage privado
+INSERT INTO storage.buckets (id, name, public) VALUES ('documentos', 'documentos', false);
+
+-- 6. Políticas de Segurança (RLS)
+ALTER TABLE public.user_profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.clientes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.vendas ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.vendas_documentos ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Permitir acesso total anonimo clientes" ON public.clientes FOR ALL USING (true);
-CREATE POLICY "Permitir acesso total anonimo vendas" ON public.vendas FOR ALL USING (true);
-CREATE POLICY "Permitir acesso total anonimo vendas_documentos" ON public.vendas_documentos FOR ALL USING (true);
+CREATE POLICY user_profiles_select_own ON public.user_profiles FOR SELECT TO authenticated USING (id = auth.uid());
+CREATE POLICY user_profiles_admin_all ON public.user_profiles FOR ALL TO authenticated USING (public.is_admin()) WITH CHECK (public.is_admin());
 
--- Política para o Storage
-CREATE POLICY "Permitir acesso total anonimo storage" ON storage.objects FOR ALL USING (bucket_id = 'documentos');
+CREATE POLICY clientes_authenticated_select ON public.clientes FOR SELECT TO authenticated USING (public.is_active_app_user());
+CREATE POLICY clientes_authenticated_insert ON public.clientes FOR INSERT TO authenticated WITH CHECK (public.is_active_app_user());
+CREATE POLICY clientes_admin_update ON public.clientes FOR UPDATE TO authenticated USING (public.is_admin()) WITH CHECK (public.is_admin());
+CREATE POLICY clientes_admin_delete ON public.clientes FOR DELETE TO authenticated USING (public.is_admin());
 
--- 6. Índices de Performance
+CREATE POLICY vendas_authenticated_select ON public.vendas FOR SELECT TO authenticated USING (public.is_active_app_user());
+CREATE POLICY vendas_authenticated_insert ON public.vendas FOR INSERT TO authenticated WITH CHECK (public.is_active_app_user());
+
+CREATE POLICY vendas_documentos_authenticated_select ON public.vendas_documentos FOR SELECT TO authenticated USING (public.is_active_app_user());
+CREATE POLICY vendas_documentos_authenticated_insert ON public.vendas_documentos FOR INSERT TO authenticated WITH CHECK (public.is_active_app_user());
+
+CREATE POLICY documentos_authenticated_select ON storage.objects FOR SELECT TO authenticated USING (bucket_id = 'documentos' AND public.is_active_app_user());
+CREATE POLICY documentos_authenticated_insert ON storage.objects FOR INSERT TO authenticated WITH CHECK (bucket_id = 'documentos' AND public.is_active_app_user());
+
+-- 7. Índices de Performance
 CREATE INDEX IF NOT EXISTS idx_vendas_data_venda ON public.vendas(data_venda);
 CREATE INDEX IF NOT EXISTS idx_clientes_cpf ON public.clientes(cpf);
 CREATE INDEX IF NOT EXISTS idx_vendas_documentos_venda_id ON public.vendas_documentos(venda_id);

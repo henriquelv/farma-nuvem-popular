@@ -6,7 +6,6 @@
  */
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-// Tenta pegar as variáveis de ambiente, se existirem
 const supabaseUrlEnv = import.meta.env.VITE_SUPABASE_URL || '';
 const supabaseAnonKeyEnv = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
@@ -15,9 +14,8 @@ let supabaseClient: SupabaseClient | null = null;
 export const getSupabase = (): SupabaseClient | null => {
   if (supabaseClient) return supabaseClient;
 
-  // Se não tiver no .env, tenta pegar do localStorage (para facilitar o teste no MVP)
-  const url = supabaseUrlEnv || localStorage.getItem('supabaseUrl');
-  const key = supabaseAnonKeyEnv || localStorage.getItem('supabaseAnonKey');
+  const url = supabaseUrlEnv || (!import.meta.env.PROD ? localStorage.getItem('supabaseUrl') : '');
+  const key = supabaseAnonKeyEnv || (!import.meta.env.PROD ? localStorage.getItem('supabaseAnonKey') : '');
 
   if (url && key) {
     supabaseClient = createClient(url, key);
@@ -28,12 +26,16 @@ export const getSupabase = (): SupabaseClient | null => {
 };
 
 export const setSupabaseCredentials = (url: string, key: string) => {
+  if (import.meta.env.PROD) {
+    throw new Error('A configuração manual do Supabase está desativada em produção.');
+  }
   localStorage.setItem('supabaseUrl', url);
   localStorage.setItem('supabaseAnonKey', key);
   supabaseClient = createClient(url, key);
 };
 
 export const clearSupabaseCredentials = () => {
+  if (import.meta.env.PROD) return;
   localStorage.removeItem('supabaseUrl');
   localStorage.removeItem('supabaseAnonKey');
   supabaseClient = null;

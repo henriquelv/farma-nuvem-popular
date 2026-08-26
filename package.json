@@ -11,7 +11,10 @@
     "lint": "tsc --noEmit",
     "storage:optimize:dry": "tsx scripts/optimize-existing-storage.ts --dry-run",
     "storage:optimize": "tsx scripts/optimize-existing-storage.ts",
-    "storage:restore": "tsx scripts/restore-storage-backup.ts"
+    "storage:restore": "tsx scripts/restore-storage-backup.ts",
+    "backup:production": "tsx scripts/backup-production.ts",
+    "restore:production": "tsx scripts/restore-production-backup.ts",
+    "auth:provision": "tsx scripts/provision-user-role.ts"
   },
   "dependencies": {
     "@google/genai": "^1.46.0",

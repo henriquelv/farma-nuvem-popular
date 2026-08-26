@@ -5,6 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 import sharp from 'sharp';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import * as fs from 'node:fs';
+import * as crypto from 'node:crypto';
 import * as process from 'node:process';
 
 const args = process.argv.slice(2);
@@ -25,11 +26,18 @@ function readNumber(name: string, fallback: number) {
 
 const manifestPath = readValue('--manifest');
 const limit = readNumber('--limit', Infinity);
+const apply = args.includes('--apply');
+const confirmation = readValue('--confirm');
 const supabaseUrl = process.env.SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!manifestPath) {
   console.error('Informe --manifest reports/storage-optimization/manifest-XXXX.json');
+  process.exit(1);
+}
+
+if (apply && confirmation !== 'RESTORE_STORAGE_BACKUP') {
+  console.error('Restore real exige --apply --confirm RESTORE_STORAGE_BACKUP');
   process.exit(1);
 }
 
@@ -61,7 +69,7 @@ async function main() {
   const entries = Array.isArray(manifest.entries) ? manifest.entries.slice(0, limit) : [];
   const report: any[] = [];
 
-  console.log(`Restaurando ${entries.length} arquivo(s) a partir de ${manifestPath}`);
+  console.log(`${apply ? 'Restaurando' : 'Validando (dry-run)'} ${entries.length} arquivo(s) a partir de ${manifestPath}`);
 
   for (const entry of entries) {
     try {
@@ -69,6 +77,20 @@ async function main() {
       const buffer = fs.readFileSync(entry.localBackupPath);
       const contentType = entry.contentTypeBefore || 'application/octet-stream';
       await validate(buffer, contentType);
+      const localHash = crypto.createHash('sha256').update(buffer).digest('hex');
+      if (entry.sha256Original && localHash !== entry.sha256Original) throw new Error('hash do backup local divergente');
+
+      if (!apply) {
+        report.push({
+          originalPath: entry.originalPath,
+          localBackupPath: entry.localBackupPath,
+          bytes: buffer.length,
+          sha256: localHash,
+          status: 'validated-dry-run',
+        });
+        console.log(`DRY ${entry.originalPath}`);
+        continue;
+      }
 
       const { error } = await supabase.storage.from(bucket).upload(entry.originalPath, buffer, {
         contentType,
@@ -80,6 +102,7 @@ async function main() {
       if (downloadError || !data) throw downloadError || new Error('download pos-restore falhou');
       const restored = Buffer.from(await data.arrayBuffer());
       await validate(restored, contentType);
+      if (crypto.createHash('sha256').update(restored).digest('hex') !== localHash) throw new Error('hash pos-restore divergente');
 
       report.push({
         originalPath: entry.originalPath,
@@ -101,9 +124,11 @@ async function main() {
   }
 
   fs.mkdirSync('reports/storage-optimization', { recursive: true });
-  const out = `reports/storage-optimization/restore-${new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)}.json`;
-  fs.writeFileSync(out, JSON.stringify({ manifestPath, entries: report }, null, 2));
+  const out = `reports/storage-optimization/restore-${apply ? 'apply' : 'dry-run'}-${new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)}.json`;
+  const failed = report.filter((entry) => entry.status === 'failed').length;
+  fs.writeFileSync(out, JSON.stringify({ manifestPath, mode: apply ? 'apply' : 'dry-run', status: failed ? 'failed' : 'success', entries: report }, null, 2));
   console.log(`Relatorio de restore: ${out}`);
+  if (failed) process.exit(1);
 }
 
 main().catch((error) => {

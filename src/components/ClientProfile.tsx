@@ -22,6 +22,7 @@ import {
 } from '../lib/documents';
 import { isFutureDate, maskDate, parseDateToDB } from '../lib/validators';
 import { prepareDocumentForUpload, checkFileFeasibility } from '../lib/media-compression';
+import { documentBucket, resolveDocumentRows, resolveDocumentUrl } from '../lib/storage';
 
 type DocumentTab = 'receita' | 'documento' | 'procuracao';
 
@@ -208,7 +209,8 @@ export default function ClientProfile() {
       const { data: cData, error: clientError } = await supabase.from('clientes')
         .select('id, nome_completo, url_identidade_frontal, created_at').eq('id', id).single();
       if (clientError) throw clientError;
-      setClient(cData);
+      const signedIdentityUrl = await resolveDocumentUrl(cData.url_identidade_frontal);
+      setClient({ ...cData, url_identidade_frontal: signedIdentityUrl || cData.url_identidade_frontal });
       const { data: vendasData, error: salesError } = await supabase.from('vendas')
         .select('id, created_at, data_venda').eq('cliente_id', id).order('data_venda', { ascending: false });
       if (salesError) throw salesError;
@@ -216,7 +218,7 @@ export default function ClientProfile() {
       const { data: docsData, error: docsError } = await supabase.from('vendas_documentos')
         .select('*').eq('cliente_id', id);
       if (docsError) throw docsError;
-      setAllDocs(docsData || []);
+      setAllDocs(await resolveDocumentRows(docsData || []));
     } catch (err: any) { setLoadError(explainSupabaseError(err)); } finally { setLoading(false); }
   };
 
@@ -762,14 +764,13 @@ function NewRegistroModal({ client, receitaStatus, onClose, onAdded }: any) {
           const fileToUpload = prepared.file;
           const ext  = fileToUpload.name.split('.').pop();
           const path = `${tipo}/${tipo}_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-          const { error: upErr } = await supabase.storage.from('documentos').upload(path, fileToUpload, {
+          const { error: upErr } = await supabase.storage.from(documentBucket).upload(path, fileToUpload, {
             contentType: fileToUpload.type,
           });
           if (upErr) throw upErr;
-          const { data: urlData } = supabase.storage.from('documentos').getPublicUrl(path);
           pendingDocuments.push({
             venda_id: venda.id, cliente_id: client.id,
-            tipo, url: urlData.publicUrl, nome_arquivo: f.name,
+            tipo, url: path, nome_arquivo: f.name,
           });
         }
       };
@@ -894,16 +895,15 @@ function NewPrescriptionModal({ client, onClose, onAdded }: any) {
       const fileToUpload = prepared.file;
       const ext = fileToUpload.name.split('.').pop();
       const path = `receita/receita_${client.id}_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-      const { error: upErr } = await supabase.storage.from('documentos').upload(path, fileToUpload, {
+      const { error: upErr } = await supabase.storage.from(documentBucket).upload(path, fileToUpload, {
         contentType: fileToUpload.type,
       });
       if (upErr) throw upErr;
-      const { data: urlData } = supabase.storage.from('documentos').getPublicUrl(path);
       const { error: insertError } = await supabase.from('vendas_documentos').insert([{
         venda_id: null,
         cliente_id: client.id,
         tipo: 'receita',
-        url: urlData.publicUrl,
+        url: path,
         nome_arquivo: buildPrescriptionMeta(file.name, inicioDb),
       }]);
       if (insertError) throw insertError;
@@ -1015,16 +1015,15 @@ function NewPatientDocumentModal({ client, tipo, onClose, onAdded }: { client: a
       const fileToUpload = prepared.file;
       const ext = fileToUpload.name.split('.').pop();
       const path = `${storageFolder}/${storageFolder}_${client.id}_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-      const { error: upErr } = await supabase.storage.from('documentos').upload(path, fileToUpload, {
+      const { error: upErr } = await supabase.storage.from(documentBucket).upload(path, fileToUpload, {
         contentType: fileToUpload.type,
       });
       if (upErr) throw upErr;
-      const { data: urlData } = supabase.storage.from('documentos').getPublicUrl(path);
       const { error: insertError } = await supabase.from('vendas_documentos').insert([{
         venda_id: null,
         cliente_id: client.id,
         tipo,
-        url: urlData.publicUrl,
+        url: path,
         nome_arquivo: file.name,
       }]);
       if (insertError) throw insertError;
