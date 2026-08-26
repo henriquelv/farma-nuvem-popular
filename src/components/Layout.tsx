@@ -1,21 +1,19 @@
-import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
-import { LayoutDashboard, Users, LogOut, Pill, Settings } from 'lucide-react';
-import { clearSupabaseCredentials } from '../lib/supabase';
+import React, { useEffect, useRef } from 'react';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { Users, Pill, Settings } from 'lucide-react';
 
 export default function Layout() {
-  const handleLogout = () => {
-    clearSupabaseCredentials();
-    window.location.reload();
-  };
+  const location = useLocation();
+  const mainRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    mainRef.current?.scrollTo({ top: 0, left: 0 });
+  }, [location.pathname]);
 
   return (
-    <div className="flex h-screen bg-slate-50 text-slate-900 font-sans relative overflow-hidden">
-      {/* Subtle animated background gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-100/40 via-slate-50 to-slate-100/20 pointer-events-none"></div>
-
+    <div className="flex h-dvh bg-slate-100 text-slate-900 font-sans relative overflow-hidden">
       {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-slate-200 flex flex-col shadow-sm z-10 relative">
+      <aside className="hidden md:flex w-64 bg-white border-r border-slate-200 flex-col z-10 relative flex-shrink-0">
         <div className="p-6 flex items-center gap-3 border-b border-slate-100">
           <div className="bg-blue-600 text-white p-2 rounded-lg">
             <Pill size={24} />
@@ -28,23 +26,9 @@ export default function Layout() {
 
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-                isActive
-                  ? 'bg-blue-50 text-blue-700 font-semibold'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-              }`
-            }
-          >
-            <LayoutDashboard size={20} />
-            <span>Dashboard</span>
-          </NavLink>
-          
-          <NavLink
             to="/clientes"
             className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
+              `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                 isActive
                   ? 'bg-blue-50 text-blue-700 font-semibold'
                   : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
@@ -58,7 +42,7 @@ export default function Layout() {
           <NavLink
             to="/admin"
             className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
+              `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                 isActive
                   ? 'bg-slate-900 text-white font-semibold shadow-lg shadow-slate-900/10'
                   : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
@@ -71,20 +55,32 @@ export default function Layout() {
 
         </nav>
 
-        <div className="p-4 border-t border-slate-100">
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-3 px-4 py-3 w-full text-left text-slate-600 hover:bg-red-50 hover:text-red-600 rounded-xl transition-colors"
-          >
-            <LogOut size={20} />
-            <span>Desconectar DB</span>
-          </button>
-        </div>
       </aside>
 
+      <header className="md:hidden fixed inset-x-0 top-0 z-30 h-16 bg-white border-b border-slate-200 flex items-center px-4">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-9 h-9 rounded-lg bg-blue-600 text-white flex items-center justify-center flex-shrink-0">
+            <Pill size={20} />
+          </div>
+          <div className="min-w-0">
+            <p className="font-black text-slate-900 truncate">Farmácia Popular</p>
+            <p className="text-[10px] font-bold uppercase text-slate-400">Auditoria</p>
+          </div>
+        </div>
+      </header>
+
+      <nav className="md:hidden fixed inset-x-0 bottom-0 z-30 bg-white border-t border-slate-200 px-3 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] grid grid-cols-2 gap-2">
+        <NavLink to="/clientes" className={({ isActive }) => `h-12 rounded-lg flex items-center justify-center gap-2 text-sm font-black ${isActive ? 'bg-blue-50 text-blue-700' : 'text-slate-500'}`}>
+          <Users size={19} /> Pacientes
+        </NavLink>
+        <NavLink to="/admin" className={({ isActive }) => `h-12 rounded-lg flex items-center justify-center gap-2 text-sm font-black ${isActive ? 'bg-slate-900 text-white' : 'text-slate-500'}`}>
+          <Settings size={19} /> Admin
+        </NavLink>
+      </nav>
+
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto bg-transparent relative z-10">
-        <div className="p-8 max-w-7xl mx-auto">
+      <main ref={mainRef} className="min-w-0 flex-1 overflow-y-auto bg-slate-100 relative z-10 pt-16 pb-20 md:pt-0 md:pb-0">
+        <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
           <Outlet />
         </div>
       </main>

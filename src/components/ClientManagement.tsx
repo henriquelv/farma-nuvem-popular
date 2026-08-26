@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CalendarDays, FileText, Search, Plus, User, X, Filter, ZoomIn, ZoomOut, Printer, Maximize2, UploadCloud, ChevronRight } from 'lucide-react';
+import { CalendarDays, FileText, Search, Plus, User, X, Filter, ZoomIn, ZoomOut, Printer, Maximize2, UploadCloud, ChevronRight, LoaderCircle } from 'lucide-react';
 import { getSupabase, explainSupabaseError } from '../lib/supabase';
-import { maskCPF, maskDate, parseDateToDB } from '../lib/validators';
+import { isFutureDate, maskCPF, maskDate, normalizePersonName, parseDateToDB, sanitizePersonNameInput, validateCPF } from '../lib/validators';
 import { buildPrescriptionMeta, formatDateBR, getPrescriptionEndDate, isPdfDocument } from '../lib/documents';
 import { prepareDocumentForUpload, checkFileFeasibility } from '../lib/media-compression';
+import { searchMatchScore } from '../lib/search';
 import { motion, AnimatePresence } from 'motion/react';
 
 // --- VISUALIZADOR REUTILIZÁVEL (MESMO DO PROFILE) ---
@@ -17,7 +18,7 @@ function FullscreenViewer({ url, title, onClose }: any) {
     const win = window.open('', '_blank');
     if (win) {
       const tag = showAsPdf ? 'iframe' : 'img';
-      win.document.write(`<html><body style="margin:0;display:flex;justify-content:center;align-items:center;background:#fff;"><${tag} src="${url}" style="width:100%;height:100%;border:0;object-fit:contain;"></${tag}></body></html>`);
+      win.document.write(`<html lang="pt-BR" translate="no"><body class="notranslate" translate="no" style="margin:0;display:flex;justify-content:center;align-items:center;background:#fff;"><${tag} src="${url}" style="width:100%;height:100%;border:0;object-fit:contain;"></${tag}></body></html>`);
       win.document.close(); win.focus();
       setTimeout(() => { win.print(); win.close(); }, 500);
     }
@@ -51,43 +52,50 @@ export default function ClientManagement() {
   // Advanced Filters
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [medicamento, setMedicamento] = useState('');
-  const [valorMin, setValorMin] = useState('');
-  const [valorMax, setValorMax] = useState('');
-  const [apenasComDocumentos, setApenasComDocumentos] = useState(false);
-  const [filterTipoDoc, setFilterTipoDoc] = useState<'todos' | 'receita' | 'cpf' | 'cupom'>('todos');
+  const [periodTarget, setPeriodTarget] = useState<'compras' | 'documentos'>('compras');
+  const [filterTipoDoc, setFilterTipoDoc] = useState<'todos' | 'receita' | 'cupom' | 'documento' | 'procuracao'>('todos');
   
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [searching, setSearching] = useState(false);
+  const [searchError, setSearchError] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [modalDoc, setModalDoc] = useState<{ url: string; title: string } | null>(null);
   const navigate = useNavigate();
+  const searchSequence = useRef(0);
 
-  const handleSearch = async (e?: React.FormEvent) => {
+  const handleSearch = async (e?: React.FormEvent, live = false) => {
     if (e) e.preventDefault();
     const supabase = getSupabase();
     if (!supabase) return;
 
-    setLoading(true);
+    const sequence = ++searchSequence.current;
+    if (live) setSearching(true);
+    else setLoading(true);
+    setSearchError('');
     try {
+      const startDb = startDate ? parseDateToDB(startDate) : null;
+      const endDb = endDate ? parseDateToDB(endDate) : null;
+      if (startDate && !startDb) throw new Error('Data inicial inválida. Use DD/MM/AAAA.');
+      if (endDate && !endDb) throw new Error('Data final inválida. Use DD/MM/AAAA.');
+      if (startDb && endDb && startDb > endDb) throw new Error('A data inicial não pode ser posterior à data final.');
+
       let query = supabase.from('clientes').select('*').order('created_at', { ascending: false });
 
-      const hasAdvancedFilters = startDate || endDate || medicamento || valorMin || valorMax || apenasComDocumentos || filterTipoDoc !== 'todos';
+      const hasAdvancedFilters = startDate || endDate || filterTipoDoc !== 'todos' || periodTarget === 'documentos';
 
       if (hasAdvancedFilters) {
-        // Filtro por tipo de documento (via vendas_documentos)
-        if (filterTipoDoc !== 'todos') {
-          let docsQuery = supabase.from('vendas_documentos').select('cliente_id').eq('tipo', filterTipoDoc);
+        if (periodTarget === 'documentos' || filterTipoDoc !== 'todos') {
+          let docsQuery = supabase.from('vendas_documentos').select('cliente_id');
+          if (filterTipoDoc !== 'todos') docsQuery = docsQuery.eq('tipo', filterTipoDoc);
 
           if (startDate.length === 10) {
-            const startDb = parseDateToDB(startDate);
             if (startDb) {
               const start = new Date(startDb); start.setHours(0, 0, 0, 0);
               docsQuery = docsQuery.gte('created_at', start.toISOString());
             }
           }
           if (endDate.length === 10) {
-            const endDb = parseDateToDB(endDate);
             if (endDb) {
               const end = new Date(endDb); end.setHours(23, 59, 59, 999);
               docsQuery = docsQuery.lte('created_at', end.toISOString());
@@ -100,71 +108,87 @@ export default function ClientManagement() {
           if (clientIds.length > 0) {
             query = query.in('id', clientIds);
           } else {
-            setData([]); setLoading(false); return;
+            if (sequence === searchSequence.current) setData([]);
+            return;
           }
         } else {
-          // Filtro via vendas (período, medicamento, valor)
           let vendasQuery = supabase.from('vendas').select('cliente_id');
 
-          if (startDate.length === 10 && endDate.length === 10) {
-            const startDb = parseDateToDB(startDate);
-            const endDb = parseDateToDB(endDate);
-            if (startDb && endDb) {
+          if (startDb) {
               const start = new Date(startDb); start.setHours(0, 0, 0, 0);
-              const end = new Date(endDb); end.setHours(23, 59, 59, 999);
-              vendasQuery = vendasQuery.gte('data_venda', start.toISOString()).lte('data_venda', end.toISOString());
-            }
+            vendasQuery = vendasQuery.gte('data_venda', start.toISOString());
           }
-          if (medicamento) vendasQuery = vendasQuery.ilike('nome_medicamento', `%${medicamento}%`);
-          if (valorMin) vendasQuery = vendasQuery.gte('valor', parseFloat(valorMin));
-          if (valorMax) vendasQuery = vendasQuery.lte('valor', parseFloat(valorMax));
-
+          if (endDb) {
+              const end = new Date(endDb); end.setHours(23, 59, 59, 999);
+            vendasQuery = vendasQuery.lte('data_venda', end.toISOString());
+          }
           const { data: vendasData, error: vendasError } = await vendasQuery;
           if (vendasError) throw vendasError;
           const clientIds = [...new Set(vendasData.map(v => v.cliente_id))];
           if (clientIds.length > 0) {
             query = query.in('id', clientIds);
           } else {
-            setData([]); setLoading(false); return;
+            if (sequence === searchSequence.current) setData([]);
+            return;
           }
         }
       }
 
-      if (searchTerm) {
-        const cleanCpf = searchTerm.replace(/\D/g, '');
-        if (cleanCpf.length > 0) {
-           query = query.or(`nome_completo.ilike.%${searchTerm}%,cpf.ilike.%${cleanCpf}%`);
-        } else {
-           query = query.ilike('nome_completo', `%${searchTerm}%`);
-        }
+      const { data: clientsData, error } = await query.limit(1000);
+      if (error) throw error;
+      const cleanCpf = searchTerm.replace(/\D/g, '');
+      const filtered = searchTerm.trim()
+        ? (clientsData || []).map((client: any) => {
+          const cpfMatch = cleanCpf.length > 0 && String(client.cpf || '').includes(cleanCpf);
+          return { client, score: cpfMatch ? 0 : searchMatchScore(client.nome_completo, searchTerm) };
+        }).filter(({ score }: any) => Number.isFinite(score))
+        : (clientsData || []).map((client: any) => ({ client, score: 0 }));
+      const directMatches = filtered.filter(({ score }: any) => score <= 2);
+      const relevantMatches = directMatches.length > 0 ? directMatches : filtered;
+      relevantMatches.sort((left: any, right: any) => left.score - right.score);
+      const resultLimit = directMatches.length > 0 ? 50 : 10;
+      if (sequence === searchSequence.current) {
+        setData(relevantMatches.slice(0, resultLimit).map(({ client }: any) => client));
       }
+    } catch (err: any) {
+      if (sequence === searchSequence.current) setSearchError(explainSupabaseError(err));
+    } finally {
+      if (sequence === searchSequence.current) {
+        setLoading(false);
+        setSearching(false);
+      }
+    }
+  };
 
-      const { data: clientsData, error } = await query.limit(50);
+  const handleClearFilters = async () => {
+    setStartDate('');
+    setEndDate('');
+    setSearchTerm('');
+    setPeriodTarget('compras');
+    setFilterTipoDoc('todos');
+    setShowFilters(false);
+    const supabase = getSupabase();
+    if (!supabase) return;
+    setLoading(true);
+    setSearchError('');
+    try {
+      const { data: clientsData, error } = await supabase.from('clientes')
+        .select('*').order('created_at', { ascending: false }).limit(50);
       if (error) throw error;
       setData(clientsData || []);
-    } catch (err) {
-      console.error('Erro ao buscar dados:', err);
+    } catch (err: any) {
+      setSearchError(explainSupabaseError(err));
     } finally {
       setLoading(false);
     }
   };
 
-  const handleClearFilters = () => {
-    setStartDate('');
-    setEndDate('');
-    setSearchTerm('');
-    setMedicamento('');
-    setValorMin('');
-    setValorMax('');
-    setApenasComDocumentos(false);
-    setFilterTipoDoc('todos');
-    setShowFilters(false);
-    handleSearch();
-  };
-
   useEffect(() => {
-    handleSearch();
-  }, []);
+    const timer = window.setTimeout(() => {
+      void handleSearch(undefined, searchTerm.trim().length > 0);
+    }, searchTerm.trim().length > 0 ? 250 : 0);
+    return () => window.clearTimeout(timer);
+  }, [searchTerm]);
 
   return (
     <motion.div 
@@ -186,7 +210,7 @@ export default function ClientManagement() {
         </button>
       </div>
 
-      <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+      <div className="bg-white p-5 sm:p-6 rounded-lg shadow-sm border border-slate-200">
         <form onSubmit={handleSearch} className="flex flex-col gap-4 mb-6">
           <div className="flex gap-3">
             <div className="relative flex-1">
@@ -197,9 +221,20 @@ export default function ClientManagement() {
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                autoComplete="off"
+                spellCheck={false}
                 placeholder="Buscar por Nome ou CPF..."
-                className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-slate-700 font-medium"
+                className="w-full pl-11 pr-12 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-slate-700 font-medium"
               />
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                {searching ? (
+                  <LoaderCircle size={18} className="animate-spin text-blue-500" aria-label="Buscando" />
+                ) : searchTerm ? (
+                  <button type="button" onClick={() => setSearchTerm('')} className="p-1 text-slate-400 hover:text-slate-700" title="Limpar busca" aria-label="Limpar busca">
+                    <X size={17} />
+                  </button>
+                ) : null}
+              </div>
             </div>
             <button
               type="button"
@@ -224,35 +259,51 @@ export default function ClientManagement() {
           <AnimatePresence>
             {showFilters && (
               <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-                <div className="p-8 bg-slate-50 rounded-[2rem] border-2 border-slate-100 mt-4 space-y-8">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {/* Linha 1: Período e Medicamento */}
+                <div className="p-5 bg-slate-50 rounded-lg border border-slate-200 mt-4 space-y-5">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <div className="space-y-3">
-                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-1">Período da Venda</label>
-                      <div className="flex gap-2">
-                        <input type="text" value={startDate} onChange={(e) => setStartDate(maskDate(e.target.value))} placeholder="Início" maxLength={10} className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-sm font-bold" />
-                        <input type="text" value={endDate} onChange={(e) => setEndDate(maskDate(e.target.value))} placeholder="Fim" maxLength={10} className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-sm font-bold" />
+                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.18em] px-1">Buscar período em</label>
+                      <div className="grid grid-cols-2 gap-2">
+                        {([
+                          { v: 'compras', label: 'Compras' },
+                          { v: 'documentos', label: 'Docs' },
+                        ] as const).map(({ v, label }) => (
+                          <button
+                            key={v}
+                            type="button"
+                            onClick={() => setPeriodTarget(v)}
+                            className={`px-3 py-3 rounded-lg border font-black text-xs transition-colors ${
+                              periodTarget === v ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300'
+                            }`}
+                          >
+                            {label}
+                          </button>
+                        ))}
                       </div>
                     </div>
                     <div className="space-y-3">
-                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-1">Medicamento</label>
-                      <input type="text" value={medicamento} onChange={(e) => setMedicamento(e.target.value)} placeholder="Ex: Losartana..." className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-sm font-bold" />
+                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.18em] px-1">Período</label>
+                      <div className="flex gap-2">
+                        <input type="text" value={startDate} onChange={(e) => setStartDate(maskDate(e.target.value))} placeholder="Início" maxLength={10} className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm font-bold" />
+                        <input type="text" value={endDate} onChange={(e) => setEndDate(maskDate(e.target.value))} placeholder="Fim" maxLength={10} className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm font-bold" />
+                      </div>
                     </div>
                     <div className="space-y-3">
-                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-1">Tipo de Documento</label>
+                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.18em] px-1">Tipo de documento</label>
                       <div className="grid grid-cols-2 gap-2">
                         {([
                           { v: 'todos', label: 'Todos' },
                           { v: 'receita', label: 'Receitas' },
-                          { v: 'cpf', label: 'CPF' },
                           { v: 'cupom', label: 'Cupons' },
+                          { v: 'documento', label: 'Documento' },
+                          { v: 'procuracao', label: 'Procuração' },
                         ] as const).map(({ v, label }) => (
                           <button
                             key={v}
                             type="button"
                             onClick={() => setFilterTipoDoc(v)}
-                            className={`px-3 py-2.5 rounded-xl border-2 transition-all font-black text-[10px] uppercase tracking-widest ${
-                              filterTipoDoc === v ? 'bg-blue-600 border-blue-600 text-white shadow-lg' : 'bg-white border-slate-100 text-slate-400 hover:border-slate-200'
+                            className={`px-3 py-2.5 rounded-lg border transition-colors font-black text-[10px] uppercase tracking-widest ${
+                              filterTipoDoc === v ? 'bg-blue-600 border-blue-600 text-white' : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300'
                             }`}
                           >
                             {label}
@@ -263,7 +314,7 @@ export default function ClientManagement() {
                   </div>
                   <div className="flex justify-end gap-3 pt-4 border-t border-slate-200/50">
                     <button type="button" onClick={handleClearFilters} className="px-6 py-3 text-[10px] font-black uppercase text-slate-400 tracking-widest hover:text-slate-600 transition-colors">Limpar Tudo</button>
-                    <button type="submit" className="px-8 py-3 bg-slate-900 text-white rounded-xl text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-slate-900/10">Aplicar Filtros</button>
+                    <button type="submit" className="px-8 py-3 bg-slate-900 text-white rounded-lg text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-slate-900/10">Aplicar Filtros</button>
                   </div>
                 </div>
               </motion.div>
@@ -271,18 +322,24 @@ export default function ClientManagement() {
           </AnimatePresence>
         </form>
 
+        {searchError && (
+          <div className="mb-5 rounded-lg border border-red-100 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+            {searchError}
+          </div>
+        )}
+
         {loading ? (
           <div className="py-20 flex justify-center">
             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div>
           </div>
         ) : data.length > 0 ? (
-          <div className="space-y-2">
+          <div className="space-y-2" aria-live="polite">
             {data.map((client, i) => (
               <motion.div
                 key={client.id}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.04 }}
+                transition={{ delay: Math.min(i * 0.015, 0.15) }}
                 onClick={() => navigate(`/clientes/${client.id}`)}
                 className="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 hover:border-blue-200 hover:bg-blue-50 cursor-pointer transition-all group"
               >
@@ -337,8 +394,21 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
     setError('');
 
     const dbDate = parseDateToDB(nascimento);
+    const normalizedName = normalizePersonName(nome);
+    if (normalizedName.length < 3) {
+      setError('Informe o nome completo do paciente.');
+      return;
+    }
+    if (!validateCPF(cpf)) {
+      setError('CPF inválido. Confira os 11 dígitos informados.');
+      return;
+    }
     if (!dbDate) {
       setError('Data de nascimento inválida. Digite no formato DD/MM/AAAA.');
+      return;
+    }
+    if (isFutureDate(dbDate)) {
+      setError('A data de nascimento não pode estar no futuro.');
       return;
     }
     const receitaInicioDb = parseDateToDB(receitaInicio);
@@ -350,19 +420,38 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
       setError('Informe a data de início da receita no formato DD/MM/AAAA.');
       return;
     }
+    if (isFutureDate(receitaInicioDb)) {
+      setError('A data de início da receita não pode estar no futuro.');
+      return;
+    }
 
-    setLoading(true);
-    setStatusMsg('');
     const supabase = getSupabase();
     if (!supabase) {
       setError('Credenciais do Supabase não configuradas.');
-      setLoading(false);
       return;
     }
+    const cleanCpf = cpf.replace(/\D/g, '');
+    const { data: existingClient, error: duplicateCheckError } = await supabase
+      .from('clientes')
+      .select('id, nome_completo')
+      .eq('cpf', cleanCpf)
+      .maybeSingle();
+    if (duplicateCheckError) {
+      setError(explainSupabaseError(duplicateCheckError));
+      return;
+    }
+    if (existingClient) {
+      setError(`Este CPF já está cadastrado para ${existingClient.nome_completo}.`);
+      return;
+    }
+
+    setLoading(true);
+    setStatusMsg('');
 
     const feasibilityErr = await checkFileFeasibility(documentoReceita);
     if (feasibilityErr) { setError(feasibilityErr); setLoading(false); return; }
 
+    let createdClientId: string | null = null;
     try {
       let url_identidade_frontal: string | null = null;
 
@@ -380,13 +469,14 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
       url_identidade_frontal = urlData.publicUrl;
 
       const { data: newClient, error: insertError } = await supabase.from('clientes').insert([{
-        nome_completo: nome.trim(),
-        cpf: cpf.replace(/\D/g, ''),
+        nome_completo: normalizedName,
+        cpf: cleanCpf,
         data_nascimento: dbDate,
         url_identidade_frontal,
       }]).select('id').single();
 
       if (insertError) throw insertError;
+      createdClientId = newClient.id;
 
       const { error: receitaError } = await supabase.from('vendas_documentos').insert([{
         venda_id: null,
@@ -400,6 +490,10 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
       onClientAdded();
       onClose();
     } catch (err: any) {
+      if (createdClientId) {
+        const { error: rollbackError } = await supabase.from('clientes').delete().eq('id', createdClientId);
+        if (rollbackError) console.error('Falha ao remover cadastro incompleto:', rollbackError);
+      }
       setError(explainSupabaseError(err));
     } finally {
       setLoading(false);
@@ -445,7 +539,12 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
                 required
                 type="text"
                 value={nome}
-                onChange={e => setNome(e.target.value)}
+                onChange={e => setNome(sanitizePersonNameInput(e.target.value))}
+                onBlur={() => setNome(normalizePersonName(nome))}
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck={false}
+                translate="no"
                 placeholder="Ex: Maria da Silva"
                 className="w-full px-4 py-3 text-base bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-500 focus:bg-white outline-none transition-all text-slate-800 font-medium"
               />
@@ -459,6 +558,8 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
                   type="text"
                   value={cpf}
                   onChange={e => setCpf(maskCPF(e.target.value))}
+                  inputMode="numeric"
+                  autoComplete="off"
                   maxLength={14}
                   placeholder="000.000.000-00"
                   className="w-full px-4 py-3 text-base bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-500 focus:bg-white outline-none transition-all text-slate-800 font-medium tracking-widest"
@@ -472,6 +573,8 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
                   type="text"
                   value={nascimento}
                   onChange={e => setNascimento(maskDate(e.target.value))}
+                  inputMode="numeric"
+                  autoComplete="off"
                   maxLength={10}
                   placeholder="DD/MM/AAAA"
                   className="w-full px-4 py-3 text-base bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-500 focus:bg-white outline-none transition-all text-slate-800 font-medium"
@@ -494,7 +597,7 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
                 <input
                   type="file"
                   required
-                  accept="image/*,application/pdf"
+                  accept="image/jpeg,image/png,image/webp,application/pdf"
                   onChange={e => setDocumentoReceita(e.target.files?.[0] || null)}
                   className="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10"
                 />
@@ -522,6 +625,8 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
                     type="text"
                     value={receitaInicio}
                     onChange={e => setReceitaInicio(maskDate(e.target.value))}
+                    inputMode="numeric"
+                    autoComplete="off"
                     maxLength={10}
                     placeholder="DD/MM/AAAA"
                     className="w-full px-4 py-3 text-base bg-white border-2 border-blue-100 rounded-2xl focus:border-blue-500 outline-none transition-all text-slate-800 font-medium"

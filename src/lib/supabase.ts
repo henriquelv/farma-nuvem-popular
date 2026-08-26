@@ -52,6 +52,20 @@ export const explainSupabaseError = (err: any): string => {
   if (err?.code === '23505' || msg.includes('duplicate key')) {
     return 'Este CPF já está cadastrado para outro paciente.';
   }
+  if (msg.includes('patient_has_audit_history')) {
+    return 'Este paciente possui histórico fiscal e não pode ser excluído.';
+  }
+  if (msg.includes('audit_records_are_immutable')) {
+    return 'Este registro faz parte do histórico fiscal e não pode ser alterado ou excluído.';
+  }
+  if (err?.code === '23514' || msg.includes('check constraint')) {
+    if (msg.includes('clientes_cpf_valid_check')) return 'CPF inválido. Confira os 11 dígitos informados.';
+    if (msg.includes('clientes_nascimento_valid_check')) return 'Data de nascimento inválida ou futura.';
+    if (msg.includes('clientes_nome_not_blank_check')) return 'Informe o nome completo do paciente.';
+    if (msg.includes('vendas_medicamento_not_blank_check')) return 'Informe o medicamento da compra.';
+    if (msg.includes('vendas_documentos_tipo_check')) return 'Tipo de documento inválido. Atualize a página e tente novamente.';
+    return 'Os dados informados são inválidos. Confira os campos e tente novamente.';
+  }
   if (msg.includes('bucket not found')) {
     return 'Bucket "documentos" não existe no Supabase. Crie-o no painel de Storage.';
   }

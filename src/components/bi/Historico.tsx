@@ -6,7 +6,6 @@ import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  LineChart, Line
 } from 'recharts';
 import { motion } from 'motion/react';
 
@@ -14,7 +13,7 @@ export default function BIHistorico() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [monthlyData, setMonthlyData] = useState<any[]>([]);
-  const [stats, setStats] = useState({ totalVendas: 0, totalValor: 0, mediaMensal: 0 });
+  const [stats, setStats] = useState({ totalVendas: 0, meses: 0, mediaMensal: 0 });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,7 +23,7 @@ export default function BIHistorico() {
       try {
         const { data: vendas, error } = await supabase
           .from('vendas')
-          .select('*')
+          .select('id, data_venda')
           .order('data_venda', { ascending: true });
 
         if (error) throw error;
@@ -35,18 +34,15 @@ export default function BIHistorico() {
         }
 
         const totalVendas = vendas.length;
-        const totalValor = vendas.reduce((acc, v) => acc + Number(v.valor), 0);
-
         // Group by Month/Year
         const monthMap = new Map();
         vendas.forEach(v => {
           const date = parseISO(v.data_venda);
           const monthKey = format(date, 'MMM/yy', { locale: ptBR });
           if (!monthMap.has(monthKey)) {
-            monthMap.set(monthKey, { mes: monthKey, valor: 0, qtd: 0 });
+            monthMap.set(monthKey, { mes: monthKey, qtd: 0 });
           }
           const current = monthMap.get(monthKey);
-          current.valor += Number(v.valor);
           current.qtd += 1;
         });
 
@@ -55,8 +51,8 @@ export default function BIHistorico() {
 
         setStats({
           totalVendas,
-          totalValor,
-          mediaMensal: chartData.length > 0 ? totalValor / chartData.length : 0
+          meses: chartData.length,
+          mediaMensal: chartData.length > 0 ? totalVendas / chartData.length : 0
         });
 
       } catch (err) {
@@ -111,39 +107,35 @@ export default function BIHistorico() {
               <div className="absolute -right-6 -top-6 text-indigo-50 opacity-50">
                 <TrendingUp size={120} />
               </div>
-              <p className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-2 relative z-10">Faturamento Acumulado</p>
-              <p className="text-4xl font-black text-slate-900 relative z-10">
-                R$ {stats.totalValor.toFixed(2).replace('.', ',')}
-              </p>
+              <p className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-2 relative z-10">Meses com registros</p>
+              <p className="text-4xl font-black text-slate-900 relative z-10">{stats.meses}</p>
             </div>
             <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden">
               <div className="absolute -right-6 -top-6 text-indigo-50 opacity-50">
                 <Calendar size={120} />
               </div>
-              <p className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-2 relative z-10">Média Mensal</p>
-              <p className="text-4xl font-black text-slate-900 relative z-10">
-                R$ {stats.mediaMensal.toFixed(2).replace('.', ',')}
-              </p>
+              <p className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-2 relative z-10">Média mensal</p>
+              <p className="text-4xl font-black text-slate-900 relative z-10">{stats.mediaMensal.toFixed(1).replace('.', ',')}</p>
             </div>
           </div>
 
           <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
             <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
               <TrendingUp className="text-indigo-500" />
-              Evolução do Faturamento (Mensal)
+              Registros por mês
             </h2>
             <div className="h-96">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={monthlyData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                   <XAxis dataKey="mes" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} dy={10} />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} tickFormatter={(val) => `R$${val}`} />
+                  <YAxis axisLine={false} tickLine={false} allowDecimals={false} tick={{ fill: '#64748b', fontSize: 12 }} />
                   <Tooltip 
                     contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
-                    formatter={(value) => [`R$ ${Number(value ?? 0).toFixed(2)}`, 'Faturamento']}
+                    formatter={(value) => [Number(value ?? 0), 'Registros']}
                     cursor={{ fill: '#f8fafc' }}
                   />
-                  <Bar dataKey="valor" fill="#4f46e5" radius={[6, 6, 0, 0]} />
+                  <Bar dataKey="qtd" fill="#4f46e5" radius={[6, 6, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

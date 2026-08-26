@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ShoppingCart, TrendingUp, Clock, Activity } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, FileText, Clock, Activity, Users } from 'lucide-react';
 import { getSupabase } from '../../lib/supabase';
-import { format, parseISO } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import {
-  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  BarChart, Bar
+  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
 import { motion } from 'motion/react';
 
@@ -14,8 +11,7 @@ export default function BIVendasHoje() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [hourlyData, setHourlyData] = useState<any[]>([]);
-  const [topMeds, setTopMeds] = useState<any[]>([]);
-  const [stats, setStats] = useState({ total: 0, valor: 0, ticketMedio: 0 });
+  const [stats, setStats] = useState({ total: 0, cupons: 0, pacientes: 0 });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +24,7 @@ export default function BIVendasHoje() {
         
         const { data, error } = await supabase
           .from('vendas')
-          .select('*')
+          .select('id, cliente_id, data_venda')
           .gte('data_venda', today.toISOString())
           .order('data_venda', { ascending: true });
 
@@ -38,11 +34,21 @@ export default function BIVendasHoje() {
         
         // Stats
         const total = vendas.length;
-        const valor = vendas.reduce((acc, v) => acc + Number(v.valor), 0);
+        const vendaIds = vendas.map((v) => v.id);
+        let cupons = 0;
+        if (vendaIds.length > 0) {
+          const { count, error: couponsError } = await supabase
+            .from('vendas_documentos')
+            .select('*', { count: 'exact', head: true })
+            .eq('tipo', 'cupom')
+            .in('venda_id', vendaIds);
+          if (couponsError) throw couponsError;
+          cupons = count || 0;
+        }
         setStats({
           total,
-          valor,
-          ticketMedio: total > 0 ? valor / total : 0
+          cupons,
+          pacientes: new Set(vendas.map((v) => v.cliente_id).filter(Boolean)).size,
         });
 
         // Hourly Data (8h to 20h)
@@ -55,23 +61,11 @@ export default function BIVendasHoje() {
           const date = new Date(v.data_venda);
           const hour = `${date.getHours().toString().padStart(2, '0')}:00`;
           if (hoursMap.has(hour)) {
-            hoursMap.set(hour, hoursMap.get(hour) + Number(v.valor));
+            hoursMap.set(hour, hoursMap.get(hour) + 1);
           }
         });
 
-        setHourlyData(Array.from(hoursMap, ([hora, valor]) => ({ hora, valor })));
-
-        // Top Meds
-        const medsMap = new Map();
-        vendas.forEach(v => {
-          medsMap.set(v.nome_medicamento, (medsMap.get(v.nome_medicamento) || 0) + 1);
-        });
-        
-        const sortedMeds = Array.from(medsMap, ([nome, qtd]) => ({ nome, qtd }))
-          .sort((a, b) => b.qtd - a.qtd)
-          .slice(0, 5);
-          
-        setTopMeds(sortedMeds);
+        setHourlyData(Array.from(hoursMap, ([hora, registros]) => ({ hora, registros })));
 
       } catch (err) {
         console.error(err);
@@ -123,29 +117,24 @@ export default function BIVendasHoje() {
             </div>
             <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden">
               <div className="absolute -right-6 -top-6 text-emerald-50 opacity-50">
-                <TrendingUp size={120} />
+                <FileText size={120} />
               </div>
-              <p className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-2 relative z-10">Faturamento Bruto</p>
-              <p className="text-4xl font-black text-slate-900 relative z-10">
-                R$ {stats.valor.toFixed(2).replace('.', ',')}
-              </p>
+              <p className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-2 relative z-10">Cupons anexados</p>
+              <p className="text-4xl font-black text-slate-900 relative z-10">{stats.cupons}</p>
             </div>
             <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden">
               <div className="absolute -right-6 -top-6 text-indigo-50 opacity-50">
-                <ShoppingCart size={120} />
+                <Users size={120} />
               </div>
-              <p className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-2 relative z-10">Ticket Médio</p>
-              <p className="text-4xl font-black text-slate-900 relative z-10">
-                R$ {stats.ticketMedio.toFixed(2).replace('.', ',')}
-              </p>
+              <p className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-2 relative z-10">Pacientes atendidos</p>
+              <p className="text-4xl font-black text-slate-900 relative z-10">{stats.pacientes}</p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+          <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
               <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
                 <Clock className="text-blue-500" />
-                Faturamento por Hora
+                Registros por hora
               </h2>
               <div className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
@@ -158,37 +147,17 @@ export default function BIVendasHoje() {
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                     <XAxis dataKey="hora" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} dy={10} />
-                    <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} tickFormatter={(val) => `R$${val}`} />
+                    <YAxis axisLine={false} tickLine={false} allowDecimals={false} tick={{ fill: '#64748b', fontSize: 12 }} />
                     <Tooltip 
                       contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
-                      formatter={(value) => [`R$ ${Number(value ?? 0).toFixed(2)}`, 'Faturamento']}
+                      formatter={(value) => [Number(value ?? 0), 'Registros']}
                     />
-                    <Area type="monotone" dataKey="valor" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorValor)" />
+                    <Area type="monotone" dataKey="registros" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorValor)" />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
             </div>
 
-            <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-              <h2 className="text-xl font-bold text-slate-800 mb-6">Top Medicamentos</h2>
-              <div className="space-y-4">
-                {topMeds.map((med, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm">
-                        {idx + 1}
-                      </div>
-                      <span className="font-semibold text-slate-700">{med.nome}</span>
-                    </div>
-                    <span className="font-black text-slate-900">{med.qtd}x</span>
-                  </div>
-                ))}
-                {topMeds.length === 0 && (
-                  <p className="text-slate-500 text-center py-8">Nenhuma venda registrada hoje.</p>
-                )}
-              </div>
-            </div>
-          </div>
         </>
       )}
     </motion.div>

@@ -7,6 +7,17 @@ import { motion, AnimatePresence } from 'motion/react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { formatDateBR, getDocumentName, isPdfDocument, parsePrescriptionMeta } from '../../lib/documents';
+import { matchesSearchText } from '../../lib/search';
+
+type DocumentFilter = 'todos' | 'receita' | 'cupom' | 'documento' | 'procuracao';
+
+const documentTypeLabel = (type: string) => ({
+  receita: 'Receita',
+  cupom: 'Cupom Fiscal',
+  documento: 'Documento',
+  procuracao: 'Procuração',
+  identidade: 'Identidade',
+}[type] || 'Documento');
 
 function FullscreenViewer({ url, title, onClose }: { url: string; title: string; onClose: () => void }) {
   const [zoom, setZoom] = useState(1);
@@ -15,7 +26,7 @@ function FullscreenViewer({ url, title, onClose }: { url: string; title: string;
   const handlePrint = () => {
     const win = window.open('', '_blank');
     if (win) {
-      win.document.write(`<html><body style="margin:0;background:#fff;"><${isPdf ? 'iframe' : 'img'} src="${url}" style="width:100%;height:100%;border:0;object-fit:contain;"></${isPdf ? 'iframe' : 'img'}></body></html>`);
+      win.document.write(`<html lang="pt-BR" translate="no"><body class="notranslate" translate="no" style="margin:0;background:#fff;"><${isPdf ? 'iframe' : 'img'} src="${url}" style="width:100%;height:100%;border:0;object-fit:contain;"></${isPdf ? 'iframe' : 'img'}></body></html>`);
       win.document.close();
       win.focus();
       setTimeout(() => { win.print(); win.close(); }, 500);
@@ -71,10 +82,11 @@ export default function Auditoria() {
   const [searchClient, setSearchClient] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [filterTipo, setFilterTipo] = useState<'todos' | 'receita' | 'cupom'>('todos');
+  const [filterTipo, setFilterTipo] = useState<DocumentFilter>('todos');
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
+  const [searchError, setSearchError] = useState('');
   const [modalDoc, setModalDoc] = useState<{ url: string; title: string } | null>(null);
 
   const handleSearch = async (e?: React.FormEvent) => {
@@ -83,7 +95,14 @@ export default function Auditoria() {
     if (!supabase) return;
 
     setLoading(true);
+    setSearchError('');
     try {
+      const startDb = startDate ? parseDateToDB(startDate) : null;
+      const endDb = endDate ? parseDateToDB(endDate) : null;
+      if (startDate && !startDb) throw new Error('Data inicial inválida. Use DD/MM/AAAA.');
+      if (endDate && !endDb) throw new Error('Data final inválida. Use DD/MM/AAAA.');
+      if (startDb && endDb && startDb > endDb) throw new Error('A data inicial não pode ser posterior à data final.');
+
       let query = supabase
         .from('vendas_documentos')
         .select('*, clientes(nome_completo, cpf)')
@@ -94,7 +113,6 @@ export default function Auditoria() {
       }
 
       if (startDate && startDate.length === 10) {
-        const startDb = parseDateToDB(startDate);
         if (startDb) {
           const start = new Date(startDb);
           start.setHours(0, 0, 0, 0);
@@ -103,7 +121,6 @@ export default function Auditoria() {
       }
 
       if (endDate && endDate.length === 10) {
-        const endDb = parseDateToDB(endDate);
         if (endDb) {
           const end = new Date(endDb);
           end.setHours(23, 59, 59, 999);
@@ -117,19 +134,19 @@ export default function Auditoria() {
       let filtered = data || [];
 
       if (searchClient.trim()) {
-        const termLower = searchClient.toLowerCase();
         const termDigits = searchClient.replace(/\D/g, '');
         filtered = filtered.filter(d => {
-          const nome = (d.clientes?.nome_completo || '').toLowerCase();
           const cpf = d.clientes?.cpf || '';
-          return nome.includes(termLower) || (termDigits && cpf.includes(termDigits));
+          return matchesSearchText(d.clientes?.nome_completo, searchClient)
+            || (termDigits && cpf.includes(termDigits));
         });
       }
 
       setResults(filtered);
       setSearched(true);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Erro na busca de auditoria:', err);
+      setSearchError(err?.message || 'Não foi possível concluir a busca.');
     } finally {
       setLoading(false);
     }
@@ -152,7 +169,7 @@ export default function Auditoria() {
       : 'Período: Todos os registros';
     doc.text(periodoTexto, 14, 28);
     if (searchClient) doc.text(`Cliente: ${searchClient}`, 14, 34);
-    if (filterTipo !== 'todos') doc.text(`Tipo: ${filterTipo === 'receita' ? 'Receitas' : 'Cupons Fiscais'}`, 14, 40);
+    if (filterTipo !== 'todos') doc.text(`Tipo: ${documentTypeLabel(filterTipo)}`, 14, 40);
 
     const totalCupons = results.filter(r => r.tipo === 'cupom').length;
     const totalReceitas = results.filter(r => r.tipo === 'receita').length;
@@ -163,7 +180,7 @@ export default function Auditoria() {
     const tableData = results.map(r => [
       r.clientes?.nome_completo || 'N/A',
       r.clientes?.cpf?.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4') || 'N/A',
-      r.tipo === 'cupom' ? 'Cupom Fiscal' : 'Receita',
+      documentTypeLabel(r.tipo),
       r.tipo === 'receita'
         ? `${getDocumentName(r)} (${formatDateBR(parsePrescriptionMeta(r).inicio)} a ${formatDateBR(parsePrescriptionMeta(r).vencimento)})`
         : getDocumentName(r),
@@ -233,8 +250,8 @@ export default function Auditoria() {
             {/* Tipo de documento */}
             <div className="space-y-2">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-1">Tipo de Documento</label>
-              <div className="flex gap-2">
-                {(['todos', 'cupom', 'receita'] as const).map(tipo => (
+              <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+                {(['todos', 'cupom', 'receita', 'documento', 'procuracao'] as const).map(tipo => (
                   <button
                     key={tipo}
                     type="button"
@@ -247,12 +264,18 @@ export default function Auditoria() {
                         : 'bg-white border-slate-100 text-slate-400 hover:border-slate-200'
                     }`}
                   >
-                    {tipo === 'todos' ? 'Todos' : tipo === 'cupom' ? 'Cupons' : 'Receitas'}
+                    {tipo === 'todos' ? 'Todos' : documentTypeLabel(tipo)}
                   </button>
                 ))}
               </div>
             </div>
           </div>
+
+          {searchError && (
+            <div className="rounded-lg border border-red-100 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+              {searchError}
+            </div>
+          )}
 
           {/* Período */}
           <div className="space-y-2">
@@ -372,12 +395,13 @@ export default function Auditoria() {
                         </td>
                         <td className="py-4">
                           <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wide ${
-                            doc.tipo === 'cupom'
-                              ? 'bg-indigo-50 text-indigo-700'
-                              : 'bg-blue-50 text-blue-700'
+                            doc.tipo === 'cupom' ? 'bg-indigo-50 text-indigo-700'
+                              : doc.tipo === 'receita' ? 'bg-blue-50 text-blue-700'
+                              : doc.tipo === 'procuracao' ? 'bg-amber-50 text-amber-800'
+                              : 'bg-slate-100 text-slate-700'
                           }`}>
                             {doc.tipo === 'cupom' ? <Receipt size={10} /> : <FileText size={10} />}
-                            {doc.tipo === 'cupom' ? 'Cupom Fiscal' : 'Receita'}
+                            {documentTypeLabel(doc.tipo)}
                           </span>
                         </td>
                         <td className="py-4 text-slate-700 text-sm font-medium max-w-[220px] truncate">

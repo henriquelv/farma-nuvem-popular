@@ -9,9 +9,10 @@
  */
 
 import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist';
+import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 
-// Configura o worker do pdfjs (CDN, compatível com Vite bundler)
-GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.min.mjs`;
+// Usa o worker da mesma versão instalada, evitando erro de versão no navegador.
+GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
 
 // ─── Tipos ───────────────────────────────────────────────────────────────────
 
@@ -35,6 +36,7 @@ export type DocumentResult = {
 };
 
 const IMAGE_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.pdf'];
 
 function getFileNameWithoutExt(name: string): string {
   const dot = name.lastIndexOf('.');
@@ -42,7 +44,7 @@ function getFileNameWithoutExt(name: string): string {
 }
 
 function logStats(file: File, result: DocumentResult): void {
-  if (process.env.NODE_ENV === 'development') {
+  if (import.meta.env.DEV) {
     const reduction = result.optimized
       ? ` (-${Math.round((1 - result.finalSize / result.originalSize) * 100)}%)`
       : ' (sem otimização)';
@@ -74,11 +76,6 @@ async function compressImage(
     let { width, height } = bitmap;
 
     const ratio = Math.min(maxWidthOrHeight / width, maxWidthOrHeight / height, 1);
-    if (ratio >= 1) {
-      bitmap.close();
-      return { file, originalSize: file.size, finalSize: file.size, optimized: false, optimizationType: 'none' };
-    }
-
     width = Math.round(width * ratio);
     height = Math.round(height * ratio);
 
@@ -90,6 +87,9 @@ async function compressImage(
       bitmap.close();
       return { file, originalSize: file.size, finalSize: file.size, optimized: false, optimizationType: 'none' };
     }
+    // JPEG não suporta transparência. Fundo branco evita páginas transparentes exibidas em preto.
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, width, height);
     ctx.drawImage(bitmap, 0, 0, width, height);
     bitmap.close();
 
@@ -125,12 +125,12 @@ async function optimizeScannedPdf(
   file: File,
   options?: PdfOptions
 ): Promise<DocumentResult> {
-  const maxWidthOrHeight = options?.maxWidthOrHeight ?? 1800;
-  const jpegQuality = options?.jpegQuality ?? 0.78;
+  const maxWidthOrHeight = options?.maxWidthOrHeight ?? 1700;
+  const jpegQuality = options?.jpegQuality ?? 0.76;
 
   try {
     const arrayBuffer = await file.arrayBuffer();
-    const pdf = await getDocument({ data: arrayBuffer }).promise;
+    const pdf = await getDocument({ data: arrayBuffer.slice(0) }).promise;
 
     // Limite técnico: se tiver mais de 50 páginas, não tenta otimizar
     if (pdf.numPages > 50) {
@@ -139,7 +139,8 @@ async function optimizeScannedPdf(
     }
 
     const { default: jsPDF } = await import('jspdf');
-    const doc = new jsPDF({ unit: 'px', format: [maxWidthOrHeight, maxWidthOrHeight * 1.4] });
+    let doc: InstanceType<typeof jsPDF> | null = null;
+    let renderedPages = 0;
 
     for (let i = 1; i <= pdf.numPages; i++) {
       const page = await pdf.getPage(i);
@@ -148,10 +149,12 @@ async function optimizeScannedPdf(
       // Redimensionar mantendo proporção
       const scale = Math.min(maxWidthOrHeight / viewport.width, maxWidthOrHeight / viewport.height);
       const scaledViewport = page.getViewport({ scale });
+      const pageWidth = Math.max(1, Math.round(scaledViewport.width));
+      const pageHeight = Math.max(1, Math.round(scaledViewport.height));
 
       const canvas = document.createElement('canvas');
-      canvas.width = scaledViewport.width;
-      canvas.height = scaledViewport.height;
+      canvas.width = pageWidth;
+      canvas.height = pageHeight;
       const ctx = canvas.getContext('2d');
       if (!ctx) {
         page.cleanup();
@@ -163,12 +166,13 @@ async function optimizeScannedPdf(
 
       const dataUrl = canvas.toDataURL('image/jpeg', jpegQuality);
 
-      if (i === 1) {
-        doc.addImage(dataUrl, 'JPEG', 0, 0, scaledViewport.width, scaledViewport.height, undefined, 'FAST');
+      if (!doc) {
+        doc = new jsPDF({ unit: 'px', compress: true, format: [pageWidth, pageHeight] });
       } else {
-        doc.addPage([scaledViewport.width, scaledViewport.height]);
-        doc.addImage(dataUrl, 'JPEG', 0, 0, scaledViewport.width, scaledViewport.height, undefined, 'FAST');
+        doc.addPage([pageWidth, pageHeight]);
       }
+      doc.addImage(dataUrl, 'JPEG', 0, 0, pageWidth, pageHeight, undefined, 'FAST');
+      renderedPages += 1;
 
       // Limpeza de memória
       canvas.width = 0;
@@ -176,12 +180,22 @@ async function optimizeScannedPdf(
     }
 
     pdf.destroy();
+    if (!doc || renderedPages === 0) {
+      return { file, originalSize: file.size, finalSize: file.size, optimized: false, optimizationType: 'none' };
+    }
 
     const pdfBlob = doc.output('blob');
     const optimizedFile = new File([pdfBlob], getFileNameWithoutExt(file.name) + '.pdf', { type: 'application/pdf' });
 
     // Se ficou maior que o original, mantém original
     if (pdfBlob.size >= file.size) {
+      return { file, originalSize: file.size, finalSize: file.size, optimized: false, optimizationType: 'none' };
+    }
+
+    const validation = await getDocument({ data: await pdfBlob.arrayBuffer() }).promise;
+    const validPageCount = validation.numPages;
+    validation.destroy();
+    if (validPageCount !== renderedPages) {
       return { file, originalSize: file.size, finalSize: file.size, optimized: false, optimizationType: 'none' };
     }
 
@@ -229,7 +243,7 @@ export async function prepareDocumentForUpload(
 
   onStatus?.('uploading');
 
-  if (process.env.NODE_ENV === 'development') {
+  if (import.meta.env.DEV) {
     logStats(file, result);
   }
 
@@ -249,13 +263,20 @@ export async function prepareDocumentForUpload(
  * A mensagem é amigável e não técnica.
  */
 export async function checkFileFeasibility(file: File): Promise<string | null> {
+  if (file.size === 0) return 'O arquivo está vazio. Selecione outro documento.';
+
+  const lowerName = file.name.toLowerCase();
+  if (!ALLOWED_EXTENSIONS.some((extension) => lowerName.endsWith(extension))) {
+    return 'Formato não compatível. Envie uma imagem JPG, PNG ou WebP, ou um arquivo PDF.';
+  }
+
   if (file.size > 100 * 1024 * 1024) {
     return 'Não foi possível otimizar este arquivo automaticamente. Tente dividir o documento em menos páginas ou enviar outro arquivo.';
   }
 
   if (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) {
     try {
-      const buf = await file.slice(0, Math.min(file.size, 1024 * 1024)).arrayBuffer();
+      const buf = await file.arrayBuffer();
       const pdf = await getDocument({ data: buf }).promise;
       const pages = pdf.numPages;
       pdf.destroy();

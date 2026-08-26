@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   AlertTriangle,
-  CalendarClock,
+  LayoutDashboard,
+  LockKeyhole,
   Pencil,
   RefreshCw,
   Save,
@@ -14,34 +15,17 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { getSupabase, explainSupabaseError } from '../lib/supabase';
-import { maskCPF, maskDate, parseDateToDB } from '../lib/validators';
+import { isFutureDate, maskCPF, maskDate, normalizePersonName, parseDateToDB, sanitizePersonNameInput, validateCPF } from '../lib/validators';
+import { matchesSearchText } from '../lib/search';
+import Dashboard from './Dashboard';
 
-type AdminTab = 'pacientes' | 'registros';
-
-const currency = new Intl.NumberFormat('pt-BR', {
-  style: 'currency',
-  currency: 'BRL',
-});
+type AdminTab = 'painel' | 'pacientes' | 'registros';
 
 const dbDateToBR = (date?: string) => {
   if (!date) return '';
   const [year, month, day] = date.split('-');
   if (!year || !month || !day) return '';
   return `${day}/${month}/${year}`;
-};
-
-const toDateTimeLocal = (value?: string) => {
-  if (!value) return '';
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return '';
-  const offset = date.getTimezoneOffset();
-  const local = new Date(date.getTime() - offset * 60 * 1000);
-  return local.toISOString().slice(0, 16);
-};
-
-const fromDateTimeLocal = (value: string) => {
-  if (!value) return new Date().toISOString();
-  return new Date(value).toISOString();
 };
 
 function EmptyState({ label }: { label: string }) {
@@ -94,14 +78,14 @@ function AdminModal({
 }
 
 export default function Admin() {
-  const [tab, setTab] = useState<AdminTab>('pacientes');
+  const [tab, setTab] = useState<AdminTab>('painel');
   const [clients, setClients] = useState<any[]>([]);
   const [sales, setSales] = useState<any[]>([]);
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [editingClient, setEditingClient] = useState<any | null>(null);
-  const [editingSale, setEditingSale] = useState<any | null>(null);
+  const [deletingClient, setDeletingClient] = useState<any | null>(null);
 
   const fetchData = async () => {
     const supabase = getSupabase();
@@ -114,7 +98,7 @@ export default function Admin() {
         supabase.from('clientes').select('id, nome_completo, cpf, data_nascimento, created_at').order('created_at', { ascending: false }),
         supabase
           .from('vendas')
-          .select('id, cliente_id, data_venda, nome_medicamento, valor, created_at, clientes(nome_completo, cpf)')
+          .select('id, cliente_id, data_venda, created_at, clientes(nome_completo, cpf)')
           .order('data_venda', { ascending: false }),
       ]);
 
@@ -135,56 +119,25 @@ export default function Admin() {
   }, []);
 
   const filteredClients = useMemo(() => {
-    const term = query.trim().toLowerCase();
+    const term = query.trim();
     const digits = query.replace(/\D/g, '');
     if (!term && !digits) return clients;
     return clients.filter((client) => {
-      const name = String(client.nome_completo || '').toLowerCase();
       const cpf = String(client.cpf || '');
-      return name.includes(term) || (digits && cpf.includes(digits));
+      return matchesSearchText(client.nome_completo, term) || (digits && cpf.includes(digits));
     });
   }, [clients, query]);
 
   const filteredSales = useMemo(() => {
-    const term = query.trim().toLowerCase();
+    const term = query.trim();
     const digits = query.replace(/\D/g, '');
     if (!term && !digits) return sales;
     return sales.filter((sale) => {
-      const name = String(sale.clientes?.nome_completo || '').toLowerCase();
       const cpf = String(sale.clientes?.cpf || '');
-      const med = String(sale.nome_medicamento || '').toLowerCase();
-      return name.includes(term) || med.includes(term) || (digits && cpf.includes(digits));
+      return matchesSearchText(sale.clientes?.nome_completo, term)
+        || (digits && cpf.includes(digits));
     });
   }, [sales, query]);
-
-  const handleDeleteClient = async (client: any) => {
-    if (!window.confirm(`Excluir ${client.nome_completo}? Isso também remove os registros vinculados.`)) return;
-    const supabase = getSupabase();
-    if (!supabase) return;
-
-    try {
-      const { error: deleteError } = await supabase.from('clientes').delete().eq('id', client.id);
-      if (deleteError) throw deleteError;
-      await fetchData();
-    } catch (err: any) {
-      setError(explainSupabaseError(err));
-    }
-  };
-
-  const handleDeleteSale = async (sale: any) => {
-    const clientName = sale.clientes?.nome_completo || 'este registro';
-    if (!window.confirm(`Excluir registro de ${clientName}? Os documentos vinculados serão removidos da lista.`)) return;
-    const supabase = getSupabase();
-    if (!supabase) return;
-
-    try {
-      const { error: deleteError } = await supabase.from('vendas').delete().eq('id', sale.id);
-      if (deleteError) throw deleteError;
-      await fetchData();
-    } catch (err: any) {
-      setError(explainSupabaseError(err));
-    }
-  };
 
   return (
     <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto space-y-6">
@@ -192,7 +145,7 @@ export default function Admin() {
         <div>
           <p className="text-[11px] font-black uppercase tracking-[0.24em] text-blue-500 mb-2">Controle interno</p>
           <h1 className="text-4xl font-black text-slate-950 tracking-tight">Admin</h1>
-          <p className="text-slate-500 mt-2 text-lg">Edite cadastros, revise registros e remova itens incorretos.</p>
+          <p className="text-slate-500 mt-2 text-lg">Painel, cadastros e registros administrativos em um só lugar.</p>
         </div>
         <button
           type="button"
@@ -213,7 +166,17 @@ export default function Admin() {
 
       <div className="bg-white border border-slate-100 rounded-3xl shadow-sm overflow-hidden">
         <div className="p-4 sm:p-5 border-b border-slate-100 flex flex-col lg:flex-row gap-4 lg:items-center justify-between">
-          <div className="grid grid-cols-2 gap-2 p-1 bg-slate-100 rounded-2xl w-full lg:w-fit">
+          <div className="grid grid-cols-3 gap-2 p-1 bg-slate-100 rounded-2xl w-full lg:w-fit">
+            <button
+              type="button"
+              onClick={() => setTab('painel')}
+              className={`px-4 py-3 rounded-xl font-black text-sm flex items-center justify-center gap-2 transition-all ${
+                tab === 'painel' ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-500 hover:text-slate-900'
+              }`}
+            >
+              <LayoutDashboard size={17} />
+              Painel
+            </button>
             <button
               type="button"
               onClick={() => setTab('pacientes')}
@@ -236,19 +199,21 @@ export default function Admin() {
             </button>
           </div>
 
-          <div className="relative w-full lg:max-w-md">
+          {tab !== 'painel' && <div className="relative w-full lg:max-w-md">
             <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder={tab === 'pacientes' ? 'Buscar nome ou CPF...' : 'Buscar cliente, CPF ou medicamento...'}
+              placeholder="Buscar nome ou CPF..."
               className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:border-blue-500 focus:bg-white text-slate-700 font-semibold"
             />
-          </div>
+          </div>}
         </div>
 
         <div className="p-4 sm:p-5">
-          {loading ? (
+          {tab === 'painel' ? (
+            <Dashboard />
+          ) : loading ? (
             <div className="h-64 flex items-center justify-center">
               <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
             </div>
@@ -274,7 +239,7 @@ export default function Admin() {
                       </button>
                       <button
                         type="button"
-                        onClick={() => handleDeleteClient(client)}
+                        onClick={() => setDeletingClient(client)}
                         className="px-4 py-2 rounded-xl bg-red-50 border border-red-100 text-red-600 font-black text-sm hover:bg-red-100 inline-flex items-center gap-2"
                       >
                         <Trash2 size={15} />
@@ -298,27 +263,12 @@ export default function Admin() {
                         {new Date(sale.data_venda || sale.created_at).toLocaleDateString('pt-BR')}
                       </span>
                     </div>
-                    <p className="text-sm text-slate-500 font-semibold mt-1">
-                      {sale.nome_medicamento || 'Medicamento não informado'} · {currency.format(Number(sale.valor || 0))}
-                    </p>
                   </div>
                   <div className="flex gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setEditingSale(sale)}
-                      className="px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-600 font-black text-sm hover:text-blue-700 hover:border-blue-200 inline-flex items-center gap-2"
-                    >
-                      <Pencil size={15} />
-                      Editar
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleDeleteSale(sale)}
-                      className="px-4 py-2 rounded-xl bg-red-50 border border-red-100 text-red-600 font-black text-sm hover:bg-red-100 inline-flex items-center gap-2"
-                    >
-                      <Trash2 size={15} />
-                      Excluir
-                    </button>
+                    <span className="px-4 py-2 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-700 font-black text-sm inline-flex items-center gap-2">
+                      <ShieldCheck size={15} />
+                      Histórico preservado
+                    </span>
                   </div>
                 </div>
               ))}
@@ -340,17 +290,142 @@ export default function Admin() {
             }}
           />
         )}
-        {editingSale && (
-          <EditSaleModal
-            sale={editingSale}
-            onClose={() => setEditingSale(null)}
-            onSaved={async () => {
-              setEditingSale(null);
+        {deletingClient && (
+          <DeleteClientModal
+            client={deletingClient}
+            onClose={() => setDeletingClient(null)}
+            onDeleted={async () => {
+              setDeletingClient(null);
               await fetchData();
             }}
           />
         )}
       </AnimatePresence>
+    </motion.div>
+  );
+}
+
+function DeleteClientModal({ client, onClose, onDeleted }: { client: any; onClose: () => void; onDeleted: () => void }) {
+  const [checking, setChecking] = useState(true);
+  const [salesCount, setSalesCount] = useState(0);
+  const [documentsCount, setDocumentsCount] = useState(0);
+  const [typedName, setTypedName] = useState('');
+  const [cpfSuffix, setCpfSuffix] = useState('');
+  const [acknowledged, setAcknowledged] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const checkHistory = async () => {
+      const supabase = getSupabase();
+      if (!supabase) return;
+      setChecking(true);
+      setError('');
+      try {
+        const [salesResult, documentsResult] = await Promise.all([
+          supabase.from('vendas').select('id', { count: 'exact', head: true }).eq('cliente_id', client.id),
+          supabase.from('vendas_documentos').select('id', { count: 'exact', head: true }).eq('cliente_id', client.id),
+        ]);
+        if (salesResult.error) throw salesResult.error;
+        if (documentsResult.error) throw documentsResult.error;
+        setSalesCount(salesResult.count || 0);
+        setDocumentsCount(documentsResult.count || 0);
+      } catch (err: any) {
+        setError(explainSupabaseError(err));
+      } finally {
+        setChecking(false);
+      }
+    };
+    void checkHistory();
+  }, [client.id]);
+
+  const cleanCpf = String(client.cpf || '').replace(/\D/g, '');
+  const expectedSuffix = cleanCpf.slice(-4);
+  const hasHistory = salesCount > 0 || documentsCount > 0;
+  const nameMatches = normalizePersonName(typedName) === normalizePersonName(client.nome_completo);
+  const cpfMatches = cpfSuffix === expectedSuffix;
+  const canDelete = !checking && !hasHistory && !error && nameMatches && cpfMatches && acknowledged && !deleting;
+
+  const handleDelete = async () => {
+    if (!canDelete) return;
+    const supabase = getSupabase();
+    if (!supabase) return;
+    setDeleting(true);
+    setError('');
+    try {
+      const { error: deleteError } = await supabase.from('clientes').delete().eq('id', client.id);
+      if (deleteError) throw deleteError;
+      onDeleted();
+    } catch (err: any) {
+      setError(explainSupabaseError(err));
+      setDeleting(false);
+    }
+  };
+
+  return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] bg-slate-950/70 backdrop-blur-sm p-4 flex items-center justify-center">
+      <motion.div initial={{ scale: 0.96, y: 12 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.96, opacity: 0 }} className="w-full max-w-lg overflow-hidden rounded-lg bg-white shadow-2xl border border-slate-200">
+        <div className="flex items-start gap-4 border-b border-slate-200 px-6 py-5">
+          <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-red-50 text-red-700">
+            <LockKeyhole size={22} />
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-red-600">Área protegida</p>
+            <h2 className="mt-1 text-xl font-black text-slate-950">Excluir paciente</h2>
+            <p className="mt-1 truncate text-sm font-semibold text-slate-500">{client.nome_completo}</p>
+          </div>
+          <button type="button" onClick={onClose} className="p-2 text-slate-400 hover:text-slate-700" title="Fechar" aria-label="Fechar">
+            <X size={20} />
+          </button>
+        </div>
+
+        <div className="space-y-5 px-6 py-5">
+          {checking ? (
+            <div className="flex items-center gap-3 py-8 justify-center text-sm font-bold text-slate-500">
+              <RefreshCw size={18} className="animate-spin" /> Verificando histórico fiscal...
+            </div>
+          ) : hasHistory ? (
+            <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-4 text-red-800">
+              <div className="flex items-start gap-3">
+                <AlertTriangle size={20} className="mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="font-black">Exclusão bloqueada</p>
+                  <p className="mt-1 text-sm font-semibold leading-relaxed">Este paciente possui {salesCount} registro(s) de compra e {documentsCount} arquivo(s). O histórico deve permanecer disponível para auditoria fiscal.</p>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold leading-relaxed text-amber-900">
+                Este cadastro não possui histórico vinculado. A exclusão é permanente e não pode ser desfeita.
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-black text-slate-700">Digite o nome completo</label>
+                <input value={typedName} onChange={(event) => setTypedName(sanitizePersonNameInput(event.target.value))} autoComplete="off" spellCheck={false} placeholder={client.nome_completo} className="w-full rounded-lg border-2 border-slate-200 bg-slate-50 px-4 py-3 font-bold text-slate-900 outline-none focus:border-red-400" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-black text-slate-700">Últimos 4 dígitos do CPF</label>
+                <input value={cpfSuffix} onChange={(event) => setCpfSuffix(event.target.value.replace(/\D/g, '').slice(0, 4))} inputMode="numeric" autoComplete="off" maxLength={4} placeholder="0000" className="w-full rounded-lg border-2 border-slate-200 bg-slate-50 px-4 py-3 font-bold tracking-[0.25em] text-slate-900 outline-none focus:border-red-400" />
+              </div>
+              <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 px-4 py-3">
+                <input type="checkbox" checked={acknowledged} onChange={(event) => setAcknowledged(event.target.checked)} className="mt-0.5 h-4 w-4 accent-red-600" />
+                <span className="text-sm font-semibold leading-relaxed text-slate-600">Confirmo que revisei o cadastro e desejo removê-lo permanentemente.</span>
+              </label>
+            </>
+          )}
+
+          {error && <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{error}</div>}
+        </div>
+
+        <div className="flex gap-3 border-t border-slate-200 bg-slate-50 px-6 py-4">
+          <button type="button" onClick={onClose} className="flex-1 rounded-lg border border-slate-300 bg-white px-4 py-3 font-black text-slate-700 hover:bg-slate-100">Cancelar</button>
+          {!hasHistory && !checking && (
+            <button type="button" onClick={handleDelete} disabled={!canDelete} className="flex-1 rounded-lg bg-red-700 px-4 py-3 font-black text-white hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-35">
+              {deleting ? 'Excluindo...' : 'Excluir definitivamente'}
+            </button>
+          )}
+        </div>
+      </motion.div>
     </motion.div>
   );
 }
@@ -367,8 +442,21 @@ function EditClientModal({ client, onClose, onSaved }: { client: any; onClose: (
     const supabase = getSupabase();
     const dbDate = parseDateToDB(nascimento);
     if (!supabase) return;
+    const normalizedName = normalizePersonName(nome);
+    if (normalizedName.length < 3) {
+      setError('Informe o nome completo do paciente.');
+      return;
+    }
+    if (!validateCPF(cpf)) {
+      setError('CPF inválido. Confira os 11 dígitos informados.');
+      return;
+    }
     if (!dbDate) {
       setError('Data de nascimento inválida. Use DD/MM/AAAA.');
+      return;
+    }
+    if (isFutureDate(dbDate)) {
+      setError('A data de nascimento não pode estar no futuro.');
       return;
     }
 
@@ -378,7 +466,7 @@ function EditClientModal({ client, onClose, onSaved }: { client: any; onClose: (
       const { error: updateError } = await supabase
         .from('clientes')
         .update({
-          nome_completo: nome.trim(),
+          nome_completo: normalizedName,
           cpf: cpf.replace(/\D/g, ''),
           data_nascimento: dbDate,
         })
@@ -400,87 +488,17 @@ function EditClientModal({ client, onClose, onSaved }: { client: any; onClose: (
           {error && <div className="bg-red-50 text-red-700 px-4 py-3 rounded-2xl font-semibold border border-red-100">{error}</div>}
           <div className="space-y-2">
             <label className="text-sm font-black text-slate-700">Nome completo</label>
-            <input value={nome} onChange={(event) => setNome(event.target.value)} className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 font-semibold" />
+            <input value={nome} onChange={(event) => setNome(sanitizePersonNameInput(event.target.value))} onBlur={() => setNome(normalizePersonName(nome))} autoComplete="off" autoCorrect="off" spellCheck={false} translate="no" className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 font-semibold" />
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-black text-slate-700">CPF</label>
-              <input value={cpf} maxLength={14} onChange={(event) => setCpf(maskCPF(event.target.value))} className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 font-semibold tracking-widest" />
+              <input value={cpf} inputMode="numeric" autoComplete="off" maxLength={14} onChange={(event) => setCpf(maskCPF(event.target.value))} className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 font-semibold tracking-widest" />
             </div>
             <div className="space-y-2">
               <label className="text-sm font-black text-slate-700">Data de nascimento</label>
-              <input value={nascimento} maxLength={10} onChange={(event) => setNascimento(maskDate(event.target.value))} className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 font-semibold" />
+              <input value={nascimento} inputMode="numeric" autoComplete="off" maxLength={10} onChange={(event) => setNascimento(maskDate(event.target.value))} className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 font-semibold" />
             </div>
-          </div>
-        </div>
-        <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex gap-3">
-          <button type="button" onClick={onClose} className="flex-1 py-3 bg-white border-2 border-slate-200 rounded-2xl text-slate-500 font-black">Cancelar</button>
-          <button type="submit" disabled={saving} className="flex-1 py-3 bg-blue-600 text-white rounded-2xl font-black disabled:opacity-60 inline-flex items-center justify-center gap-2">
-            <Save size={18} />
-            {saving ? 'Salvando...' : 'Salvar'}
-          </button>
-        </div>
-      </form>
-    </AdminModal>
-  );
-}
-
-function EditSaleModal({ sale, onClose, onSaved }: { sale: any; onClose: () => void; onSaved: () => void }) {
-  const [medicamento, setMedicamento] = useState(sale.nome_medicamento || '');
-  const [valor, setValor] = useState(String(sale.valor ?? 0));
-  const [dataVenda, setDataVenda] = useState(toDateTimeLocal(sale.data_venda || sale.created_at));
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState('');
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    const supabase = getSupabase();
-    if (!supabase) return;
-
-    const numericValue = Number(String(valor).replace(',', '.')) || 0;
-    setSaving(true);
-    setError('');
-    try {
-      const { error: updateError } = await supabase
-        .from('vendas')
-        .update({
-          data_venda: fromDateTimeLocal(dataVenda),
-          nome_medicamento: medicamento.trim() || 'Não informado',
-          valor: numericValue,
-        })
-        .eq('id', sale.id);
-
-      if (updateError) throw updateError;
-      onSaved();
-    } catch (err: any) {
-      setError(explainSupabaseError(err));
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  return (
-    <AdminModal title="Editar registro" subtitle={sale.clientes?.nome_completo || 'Registro de venda'} onClose={onClose}>
-      <form onSubmit={handleSubmit} className="min-h-0 flex-1 flex flex-col">
-        <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5 space-y-4">
-          {error && <div className="bg-red-50 text-red-700 px-4 py-3 rounded-2xl font-semibold border border-red-100">{error}</div>}
-          <div className="space-y-2">
-            <label className="text-sm font-black text-slate-700">Medicamento</label>
-            <input value={medicamento} onChange={(event) => setMedicamento(event.target.value)} placeholder="Ex: Losartana" className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 font-semibold" />
-          </div>
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <label className="text-sm font-black text-slate-700">Valor</label>
-              <input value={valor} inputMode="decimal" onChange={(event) => setValor(event.target.value)} className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 font-semibold" />
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-black text-slate-700">Data e hora</label>
-              <input type="datetime-local" value={dataVenda} onChange={(event) => setDataVenda(event.target.value)} className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 font-semibold" />
-            </div>
-          </div>
-          <div className="flex items-start gap-3 bg-amber-50 text-amber-800 border border-amber-100 rounded-2xl px-4 py-3 text-sm font-semibold">
-            <CalendarClock size={18} className="flex-shrink-0 mt-0.5" />
-            Os anexos continuam vinculados ao registro após salvar.
           </div>
         </div>
         <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex gap-3">

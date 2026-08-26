@@ -11,3 +11,6 @@ coverage/
 build_output.txt
 cleanup-mockup.mjs
 AGENTS.md
+backups/
+reports/storage-optimization/
+supabase/.temp/

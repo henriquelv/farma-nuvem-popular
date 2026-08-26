@@ -1,0 +1,12 @@
+.env
+.env.*
+.git
+.vercel
+node_modules
+dist
+backups
+reports/storage-optimization
+build_output.txt
+cleanup-mockup.mjs
+AGENTS.md
+src/components/plano de implementação codex.md

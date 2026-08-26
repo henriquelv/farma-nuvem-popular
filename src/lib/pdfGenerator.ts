@@ -13,24 +13,17 @@ export const generateAuditPDF = (sales: any[], startDate: string, endDate: strin
   doc.text(`Período: ${startDate || 'Início'} a ${endDate || 'Hoje'}`, 14, 30);
 
   const totalSales = sales.length;
-  const totalValue = sales.reduce((acc, curr) => acc + Number(curr.valor), 0);
-  const avgValue = totalSales > 0 ? totalValue / totalSales : 0;
-
-  doc.text(`Total de Vendas: ${totalSales}`, 14, 38);
-  doc.text(`Valor Total: R$ ${totalValue.toFixed(2).replace('.', ',')}`, 14, 44);
-  doc.text(`Ticket Médio: R$ ${avgValue.toFixed(2).replace('.', ',')}`, 14, 50);
+  doc.text(`Total de registros: ${totalSales}`, 14, 38);
 
   const tableData = sales.map(s => [
     format(new Date(s.data_venda), 'dd/MM/yyyy HH:mm'),
     s.clientes?.nome_completo || 'N/A',
-    s.clientes?.cpf?.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4") || 'N/A',
-    s.nome_medicamento,
-    `R$ ${Number(s.valor).toFixed(2).replace('.', ',')}`
+    s.clientes?.cpf?.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4") || 'N/A'
   ]);
 
   autoTable(doc, {
-    startY: 58,
-    head: [['Data', 'Cliente', 'CPF', 'Medicamento', 'Valor']],
+    startY: 46,
+    head: [['Data', 'Cliente', 'CPF']],
     body: tableData,
     theme: 'striped',
     headStyles: { fillColor: [37, 99, 235] }

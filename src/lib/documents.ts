@@ -61,11 +61,15 @@ export const getPrescriptionStatus = (doc: any) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const expiresAt = parseISO(`${meta.vencimento}T12:00:00`);
+  const startsAt = parseISO(`${meta.inicio}T12:00:00`);
   const daysLeft = differenceInCalendarDays(expiresAt, today);
+  const daysUntilStart = differenceInCalendarDays(startsAt, today);
 
   return {
     ...meta,
     vencida: daysLeft < 0,
+    aindaNaoIniciada: daysUntilStart > 0,
+    diasAteInicio: daysUntilStart,
     diasRestantes: daysLeft,
   };
 };
