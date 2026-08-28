@@ -1,5 +1,18 @@
 # Rollout de seguranca
 
+## Estado do Auth em producao (2026-08-28)
+
+- login compartilhado da farmacia: `otavio`;
+- senha minima de 12 caracteres, com minuscula, maiuscula e numero exigidos pelo Supabase;
+- simbolo exigido adicionalmente pelo app e pelos scripts administrativos;
+- cadastro publico e usuarios anonimos desativados;
+- reautenticacao exigida para troca sensivel de senha;
+- sessao limitada a 12 horas de inatividade e 24 horas no total;
+- recuperacao preparada nas rotas `/recuperar-senha` e `/nova-senha`;
+- envio de recuperacao depende de e-mail real na conta e SMTP de producao.
+
+O bloqueio progressivo do frontend reduz repeticoes acidentais e ataques simples. O rate limit nativo do Supabase permanece como controle do servidor. Para protecao automatizada adicional, configure Cloudflare Turnstile no Supabase e passe o token CAPTCHA nas chamadas Auth.
+
 Este rollout foi separado em preparacao e ativacao para evitar indisponibilidade na farmacia. Nao aplique a ativacao antes de concluir todos os testes de login.
 
 ## 1. Backup obrigatorio

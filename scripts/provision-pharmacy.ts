@@ -5,6 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 import { randomUUID } from 'node:crypto';
 import * as process from 'node:process';
 import { normalizePharmacyLogin, pharmacyLoginToEmail } from '../src/lib/pharmacy-login';
+import { validatePassword } from '../src/lib/password-security';
 
 const args = process.argv.slice(2);
 const CONFIRMATION = 'CREATE_PHARMACY_LOGIN';
@@ -32,8 +33,9 @@ if (pharmacyName.length < 3) {
   console.error('Informe --pharmacy-name "NOME DA FARMACIA".');
   process.exit(1);
 }
-if (password.length < 12 || password.length > 72) {
-  console.error('A senha deve ter entre 12 e 72 caracteres.');
+const passwordError = validatePassword(password);
+if (passwordError) {
+  console.error(passwordError);
   process.exit(1);
 }
 if (apply && confirmation !== CONFIRMATION) {

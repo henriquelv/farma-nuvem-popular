@@ -23,6 +23,8 @@ type AuthState = {
   loading: boolean;
   profileError: string;
   signIn: (login: string, password: string) => Promise<void>;
+  requestPasswordReset: (email: string) => Promise<void>;
+  updatePassword: (password: string) => Promise<void>;
   signOut: () => Promise<void>;
 };
 
@@ -124,6 +126,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (!supabase) throw new Error('Supabase não configurado.');
       const email = pharmacyLoginToEmail(login);
       const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+      if (error) throw error;
+    },
+    requestPasswordReset: async (email) => {
+      const supabase = getSupabase();
+      if (!supabase) throw new Error('Supabase não configurado.');
+      const { error } = await supabase.auth.resetPasswordForEmail(email.trim().toLowerCase(), {
+        redirectTo: `${window.location.origin}/nova-senha`,
+      });
+      if (error) throw error;
+    },
+    updatePassword: async (password) => {
+      const supabase = getSupabase();
+      if (!supabase) throw new Error('Supabase não configurado.');
+      const { error } = await supabase.auth.updateUser({ password });
       if (error) throw error;
     },
     signOut: async () => {

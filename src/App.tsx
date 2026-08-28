@@ -18,6 +18,8 @@ import Login from './components/Login';
 import AccessDenied from './components/AccessDenied';
 import { AuthProvider } from './auth/AuthContext';
 import ProtectedRoute from './auth/ProtectedRoute';
+import PasswordResetRequest from './components/PasswordResetRequest';
+import NewPassword from './components/NewPassword';
 
 export default function App() {
   const [isSetup, setIsSetup] = useState(false);
@@ -61,6 +63,8 @@ export default function App() {
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/recuperar-senha" element={<PasswordResetRequest />} />
+          <Route path="/nova-senha" element={<NewPassword />} />
           <Route path="/sem-acesso" element={<AccessDenied />} />
           <Route element={<ProtectedRoute roles={['admin', 'atendente']} />}>
             <Route path="/" element={<Layout />}>

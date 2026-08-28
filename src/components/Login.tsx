@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import { ArrowRight, Building2, Eye, EyeOff, Pill } from 'lucide-react';
+import { Link, Navigate, useLocation } from 'react-router-dom';
+import { ArrowRight, Building2, Eye, EyeOff, LockKeyhole, Pill } from 'lucide-react';
 import { useAuth } from '../auth/AuthContext';
+import { clearLoginFailures, formatRetryTime, getLoginLock, recordLoginFailure } from '../lib/login-rate-limit';
 
 export default function Login() {
   const { user, profile, loading: authLoading, profileError, signIn } = useAuth();
@@ -11,6 +12,20 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [retryAfterMs, setRetryAfterMs] = useState(0);
+
+  React.useEffect(() => {
+    const updateLock = () => {
+      const remaining = getLoginLock(login).retryAfterMs;
+      setRetryAfterMs((previous) => {
+        if (previous > 0 && remaining === 0) setError('');
+        return remaining;
+      });
+    };
+    updateLock();
+    const timer = window.setInterval(updateLock, 1_000);
+    return () => window.clearInterval(timer);
+  }, [login]);
 
   if (!authLoading && user && profile) {
     const requested = (location.state as { from?: string } | null)?.from;
@@ -19,12 +34,24 @@ export default function Login() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    const lock = getLoginLock(login);
+    if (lock.retryAfterMs > 0) {
+      setRetryAfterMs(lock.retryAfterMs);
+      setError(`Muitas tentativas. Aguarde ${formatRetryTime(lock.retryAfterMs)} antes de tentar novamente.`);
+      return;
+    }
     setLoading(true);
     setError('');
     try {
       await signIn(login, password);
-    } catch {
-      setError('Login ou senha inválidos. Confira os dados e tente novamente.');
+      clearLoginFailures(login);
+    } catch (caughtError) {
+      const status = Number((caughtError as { status?: number })?.status || 0);
+      const next = recordLoginFailure(login, status === 429 ? 60_000 : 0);
+      setRetryAfterMs(next.retryAfterMs);
+      setError(next.retryAfterMs > 0
+        ? `Muitas tentativas. Aguarde ${formatRetryTime(next.retryAfterMs)} antes de tentar novamente.`
+        : 'Login ou senha inválidos. Confira os dados e tente novamente.');
     } finally {
       setLoading(false);
     }
@@ -53,21 +80,25 @@ export default function Login() {
             </div>
             <p className="text-xs font-black text-blue-600">ACESSO DA FARMÁCIA</p>
             <h1 className="mt-2 text-3xl font-black text-slate-950">Entrar no sistema</h1>
-            <p className="mt-2 text-sm font-semibold text-slate-500">Identifique sua farmácia para continuar.</p>
+            <p className="mt-2 text-sm font-semibold text-slate-500">Identifique sua farmácia para continuar com segurança.</p>
           </header>
 
           <form onSubmit={handleSubmit} className="space-y-5 rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+          {(location.state as { passwordUpdated?: boolean } | null)?.passwordUpdated && !error && !profileError && <div role="status" className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-bold text-emerald-800">Senha atualizada. Entre novamente para continuar.</div>}
           {(error || profileError) && <div role="alert" className="rounded-lg border border-red-100 bg-red-50 px-4 py-3 text-sm font-bold text-red-700">{error || profileError}</div>}
           <label className="block space-y-2">
             <span className="text-sm font-black text-slate-700">Login da farmácia</span>
-            <div className="relative"><Building2 size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" /><input type="text" required autoFocus autoCapitalize="none" autoCorrect="off" spellCheck={false} autoComplete="username" value={login} onChange={(e) => setLogin(e.target.value)} placeholder="Ex.: farmacia-centro" className="min-h-12 w-full rounded-lg border border-slate-200 py-3 pl-11 pr-3 font-semibold text-slate-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" /></div>
+            <div className="relative"><Building2 size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" /><input type="text" required autoFocus maxLength={50} autoCapitalize="none" autoCorrect="off" spellCheck={false} autoComplete="username" value={login} onChange={(e) => setLogin(e.target.value)} placeholder="Ex.: otavio" className="min-h-12 w-full rounded-lg border border-slate-200 py-3 pl-11 pr-3 font-semibold text-slate-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" /></div>
           </label>
           <label className="block space-y-2">
             <span className="text-sm font-black text-slate-700">Senha</span>
-            <div className="relative"><input type={showPassword ? 'text' : 'password'} required autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} className="min-h-12 w-full rounded-lg border border-slate-200 px-3 py-3 pr-11 font-semibold text-slate-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" /><button type="button" onClick={() => setShowPassword(value => !value)} className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center text-slate-400 hover:text-slate-700" title={showPassword ? 'Ocultar senha' : 'Mostrar senha'} aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}>{showPassword ? <EyeOff size={18} /> : <Eye size={18} />}</button></div>
+            <div className="relative"><input type={showPassword ? 'text' : 'password'} required maxLength={72} autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} className="min-h-12 w-full rounded-lg border border-slate-200 px-3 py-3 pr-11 font-semibold text-slate-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" /><button type="button" onClick={() => setShowPassword(value => !value)} className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center text-slate-400 hover:text-slate-700" title={showPassword ? 'Ocultar senha' : 'Mostrar senha'} aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}>{showPassword ? <EyeOff size={18} /> : <Eye size={18} />}</button></div>
           </label>
-          <button type="submit" disabled={loading} className="flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 font-black text-white hover:bg-blue-700 disabled:opacity-60">
-            {loading ? 'Entrando...' : <><span>Entrar</span><ArrowRight size={18} /></>}
+          <div className="flex justify-end">
+            <Link to="/recuperar-senha" className="text-sm font-black text-blue-600 hover:text-blue-800">Esqueci minha senha</Link>
+          </div>
+          <button type="submit" disabled={loading || retryAfterMs > 0} className="flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 font-black text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60">
+            {loading ? 'Entrando...' : retryAfterMs > 0 ? <><LockKeyhole size={18} /><span>Aguarde {formatRetryTime(retryAfterMs)}</span></> : <><span>Entrar</span><ArrowRight size={18} /></>}
           </button>
         </form>
         </div>
