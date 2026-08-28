@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 
 export default function PasswordResetRequest() {
+  const recoveryEnabled = import.meta.env.VITE_PASSWORD_RECOVERY_ENABLED === 'true';
   const { requestPasswordReset } = useAuth();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -40,7 +41,12 @@ export default function PasswordResetRequest() {
           <h1 className="mt-2 text-2xl font-black text-slate-950">Recuperar senha</h1>
           <p className="mt-2 text-sm font-semibold leading-6 text-slate-500">Informe o e-mail cadastrado para receber um link temporário.</p>
 
-          {sent ? (
+          {!recoveryEnabled ? (
+            <div className="mt-6">
+              <div role="status" className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-4 text-sm font-bold leading-6 text-amber-800">O envio automático ainda está aguardando a configuração do provedor de e-mail. Solicite a troca ao administrador da conta.</div>
+              <Link to="/login" className="mt-5 flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-200 font-black text-slate-700 hover:bg-slate-50"><ArrowLeft size={17} />Voltar ao login</Link>
+            </div>
+          ) : sent ? (
             <div className="mt-6">
               <div role="status" className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-4 text-sm font-bold leading-6 text-emerald-800">
                 Se o endereço estiver cadastrado, o link será enviado. Verifique também a caixa de spam.
@@ -68,4 +74,3 @@ export default function PasswordResetRequest() {
     </main>
   );
 }
-
