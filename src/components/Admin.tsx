@@ -10,6 +10,7 @@ import {
   ShieldCheck,
   ShoppingCart,
   Trash2,
+  UserCog,
   Users,
   X,
 } from 'lucide-react';
@@ -18,8 +19,9 @@ import { getSupabase, explainSupabaseError } from '../lib/supabase';
 import { isFutureDate, maskCPF, maskDate, normalizePersonName, parseDateToDB, sanitizePersonNameInput, validateCPF } from '../lib/validators';
 import { matchesSearchText } from '../lib/search';
 import Dashboard from './Dashboard';
+import AccountSettings from './AccountSettings';
 
-type AdminTab = 'painel' | 'pacientes' | 'registros';
+type AdminTab = 'painel' | 'pacientes' | 'registros' | 'conta';
 
 const dbDateToBR = (date?: string) => {
   if (!date) return '';
@@ -166,7 +168,7 @@ export default function Admin() {
 
       <div className="bg-white border border-slate-100 rounded-3xl shadow-sm overflow-hidden">
         <div className="p-4 sm:p-5 border-b border-slate-100 flex flex-col lg:flex-row gap-4 lg:items-center justify-between">
-          <div className="grid grid-cols-3 gap-2 p-1 bg-slate-100 rounded-2xl w-full lg:w-fit">
+          <div className="grid grid-cols-2 gap-2 p-1 bg-slate-100 rounded-2xl w-full sm:grid-cols-4 lg:w-fit">
             <button
               type="button"
               onClick={() => setTab('painel')}
@@ -197,9 +199,19 @@ export default function Admin() {
               <ShoppingCart size={17} />
               Registros
             </button>
+            <button
+              type="button"
+              onClick={() => setTab('conta')}
+              className={`px-4 py-3 rounded-xl font-black text-sm flex items-center justify-center gap-2 transition-all ${
+                tab === 'conta' ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-500 hover:text-slate-900'
+              }`}
+            >
+              <UserCog size={17} />
+              Minha conta
+            </button>
           </div>
 
-          {tab !== 'painel' && <div className="relative w-full lg:max-w-md">
+          {tab !== 'painel' && tab !== 'conta' && <div className="relative w-full lg:max-w-md">
             <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               value={query}
@@ -213,6 +225,8 @@ export default function Admin() {
         <div className="p-4 sm:p-5">
           {tab === 'painel' ? (
             <Dashboard />
+          ) : tab === 'conta' ? (
+            <AccountSettings />
           ) : loading ? (
             <div className="h-64 flex items-center justify-center">
               <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />

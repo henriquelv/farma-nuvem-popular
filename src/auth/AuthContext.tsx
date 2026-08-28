@@ -25,6 +25,7 @@ type AuthState = {
   signIn: (login: string, password: string) => Promise<void>;
   requestPasswordReset: (email: string) => Promise<void>;
   updatePassword: (password: string) => Promise<void>;
+  changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
   signOut: () => Promise<void>;
 };
 
@@ -140,6 +141,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const supabase = getSupabase();
       if (!supabase) throw new Error('Supabase não configurado.');
       const { error } = await supabase.auth.updateUser({ password });
+      if (error) throw error;
+    },
+    changePassword: async (currentPassword, newPassword) => {
+      const supabase = getSupabase();
+      const email = session?.user.email;
+      if (!supabase || !email) throw new Error('Sessão inválida. Entre novamente.');
+      const { error: confirmationError } = await supabase.auth.signInWithPassword({ email, password: currentPassword });
+      if (confirmationError) throw confirmationError;
+      const { error } = await supabase.auth.updateUser({ password: newPassword });
       if (error) throw error;
     },
     signOut: async () => {

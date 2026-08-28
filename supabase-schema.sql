@@ -30,6 +30,8 @@ CREATE TABLE public.farmacias (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     nome TEXT NOT NULL CHECK (length(btrim(nome)) >= 3),
     slug TEXT NOT NULL UNIQUE CHECK (slug ~ '^[a-z0-9][a-z0-9._-]{2,49}$'),
+    recovery_email TEXT,
+    recovery_email_updated_at TIMESTAMP WITH TIME ZONE,
     active BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
