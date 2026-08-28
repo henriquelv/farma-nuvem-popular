@@ -22,7 +22,8 @@ import {
 } from '../lib/documents';
 import { isFutureDate, maskDate, parseDateToDB } from '../lib/validators';
 import { prepareDocumentForUpload, checkFileFeasibility } from '../lib/media-compression';
-import { documentBucket, resolveDocumentRows, resolveDocumentUrl } from '../lib/storage';
+import { buildDocumentPath, documentBucket, resolveDocumentRows, resolveDocumentUrl } from '../lib/storage';
+import { useAuth } from '../auth/AuthContext';
 
 type DocumentTab = 'receita' | 'documento' | 'procuracao';
 
@@ -180,6 +181,7 @@ function UploadBox({ tipo, label, descricao, files, onAdd, colorClass, borderCla
 
 // ─── COMPONENTE PRINCIPAL ────────────────────────────────────────────────────
 export default function ClientProfile() {
+  const { profile } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
   const [client, setClient] = useState<any>(null);
@@ -672,14 +674,15 @@ export default function ClientProfile() {
 
       <AnimatePresence>
         {showNewModal && (
-          <NewRegistroModal client={client} receitaStatus={receitaStatus} onClose={() => setShowNewModal(false)} onAdded={fetchData} />
+          <NewRegistroModal farmaciaId={profile!.farmacia_id} client={client} receitaStatus={receitaStatus} onClose={() => setShowNewModal(false)} onAdded={fetchData} />
         )}
         {showRecipeModal && (
-          <NewPrescriptionModal client={client} onClose={() => setShowRecipeModal(false)} onAdded={fetchData} />
+          <NewPrescriptionModal farmaciaId={profile!.farmacia_id} client={client} onClose={() => setShowRecipeModal(false)} onAdded={fetchData} />
         )}
         {showDocumentModal && (
           <NewPatientDocumentModal
             client={client}
+            farmaciaId={profile!.farmacia_id}
             tipo={showDocumentModal}
             onClose={() => setShowDocumentModal(null)}
             onAdded={fetchData}
@@ -692,7 +695,7 @@ export default function ClientProfile() {
 }
 
 // ─── MODAL: NOVO REGISTRO ────────────────────────────────────────────────────
-function NewRegistroModal({ client, receitaStatus, onClose, onAdded }: any) {
+function NewRegistroModal({ farmaciaId, client, receitaStatus, onClose, onAdded }: any) {
   const [cupomFiles,   setCupomFiles]   = useState<File[]>([]);
   const [cupomInputKey, setCupomInputKey] = useState(0);
   const [checkingCupom, setCheckingCupom] = useState(false);
@@ -751,11 +754,12 @@ function NewRegistroModal({ client, receitaStatus, onClose, onAdded }: any) {
     try {
       const { data: venda, error: vErr } = await supabase.from('vendas')
         .insert([{
+          farmacia_id: farmaciaId,
           cliente_id: client.id,
         }])
         .select().single();
       if (vErr) throw vErr;
-      const pendingDocuments: Array<{ venda_id: string; cliente_id: string; tipo: string; url: string; nome_arquivo: string }> = [];
+      const pendingDocuments: Array<{ farmacia_id: string; venda_id: string; cliente_id: string; tipo: string; url: string; nome_arquivo: string }> = [];
       const uploadDocs = async (files: File[], tipo: string) => {
         for (const f of files) {
           const prepared = await prepareDocumentForUpload(f, (status) => {
@@ -763,12 +767,13 @@ function NewRegistroModal({ client, receitaStatus, onClose, onAdded }: any) {
           });
           const fileToUpload = prepared.file;
           const ext  = fileToUpload.name.split('.').pop();
-          const path = `${tipo}/${tipo}_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+          const path = buildDocumentPath(farmaciaId, tipo, `${tipo}_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`);
           const { error: upErr } = await supabase.storage.from(documentBucket).upload(path, fileToUpload, {
             contentType: fileToUpload.type,
           });
           if (upErr) throw upErr;
           pendingDocuments.push({
+            farmacia_id: farmaciaId,
             venda_id: venda.id, cliente_id: client.id,
             tipo, url: path, nome_arquivo: f.name,
           });
@@ -865,7 +870,7 @@ function NewRegistroModal({ client, receitaStatus, onClose, onAdded }: any) {
   );
 }
 
-function NewPrescriptionModal({ client, onClose, onAdded }: any) {
+function NewPrescriptionModal({ farmaciaId, client, onClose, onAdded }: any) {
   const [file, setFile] = useState<File | null>(null);
   const [inicio, setInicio] = useState('');
   const [loading, setLoading] = useState(false);
@@ -894,12 +899,13 @@ function NewPrescriptionModal({ client, onClose, onAdded }: any) {
       });
       const fileToUpload = prepared.file;
       const ext = fileToUpload.name.split('.').pop();
-      const path = `receita/receita_${client.id}_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+      const path = buildDocumentPath(farmaciaId, 'receita', `receita_${client.id}_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`);
       const { error: upErr } = await supabase.storage.from(documentBucket).upload(path, fileToUpload, {
         contentType: fileToUpload.type,
       });
       if (upErr) throw upErr;
       const { error: insertError } = await supabase.from('vendas_documentos').insert([{
+        farmacia_id: farmaciaId,
         venda_id: null,
         cliente_id: client.id,
         tipo: 'receita',
@@ -987,7 +993,7 @@ function NewPrescriptionModal({ client, onClose, onAdded }: any) {
   );
 }
 
-function NewPatientDocumentModal({ client, tipo, onClose, onAdded }: { client: any; tipo: DocumentTab; onClose: () => void; onAdded: () => void }) {
+function NewPatientDocumentModal({ farmaciaId, client, tipo, onClose, onAdded }: { farmaciaId: string; client: any; tipo: DocumentTab; onClose: () => void; onAdded: () => void }) {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [statusMsg, setStatusMsg] = useState('');
@@ -1014,12 +1020,13 @@ function NewPatientDocumentModal({ client, tipo, onClose, onAdded }: { client: a
       });
       const fileToUpload = prepared.file;
       const ext = fileToUpload.name.split('.').pop();
-      const path = `${storageFolder}/${storageFolder}_${client.id}_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+      const path = buildDocumentPath(farmaciaId, storageFolder, `${storageFolder}_${client.id}_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`);
       const { error: upErr } = await supabase.storage.from(documentBucket).upload(path, fileToUpload, {
         contentType: fileToUpload.type,
       });
       if (upErr) throw upErr;
       const { error: insertError } = await supabase.from('vendas_documentos').insert([{
+        farmacia_id: farmaciaId,
         venda_id: null,
         cliente_id: client.id,
         tipo,

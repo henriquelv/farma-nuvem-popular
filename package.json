@@ -14,7 +14,8 @@
     "storage:restore": "tsx scripts/restore-storage-backup.ts",
     "backup:production": "tsx scripts/backup-production.ts",
     "restore:production": "tsx scripts/restore-production-backup.ts",
-    "auth:provision": "tsx scripts/provision-user-role.ts"
+    "auth:provision": "tsx scripts/provision-user-role.ts",
+    "auth:provision-pharmacy": "tsx scripts/provision-pharmacy.ts"
   },
   "dependencies": {
     "@google/genai": "^1.46.0",

@@ -8,7 +8,9 @@ import * as path from 'node:path';
 import * as process from 'node:process';
 
 const BUCKET = 'documentos';
-const TABLES = ['vendas_documentos', 'vendas', 'clientes'] as const;
+const CORE_TABLES = ['vendas_documentos', 'vendas', 'clientes'] as const;
+const TENANT_TABLES = ['user_profiles', 'farmacias'] as const;
+const TABLES = [...CORE_TABLES, ...TENANT_TABLES] as const;
 const PAGE_SIZE = 500;
 const args = process.argv.slice(2);
 
@@ -119,7 +121,6 @@ async function backupTable(table: typeof TABLES[number]) {
     const { data, error } = await supabase
       .from(table)
       .select('*')
-      .order('created_at', { ascending: true })
       .order('id', { ascending: true })
       .range(offset, offset + PAGE_SIZE - 1);
     if (error) throw new Error(`${table}: ${error.message}`);
@@ -154,6 +155,14 @@ async function backupTable(table: typeof TABLES[number]) {
   manifest.totals.tableRows += rows.length;
   writeManifest();
   console.log(`Tabela ${table}: ${rows.length} linha(s)`);
+}
+
+async function tableAvailable(table: typeof TENANT_TABLES[number]) {
+  const { error } = await supabase.from(table).select('id').limit(0);
+  if (!error) return true;
+  const message = error.message.toLowerCase();
+  if (error.code === 'PGRST205' || message.includes('could not find the table')) return false;
+  throw new Error(`${table} availability: ${error.message}`);
 }
 
 type ListedObject = { name: string; metadata?: { size?: number; mimetype?: string }; updated_at?: string; id?: string | null };
@@ -228,16 +237,38 @@ async function backupStorage() {
 
 function validateRelations() {
   const readRows = (table: string) => JSON.parse(fs.readFileSync(path.join(databaseRoot, `${table}.json`), 'utf8')) as any[];
-  const clients = new Set(readRows('clientes').map((row) => row.id));
+  const clientRows = readRows('clientes');
+  const clients = new Set(clientRows.map((row) => row.id));
   const sales = readRows('vendas');
   const saleIds = new Set(sales.map((row) => row.id));
   const documents = readRows('vendas_documentos');
+  const pharmaciesFile = path.join(databaseRoot, 'farmacias.json');
+  const pharmacies = fs.existsSync(pharmaciesFile)
+    ? new Set(readRows('farmacias').map((row) => row.id))
+    : null;
+  const tenantColumnsPresent = clientRows.every((row) => typeof row.farmacia_id === 'string');
+  const clientPharmacies = new Map(clientRows.map((row) => [row.id, row.farmacia_id]));
+  const salePharmacies = new Map(sales.map((row) => [row.id, row.farmacia_id]));
+  if (pharmacies && tenantColumnsPresent) {
+    for (const client of clientRows) {
+      if (!pharmacies.has(client.farmacia_id)) throw new Error(`Cliente ${client.id} referencia farmacia ausente.`);
+    }
+    const profilesFile = path.join(databaseRoot, 'user_profiles.json');
+    if (fs.existsSync(profilesFile)) {
+      for (const profile of readRows('user_profiles')) {
+        if (!pharmacies.has(profile.farmacia_id)) throw new Error(`Perfil ${profile.id} referencia farmacia ausente.`);
+      }
+    }
+  }
   for (const sale of sales) {
     if (sale.cliente_id && !clients.has(sale.cliente_id)) throw new Error(`Venda ${sale.id} referencia cliente ausente.`);
+    if (tenantColumnsPresent && sale.cliente_id && sale.farmacia_id !== clientPharmacies.get(sale.cliente_id)) throw new Error(`Venda ${sale.id} cruza farmacias.`);
   }
   for (const document of documents) {
     if (document.cliente_id && !clients.has(document.cliente_id)) throw new Error(`Documento ${document.id} referencia cliente ausente.`);
     if (document.venda_id && !saleIds.has(document.venda_id)) throw new Error(`Documento ${document.id} referencia venda ausente.`);
+    if (tenantColumnsPresent && document.cliente_id && document.farmacia_id !== clientPharmacies.get(document.cliente_id)) throw new Error(`Documento ${document.id} cruza farmacias.`);
+    if (tenantColumnsPresent && document.venda_id && document.farmacia_id !== salePharmacies.get(document.venda_id)) throw new Error(`Documento ${document.id} cruza vendas de outra farmacia.`);
   }
 }
 
@@ -245,7 +276,10 @@ async function main() {
   fs.mkdirSync(backupRoot, { recursive: true });
   writeManifest();
   try {
-    for (const table of TABLES) await backupTable(table);
+    for (const table of CORE_TABLES) await backupTable(table);
+    for (const table of TENANT_TABLES) {
+      if (await tableAvailable(table)) await backupTable(table);
+    }
     validateRelations();
     await backupStorage();
     manifest.status = 'success';

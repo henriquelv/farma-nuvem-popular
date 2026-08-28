@@ -15,6 +15,7 @@ const readValue = (name: string) => {
 const email = readValue('--email')?.trim().toLowerCase();
 const role = readValue('--role');
 const fullName = readValue('--name')?.trim();
+const pharmacyId = readValue('--pharmacy-id') || '00000000-0000-4000-8000-000000000001';
 const apply = args.includes('--apply');
 const confirmation = readValue('--confirm');
 
@@ -55,12 +56,13 @@ async function main() {
   if (!user) throw new Error('Usuário não encontrado no Supabase Auth. Crie-o primeiro no Dashboard, com e-mail confirmado.');
   const profile = {
     id: user.id,
+    farmacia_id: pharmacyId,
     full_name: fullName || String(user.user_metadata?.full_name || email!.split('@')[0]).toUpperCase(),
     role,
     active: true,
   };
 
-  console.log(JSON.stringify({ mode: apply ? 'apply' : 'dry-run', email, profile }, null, 2));
+  console.log(JSON.stringify({ mode: apply ? 'apply' : 'dry-run', email, pharmacyId, profile }, null, 2));
   if (!apply) return;
   const { error } = await supabase.from('user_profiles').upsert(profile, { onConflict: 'id' });
   if (error) throw error;

@@ -22,7 +22,7 @@ export default function Layout() {
             <Pill size={24} />
           </div>
           <div>
-            <h1 className="font-bold text-lg leading-tight text-slate-800">Farmácia Popular</h1>
+            <h1 className="font-bold text-lg leading-tight text-slate-800">Farma Nuvem</h1>
             <p className="text-xs text-slate-500 font-medium tracking-wide uppercase">Auditoria</p>
           </div>
         </div>
@@ -58,8 +58,8 @@ export default function Layout() {
 
         </nav>
         <div className="border-t border-slate-100 p-4">
-          <p className="truncate px-2 text-sm font-black text-slate-700">{profile?.full_name}</p>
-          <p className="mb-3 px-2 text-xs font-bold capitalize text-slate-400">{profile?.role}</p>
+          <p className="truncate px-2 text-sm font-black text-slate-700">{profile?.pharmacy_name}</p>
+          <p className="mb-3 px-2 text-xs font-bold text-slate-400">Conta da farmácia</p>
           <button type="button" onClick={() => void signOut()} className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-bold text-slate-500 hover:bg-slate-50 hover:text-slate-900">
             <LogOut size={18} /> Sair
           </button>
@@ -73,7 +73,7 @@ export default function Layout() {
             <Pill size={20} />
           </div>
           <div className="min-w-0">
-            <p className="font-black text-slate-900 truncate">Farmácia Popular</p>
+            <p className="font-black text-slate-900 truncate">{profile?.pharmacy_name}</p>
             <p className="text-[10px] font-bold uppercase text-slate-400">Auditoria</p>
           </div>
         </div>

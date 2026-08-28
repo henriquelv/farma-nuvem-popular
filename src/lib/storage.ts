@@ -3,6 +3,7 @@ import { getSupabase } from './supabase';
 const DOCUMENT_BUCKET = 'documentos';
 const SIGNED_URL_TTL_SECONDS = 10 * 60;
 const signedUrlCache = new Map<string, { url: string; expiresAt: number }>();
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 const safeDecode = (value: string) => {
   try {
@@ -75,6 +76,14 @@ export async function resolveDocumentRows<T extends { url?: string | null }>(row
 
 export function clearDocumentUrlCache() {
   signedUrlCache.clear();
+}
+
+export function buildDocumentPath(farmaciaId: string, folder: string, fileName: string) {
+  if (!UUID_PATTERN.test(farmaciaId)) throw new Error('Farmácia inválida para o upload. Entre novamente no sistema.');
+  const safeFolder = folder.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '');
+  const safeFileName = fileName.replace(/[^a-zA-Z0-9._-]/g, '_').replace(/^\.+/, '');
+  if (!safeFolder || !safeFileName) throw new Error('Caminho de documento inválido.');
+  return `${farmaciaId}/${safeFolder}/${safeFileName}`;
 }
 
 export const documentBucket = DOCUMENT_BUCKET;

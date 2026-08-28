@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useMemo, useState } from '
 import type { Session, User } from '@supabase/supabase-js';
 import { getSupabase } from '../lib/supabase';
 import { clearDocumentUrlCache } from '../lib/storage';
+import { pharmacyLoginToEmail } from '../lib/pharmacy-login';
 
 export type AppRole = 'admin' | 'atendente';
 
@@ -10,6 +11,9 @@ export type AppProfile = {
   full_name: string;
   role: AppRole;
   active: boolean;
+  farmacia_id: string;
+  pharmacy_name: string;
+  pharmacy_slug: string;
 };
 
 type AuthState = {
@@ -18,7 +22,7 @@ type AuthState = {
   profile: AppProfile | null;
   loading: boolean;
   profileError: string;
-  signIn: (email: string, password: string) => Promise<void>;
+  signIn: (login: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
 };
 
@@ -40,7 +44,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!supabase) throw new Error('Supabase não configurado.');
     const { data, error } = await supabase
       .from('user_profiles')
-      .select('id, full_name, role, active')
+      .select('id, full_name, role, active, farmacia_id')
       .eq('id', user.id)
       .maybeSingle();
     if (error) throw error;
@@ -49,7 +53,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setProfileError('Usuário sem perfil ativo. Peça acesso ao administrador.');
       return;
     }
-    setProfile(data as AppProfile);
+    const { data: pharmacy, error: pharmacyError } = await supabase
+      .from('farmacias')
+      .select('nome, slug, active')
+      .eq('id', data.farmacia_id)
+      .maybeSingle();
+    if (pharmacyError) throw pharmacyError;
+    if (!pharmacy?.active) {
+      setProfile(null);
+      setProfileError('Acesso desta farmácia está inativo. Fale com o suporte.');
+      return;
+    }
+    setProfile({
+      ...data,
+      pharmacy_name: pharmacy.nome,
+      pharmacy_slug: pharmacy.slug,
+    } as AppProfile);
     setProfileError('');
   };
 
@@ -100,9 +119,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     profile,
     loading,
     profileError,
-    signIn: async (email, password) => {
+    signIn: async (login, password) => {
       const supabase = getSupabase();
       if (!supabase) throw new Error('Supabase não configurado.');
+      const email = pharmacyLoginToEmail(login);
       const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
       if (error) throw error;
     },

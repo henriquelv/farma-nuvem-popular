@@ -14,7 +14,7 @@ O backup valido fica em `backups/production/<data>/` e precisa ter:
 
 - `manifest.json` com `status: "success"`;
 - `manifest.json.sha256`;
-- tres arquivos em `database/`;
+- os tres arquivos principais em `database/` e, apos a migracao multi-farmacia, tambem `farmacias.json` e `user_profiles.json`;
 - todos os objetos em `storage/documentos/`.
 
 Qualquer falha critica produz `status: "failed"` e exit code diferente de zero. Backups `running` ou `failed` nao podem ser restaurados.
@@ -25,43 +25,49 @@ Aplique somente a migration de preparacao:
 
 ```powershell
 npx supabase db query --linked --file supabase/migrations/20260826100000_prepare_auth_roles_and_rls.sql
+npx supabase db query --linked --file supabase/migrations/20260827120000_add_pharmacy_tenancy.sql
 ```
 
-Ela cria perfis, funcoes e politicas autenticadas. As politicas anonimas atuais continuam funcionando nesta fase.
+As migrations criam perfis e politicas autenticadas, preservam a tabela legada `farmacias` e vinculam todos os registros anteriores a uma farmacia principal. As politicas anonimas atuais continuam funcionando nesta fase.
 
-No Dashboard do Supabase, em Authentication > Users, crie os usuarios com e-mail confirmado. Depois associe cada usuario a um perfil. O comando inicia em dry-run:
+Crie uma conta compartilhada por farmacia. O login nao precisa ser um e-mail e a senha deve ter no minimo 12 caracteres. O comando inicia em dry-run e nunca exibe a senha no relatorio:
 
 ```powershell
-npm run auth:provision -- --email admin@empresa.com --role admin --name "NOME DO ADMIN"
-npm run auth:provision -- --email admin@empresa.com --role admin --name "NOME DO ADMIN" --apply --confirm PROVISION_USER_ROLE
+npm run auth:provision-pharmacy -- --legacy --login farmacia-principal --pharmacy-name "FARMACIA PRINCIPAL" --password "SENHA FORTE"
+npm run auth:provision-pharmacy -- --legacy --login farmacia-principal --pharmacy-name "FARMACIA PRINCIPAL" --password "SENHA FORTE" --apply --confirm CREATE_PHARMACY_LOGIN
 
-npm run auth:provision -- --email caixa@empresa.com --role atendente --name "NOME DO ATENDENTE"
-npm run auth:provision -- --email caixa@empresa.com --role atendente --name "NOME DO ATENDENTE" --apply --confirm PROVISION_USER_ROLE
+npm run auth:provision-pharmacy -- --login farmacia-centro --pharmacy-name "FARMACIA CENTRO" --password "OUTRA SENHA FORTE"
+npm run auth:provision-pharmacy -- --login farmacia-centro --pharmacy-name "FARMACIA CENTRO" --password "OUTRA SENHA FORTE" --apply --confirm CREATE_PHARMACY_LOGIN
 ```
+
+`--legacy` e usado apenas uma vez para a farmacia que ja possui os dados atuais. Novas farmacias nunca usam essa flag. Cada conta criada recebe administracao completa somente sobre os seus proprios pacientes.
 
 ## 3. Testar a aplicacao antes da ativacao
 
 Publique primeiro uma Preview Deployment da branch de seguranca, nunca a `main` diretamente.
 
-Teste como atendente:
+Teste com a conta da farmacia:
 
 - login e logout;
 - busca e abertura de pacientes;
 - cadastro de paciente;
 - nova receita, documento, procuracao e cupom;
-- ausencia da aba Admin;
-- acesso direto a `/admin` redirecionado para sem acesso.
-
-Teste como admin:
-
-- todos os testes do atendente;
 - acesso ao Admin e paineis;
 - edicao de cadastro sem historico fiscal;
 - bloqueios existentes de exclusao e de alteracao do historico.
 
+Teste de isolamento com uma segunda farmacia vazia:
+
+- a lista de pacientes deve iniciar vazia;
+- CPF existente na farmacia principal pode ser cadastrado na segunda farmacia;
+- a segunda farmacia nao pode abrir a URL ou o ID de paciente da primeira;
+- os novos paths de Storage devem iniciar com o UUID da farmacia autenticada.
+
 ## 4. Ativar seguranca em producao
 
-Escolha um horario de baixo movimento. Confirme antes que existe ao menos um perfil `admin` ativo e que o login na Preview funciona.
+Escolha um horario de baixo movimento. Confirme antes que existe ao menos uma farmacia ativa com perfil `admin` e que o login na Preview funciona.
+
+Para evitar indisponibilidade, publique primeiro a revisao validada na Vercel. Enquanto as politicas anonimas ainda existem, o frontend novo ja exige login, mas uma falha de sessao nao bloqueia as operacoes do banco durante a troca. Confirme o login no dominio de producao e so entao execute:
 
 ```powershell
 npx supabase db query --linked --file supabase/rollout/activate-auth-and-private-storage.sql
@@ -74,7 +80,7 @@ O SQL aborta a transacao se nao houver administrador ativo. Quando conclui, ele:
 - revoga privilegios do papel `anon`;
 - torna o bucket `documentos` privado.
 
-Imediatamente depois, publique a mesma revisao validada na Vercel e execute `supabase/rollout/verify-auth-security.sql`.
+Imediatamente depois, execute `supabase/rollout/verify-auth-security.sql` e repita no dominio de producao: login, busca, abertura de documento e logout.
 
 ## 5. Restore
 
@@ -96,7 +102,7 @@ O restore legado das copias feitas pelo otimizador tambem inicia em dry-run. A a
 
 ## 6. Documentos privados
 
-Novos uploads gravam somente o path do objeto no banco. O helper `src/lib/storage.ts` gera URLs assinadas de curta duracao. URLs publicas antigas do bucket sao convertidas para o path correspondente e assinadas sem modificar o historico.
+Novos uploads gravam somente o path `<farmacia_id>/<tipo>/<arquivo>` no banco. O helper `src/lib/storage.ts` gera URLs assinadas de curta duracao. A farmacia principal mantem leitura temporaria dos paths publicos antigos sem modificar o historico; farmacias novas nunca recebem acesso a esses paths.
 
 Validacao:
 

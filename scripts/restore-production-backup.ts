@@ -82,6 +82,8 @@ function isMissingObject(error: any) {
 
 const missingRows = new Map<string, any[]>();
 const missingStorage: any[] = [];
+const CORE_TABLES = ['clientes', 'vendas', 'vendas_documentos'];
+const RESTORE_ORDER = ['farmacias', 'user_profiles', ...CORE_TABLES];
 
 function verifyManifest() {
   if (manifest.kind !== 'farma-nuvem-production-backup' || manifest.version !== 1) throw new Error('Formato de manifesto incompatível.');
@@ -93,10 +95,12 @@ function verifyManifest() {
 }
 
 async function preflightTables() {
-  const restoreOrder = ['clientes', 'vendas', 'vendas_documentos'];
-  for (const table of restoreOrder) {
+  for (const table of RESTORE_ORDER) {
     const entry = manifest.tables.find((candidate: any) => candidate.table === table);
-    if (!entry) throw new Error(`Tabela ${table} ausente no manifesto.`);
+    if (!entry) {
+      if (CORE_TABLES.includes(table)) throw new Error(`Tabela ${table} ausente no manifesto.`);
+      continue;
+    }
     const filePath = localFile(entry.file);
     const buffer = fs.readFileSync(filePath);
     if (buffer.length !== entry.sizeBytes || sha256(buffer) !== entry.sha256) throw new Error(`Backup da tabela ${table} está corrompido.`);
@@ -150,7 +154,8 @@ async function preflightStorage() {
 }
 
 async function applyRestore() {
-  for (const table of ['clientes', 'vendas', 'vendas_documentos']) {
+  for (const table of RESTORE_ORDER) {
+    if (!missingRows.has(table)) continue;
     const rows = missingRows.get(table) || [];
     for (const rowChunk of chunks(rows)) {
       const { error } = await supabase.from(table).insert(rowChunk);
@@ -172,7 +177,8 @@ async function applyRestore() {
 }
 
 async function postValidate() {
-  for (const table of ['clientes', 'vendas', 'vendas_documentos']) {
+  for (const table of RESTORE_ORDER) {
+    if (!missingRows.has(table)) continue;
     const rows = missingRows.get(table) || [];
     for (const idChunk of chunks(rows.map((row: any) => row.id))) {
       if (!idChunk.length) continue;

@@ -6,7 +6,8 @@ import { isFutureDate, maskCPF, maskDate, normalizePersonName, parseDateToDB, sa
 import { buildPrescriptionMeta, formatDateBR, getPrescriptionEndDate, isPdfDocument } from '../lib/documents';
 import { prepareDocumentForUpload, checkFileFeasibility } from '../lib/media-compression';
 import { searchMatchScore } from '../lib/search';
-import { documentBucket } from '../lib/storage';
+import { buildDocumentPath, documentBucket } from '../lib/storage';
+import { useAuth } from '../auth/AuthContext';
 import { motion, AnimatePresence } from 'motion/react';
 
 // --- VISUALIZADOR REUTILIZÁVEL (MESMO DO PROFILE) ---
@@ -47,6 +48,7 @@ function FullscreenViewer({ url, title, onClose }: any) {
 }
 
 export default function ClientManagement() {
+  const { profile } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [showFilters, setShowFilters] = useState(false);
   
@@ -372,7 +374,7 @@ export default function ClientManagement() {
       </div>
 
       {showModal && (
-        <NewClientModal onClose={() => setShowModal(false)} onClientAdded={handleSearch} />
+        <NewClientModal farmaciaId={profile!.farmacia_id} onClose={() => setShowModal(false)} onClientAdded={handleSearch} />
       )}
       
       {modalDoc && <FullscreenViewer url={modalDoc.url} title={modalDoc.title} onClose={() => setModalDoc(null)} />}
@@ -380,7 +382,7 @@ export default function ClientManagement() {
   );
 }
 
-function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onClientAdded: () => void }) {
+function NewClientModal({ farmaciaId, onClose, onClientAdded }: { farmaciaId: string; onClose: () => void; onClientAdded: () => void }) {
   const [nome, setNome] = useState('');
   const [cpf, setCpf] = useState('');
   const [nascimento, setNascimento] = useState('');
@@ -461,7 +463,7 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
       });
       const fileToUpload = prepared.file;
       const ext = fileToUpload.name.split('.').pop();
-      const path = `cadastros/cadastro_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+      const path = buildDocumentPath(farmaciaId, 'cadastros', `cadastro_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`);
       const { error: upErr } = await supabase.storage.from(documentBucket).upload(path, fileToUpload, {
         contentType: fileToUpload.type,
       });
@@ -469,6 +471,7 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
       url_identidade_frontal = path;
 
       const { data: newClient, error: insertError } = await supabase.from('clientes').insert([{
+        farmacia_id: farmaciaId,
         nome_completo: normalizedName,
         cpf: cleanCpf,
         data_nascimento: dbDate,
@@ -479,6 +482,7 @@ function NewClientModal({ onClose, onClientAdded }: { onClose: () => void; onCli
       createdClientId = newClient.id;
 
       const { error: receitaError } = await supabase.from('vendas_documentos').insert([{
+        farmacia_id: farmaciaId,
         venda_id: null,
         cliente_id: newClient.id,
         tipo: 'receita',
