@@ -23,7 +23,7 @@ type AuthState = {
   loading: boolean;
   profileError: string;
   signIn: (login: string, password: string) => Promise<void>;
-  requestPasswordReset: (email: string) => Promise<void>;
+  requestPasswordReset: (login: string, email: string) => Promise<void>;
   updatePassword: (password: string) => Promise<void>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
   signOut: () => Promise<void>;
@@ -129,11 +129,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
       if (error) throw error;
     },
-    requestPasswordReset: async (email) => {
+    requestPasswordReset: async (login, email) => {
       const supabase = getSupabase();
       if (!supabase) throw new Error('Supabase não configurado.');
-      const { error } = await supabase.auth.resetPasswordForEmail(email.trim().toLowerCase(), {
-        redirectTo: `${window.location.origin}/nova-senha`,
+      const { error } = await supabase.functions.invoke('request-password-recovery', {
+        body: {
+          login: login.trim(),
+          email: email.trim().toLowerCase(),
+        },
       });
       if (error) throw error;
     },

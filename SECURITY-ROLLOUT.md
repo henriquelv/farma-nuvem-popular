@@ -127,3 +127,28 @@ Validacao:
 ## 7. Rollback emergencial
 
 Se a ativacao causar indisponibilidade e nao for possivel corrigir imediatamente, o arquivo `supabase/rollout/emergency-rollback-auth.sql` restaura temporariamente o acesso anterior. Ele reabre dados sensiveis e deve ser usado apenas como medida emergencial, seguido de nova auditoria e reativacao da seguranca.
+
+## 8. Recuperacao de senha por e-mail
+
+O login compartilhado da farmacia usa um endereco tecnico que nao recebe mensagens. Por isso, a recuperacao passa pela Edge Function `request-password-recovery`: ela confirma `login + e-mail de recuperacao`, gera o link com Supabase Auth e entrega a mensagem pelo Brevo. A resposta publica nao informa se a conta existe.
+
+Antes da ativacao:
+
+1. Cadastre o e-mail real em `Administrador > Minha conta`.
+2. Crie uma conta gratuita no Brevo e verifique um endereco remetente.
+3. Gere uma API key transacional e um segredo aleatorio com pelo menos 32 bytes.
+4. Instale os secrets somente no Supabase:
+
+```powershell
+npx supabase secrets set --project-ref edtscwxgpyeqmqtpisdz BREVO_API_KEY="..." EMAIL_FROM_ADDRESS="remetente@dominio.com" EMAIL_FROM_NAME="Farma Nuvem" APP_ORIGIN="https://farma-nuvem-popular.vercel.app" RECOVERY_RATE_LIMIT_SECRET="..."
+```
+
+5. Aplique `supabase/migrations/20260829120000_add_password_recovery_rate_limit.sql` e implante a funcao sem verificacao JWT, pois a rota precisa funcionar antes do login:
+
+```powershell
+npx supabase functions deploy request-password-recovery --project-ref edtscwxgpyeqmqtpisdz --no-verify-jwt
+```
+
+6. Teste a entrega e somente depois defina `VITE_PASSWORD_RECOVERY_ENABLED=true` na Vercel.
+
+O endpoint permite no maximo 5 tentativas por combinacao de conta/e-mail e 20 por origem em 15 minutos. Os identificadores sao armazenados apenas como hashes e sao eliminados apos 24 horas.
