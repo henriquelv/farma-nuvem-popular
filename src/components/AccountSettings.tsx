@@ -9,6 +9,7 @@ import PasswordRequirements from './PasswordRequirements';
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function AccountSettings() {
+  const recoveryEnabled = import.meta.env.VITE_PASSWORD_RECOVERY_ENABLED === 'true';
   const navigate = useNavigate();
   const { profile, changePassword, signOut } = useAuth();
   const [recoveryEmail, setRecoveryEmail] = useState('');
@@ -83,12 +84,16 @@ export default function AccountSettings() {
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-700"><Mail size={20} /></div>
           <div>
             <h2 className="text-lg font-black text-slate-950">E-mail de recuperação</h2>
-            <p className="mt-1 text-sm font-semibold text-slate-500">Endereço que receberá a recuperação quando o envio SMTP estiver ativo.</p>
+            <p className="mt-1 text-sm font-semibold text-slate-500">Endereço que receberá os links seguros de recuperação da conta.</p>
           </div>
         </div>
         {emailError && <div role="alert" className="mt-5 flex gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm font-bold text-red-700"><AlertTriangle size={17} />{emailError}</div>}
         {emailMessage && <div role="status" className="mt-5 flex gap-2 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-sm font-bold text-emerald-800"><ShieldCheck size={17} />{emailMessage}</div>}
-        <div className="mt-5 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm font-bold text-amber-800">Envio automático aguardando a configuração segura de um provedor SMTP.</div>
+        {recoveryEnabled ? (
+          <div className="mt-5 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-sm font-bold text-emerald-800">Depois de salvo, este e-mail fica disponível automaticamente para recuperação de senha.</div>
+        ) : (
+          <div className="mt-5 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm font-bold text-amber-800">Envio automático aguardando a configuração segura do provedor de e-mail.</div>
+        )}
         <label className="mt-5 block space-y-2">
           <span className="text-sm font-black text-slate-700">E-mail</span>
           <input type="email" required maxLength={254} disabled={loadingEmail} autoComplete="email" value={recoveryEmail} onChange={(event) => setRecoveryEmail(event.target.value)} className="min-h-12 w-full rounded-lg border border-slate-200 px-3 font-semibold text-slate-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:bg-slate-100" />
